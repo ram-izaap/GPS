@@ -198,11 +198,10 @@
                
             </div>
             <div>
-              <div class="sec-9">
+              <div class="sec-9 share-map">
               <input name="joined_map" id="joined_map" type="hidden" />
-                 <label>Current Joined Map ID</label>
+                 <label>Current Joined Map ID : </label>
                  <input type="radio" name="share_map_type" class="share_mp_type" onclick="share_map('<?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>');" value="<?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>" /><?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>
-                 <br />
                  <label>My Map</label>
                  <input type="radio" name="share_map_type" class="share_mp_type" onclick="share_map('<?php echo $rand_channelid; ?>');" value="<?php echo $rand_channelid; ?>" /><?php echo $rand_channelid; ?>
               </div>
