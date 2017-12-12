@@ -456,12 +456,9 @@ $('#map').css({"height": vph + 'px'});
               });
               markers.push(marker);
         }  
-     //   alert(markers);
-      //  participant_txt = (locations.length > 5)?"More":"";
+    
        
         for (var i = 0; i < locations.length; i++) {  
-            //alert(locations[i][9]);
-          //  if(i <= 5){
            staticmap = (locations[i][7]!='')?locations[i][7]:"";
           var dat    = new Date((contents[i][1]*1000));
           var tp     = locations[i][3];
@@ -525,18 +522,15 @@ $('#map').css({"height": vph + 'px'});
             
             //center on current position
             if(splitStr == '' && trackedStr ==''){
-                posclick(sel_group_id);
+                //posclick(sel_group_id);
             }
             
             if(trackedStr == '') {
-                
-              //trackuser(user_id,locations[i][5],asr,locations[i][1],locations[i][2],locations[i][8]);
-              trackuser();
+              //trackuser();
             }
           }
          
             invisible_icon = '<span class="invisible_icon">&nbsp;</span>';
-            
              var invisible = locations[i][6];
              var gpus      = locations[i][0].substring(0,13);
              var ctrack    = locations[i][5].substring(0,13);
@@ -551,9 +545,8 @@ $('#map').css({"height": vph + 'px'});
              }
             filters += '<li><a href="javascript:posclick('+ i + ')"><div class="p-parti"><span class="name"><b>DN: </b> '+gpus+'</span><br /><span class="name"><b>CHID: </b>'+ctrack+'</span></div></a><div class="p-find-iocn">'+group_admin_icon+'<a href="javascript:posclick('+ i + ')" id="'+locations[i][5]+'" class="myposition '+highlight_classname+'">&nbsp;</a><a href="javascript:myclick('+ i + ',1)" class="statuspop sprite-image">&nbsp;</a></div></li>';
           }
-         // alert(filters);
+         
           if(invisible == 0 && staticmap == 'dynamic') { 
-            
             inv_pt += '<li><div class="p-parti"><span class="name"><b>DN: </b>'+gpus+'</span><br /><span class="name"><b>CHID: </b>'+ctrack+'</span></div><div class="p-find-iocn">'+group_admin_icon+invisible_icon+'</div></li>';
           }
           
@@ -563,21 +556,18 @@ $('#map').css({"height": vph + 'px'});
           }
        // }
        } 
-      //  alert(markers);
-      //}
+     
         if(inv_pt!=''){
             var invisible_pt = '<li class="text-center invisible-head">Invisible Participants</li>';
                 invisible_pt +=  inv_pt;
-          //  filters += filters1; 
         }
          //added clues header 
         if(clues!=''){
             var static_cluess  = '<li class="text-center invisible-head">Static Maps/Clues</li>';
                 static_cluess  += clues;
-            //filters  += clues;
         }
         
-       // $("#participants-list").html(partcipanthead + filters +'<li class="text-center"><a href="'+site_url+'search/'+join_key+'/all">'+participant_txt+'</a></li>');
+        
         $("#tab1").html(partcipanthead+filters);
         $("#tab2").html(invisible_pt);
         $("#tab3").html(static_cluess);
@@ -727,7 +717,7 @@ $('#map').css({"height": vph + 'px'});
          map.fitBounds(bounds);
          map.setZoom(21);
          map.setCenter(markers[i].getPosition());
-         setTimeout(function(){ map.setZoom(16); },4000);
+        // setTimeout(function(){ map.setZoom(16); },4000);
     }
    
     function rotate90() {
