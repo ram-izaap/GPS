@@ -576,7 +576,7 @@ class Home extends CI_Controller {
 		$latlong = $this->input->post('latlon');
 		$phone   = $this->input->post('phone');
 		$display = $this->input->post('display');
-        $type    = $this->input->post('type');
+    $type    = $this->input->post('type');
         
         $manual_address = '';
         if($type != 'current') {
@@ -594,7 +594,7 @@ class Home extends CI_Controller {
 		}
 			
 
-		$this->service_param['default'] 	= $phone;
+		$this->service_param['default'] 	= ($display)?$display:$phone;
 		$this->service_param['email'] 		= '';
 		$this->service_param['phonenumber'] = $phone;
 		$this->service_param['password'] 	= '';

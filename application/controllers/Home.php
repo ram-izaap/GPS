@@ -634,6 +634,21 @@ class Home extends CI_Controller {
 				$outputs['msg']   ='Successfully registerd as a guest or existing user!';
 				$outputs['join_key']= (get_cookie('map_search')!='')?get_cookie('map_search'):'';
 
+        $this->service_param['user_id']   = $register['user_id'];
+        $this->service_param['join_key']  = $outputs['join_key'];
+
+        
+        $userdet = $this->rest->get('get_channel_byuser', $this->service_param, 'json');
+
+        $userdet = (array)$userdet;
+        //echo 'ghhg';customPrint($userdet, FALSE);customPrint($this->service_param);
+        if(!empty($userdet) && $userdet['status']=='success')
+        {  
+          $outputs['user_info'] = array('channel_id' => $userdet['user']->channel_id, 'display_name'=>$userdet['user']->udispname,'phonenumber' => $userdet['user']->phonenumber , 'user_id'=>$userdet['user']->user_id,'group_id'=>$userdet['user']->group_id,'joined_group'=>$userdet['joined_group'],"updated_type" => $userdet['user']->updated_type, "updated_phonenumber" => $userdet['user']->updated_phonenumber);
+        }
+
+        
+
 	   		}	
 	   		else
 	   		{

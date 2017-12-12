@@ -328,6 +328,11 @@ function guest_registration(type,clsname)
                  $("."+clsname+" .edit-icon").css("display","table-cell");
                  $("."+clsname+" .update-link").css("display","none");
    
+            if(response.user_info)
+            {
+              user_info = response.user_info;
+            }
+
             if(response.join_key!='')
               location.href=site_url+'/search/'+response.join_key;
           }

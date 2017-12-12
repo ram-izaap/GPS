@@ -288,7 +288,7 @@
                   </div>
               </div>
 
-              <div class="panel-gutter">
+              <div class="panel-gutter" style="<?php echo ($phonenumber == ''?'display:none':''); ?>"" >
                   <div class="input-group">
                       <span class="input-group-addon">
                         <label for="Dno1">
