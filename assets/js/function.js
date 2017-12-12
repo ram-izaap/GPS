@@ -18,6 +18,27 @@ function render_social_share()
       text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
       sharelabel: false
     });
+    
+  $("#searchmapshare_mobile").html(shr_ct);  
+  
+  $("#searchmapshare_mobile").socialButtonsShare({
+      socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
+      url: site_url+'/search/'+joined_mapp,
+      type: $("#joined_map").val(),
+      text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+      sharelabel: false
+    });
+     
+     $("#searchmapshare").html(shr_ct); 
+     
+      $("#searchmapshare").socialButtonsShare({
+      socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
+      url: site_url+'/search/'+joined_mapp,
+      type: $("#joined_map").val(),
+      text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+      sharelabel: false
+    });
+     
 }
 
 function share_map(chid)
@@ -163,24 +184,6 @@ $("#socialquickshare_mobile").socialButtonsShare({
   socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
   url: site_url+'/search/'+map_channel,
   text: "\nMy Map ID is "+map_channel+"\n\n View my location @ "+site_url+"/search/"+map_channel+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
-  sharelabel: false
-});
-
-        
-$("#searchmapshare").socialButtonsShare({
-  socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
-  url: site_url+'/search/'+serchval,
-  text: "\nMy Map ID is "+serchval+"\n\n View my location @ "+site_url+"/search/"+serchval+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
-  sharelabel: false
-});
-
-
-
-$("#searchmapshare_mobile").socialButtonsShare({
-  socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
-  url: site_url+'/search/'+joined_mapp,
-  type: $("#joined_map").val(),
-  text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
   sharelabel: false
 });
 

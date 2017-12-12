@@ -369,23 +369,7 @@
         </div>
         <div class="modal-body">
           <div id="searchmapshare_mobile">
-             <div id="websitesearch_text"></div>
-              <div class="sec-9 clearfix"> 
-                  <a href="javascript:;" onclick="copyToClipboard('#search','#websitesearch_text')" >
-                    <img src="<?php echo base_url();?>assets/images/copy.png"  class="img-responsive" alt="copy" />
-                  </a>
-               </div>
-
-                <div class="sec-9 clearfix"> 
-                  <a href="sms:?body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?>" class="sms"  >
-                    <img src="<?php echo base_url();?>assets/images/sms.png"  class="img-responsive" alt="sms" target="_blank" />
-                  </a>
-               </div>
-               <div class="sec-9 clearfix"> 
-                  <a href="mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?> " target="_blank" >
-                    <img src="<?php echo base_url();?>assets/images/email_send.png"  class="img-responsive" alt="email" />
-                  </a>
-               </div>   
+                
             </div>
             <div>
               <div class="sec-9">
@@ -404,3 +388,23 @@
       </div>
     </div>
   </div>
+  
+  <div id="shr_mp_content" style="display: none;">
+    <div id="websitesearch_text"></div>
+              <div class="sec-9 clearfix"> 
+                  <a href="javascript:;" onclick="copyToClipboard('#search','#websitesearch_text')" >
+                    <img src="<?php echo base_url();?>assets/images/copy.png"  class="img-responsive" alt="copy" />
+                  </a>
+               </div>
+
+                <div class="sec-9 clearfix"> 
+                  <a href="sms:?body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?>" class="sms"  >
+                    <img src="<?php echo base_url();?>assets/images/sms.png"  class="img-responsive" alt="sms" target="_blank" />
+                  </a>
+               </div>
+               <div class="sec-9 clearfix"> 
+                  <a href="mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?> " target="_blank" >
+                    <img src="<?php echo base_url();?>assets/images/email_send.png"  class="img-responsive" alt="email" />
+                  </a>
+               </div> 
+</div>
