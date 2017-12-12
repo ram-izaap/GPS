@@ -3,6 +3,7 @@
 // print_r($locations);
 // exit;
 ?>
+
 <style>
 	.martop{ margin-top:10px !important;}
 	.gm-style-iw + div {left: 10px;}
