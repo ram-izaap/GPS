@@ -305,7 +305,7 @@
         <!--  -->
         </div>
         <div class="modal-footer">  
-         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_disp_name();" > Accept KK</button>
+         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_disp_name();" > Accept </button>
           <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -335,7 +335,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="displayName">              
               <div class="panel-gutter">
-                <div class="input-group">
+                <div class="">
                   <input type="text" class="form-control" name="custom_map_id" aria-describedby="basic-addon1" id="custom_map_id" placeholder="Map ID" value="" />
                 </div>
               </div>              

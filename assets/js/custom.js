@@ -36,12 +36,12 @@ $("ul.dropdown-menu a").click(function()
 });
 
 // 
-$(".edit").on("click",function()
-  {
-    $(this).prev(".text-field").removeAttr('readonly');
-    $(this).css("display","none");
-    $(this).next(".submit").css("display","block");
-  });
+// $(".edit").on("click",function()
+//   {
+//     $(this).prev(".text-field").removeAttr('readonly');
+//     $(this).css("display","none");
+//     $(this).next(".submit").css("display","block");
+//   });
 
 $(".submit").on("click",function()
   {

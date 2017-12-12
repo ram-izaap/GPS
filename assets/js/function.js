@@ -198,7 +198,12 @@ function popupclose()
 
 function trig_disp_popup(id)
 {
-    $("#"+id).trigger("click");
+  if( id == 'display_popup_map_id' )
+  {
+    $('#custom_map_id').val( user_info.channel_id );
+  } 
+  
+  $("#"+id).trigger("click");
 }
 
 function viewyouraddress()
@@ -472,13 +477,40 @@ function update_disp_name()
 function update_map_id()
 {
      var mapID = $("#custom_map_id").val();
+         mapID = mapID.trim(); 
+
+     var validation_flag = true;
+
+     if( !mapID.length ) 
+     {
+        alert('Please enter Map ID.');
+        validation_flag = false;
+     }
+
+     if( !validation_flag ) return true;
 
      var data = {
         user_id: user_info.user_id,
         channel_id: mapID
      };
 
-     console.log(data);
+     //console.log(data);
+
+     $("#wait").css("display", "block");
+
+    $.post(site_url+'/user/updateChannelID', data, function(response){
+
+      $("#wait").css("display", "none");
+
+      alert(response.msg);
+      
+      if( response.status == 'success')
+      {
+        location.reload();
+      }
+      
+      
+    }, "json"); 
 }
 
 

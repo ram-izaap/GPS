@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
 
-	protected $api_url = 'http://hmgps.service/service/';//'http://heresmygps.com/service/';
+	protected $api_url = 'http://hmgps.api/service/';//'http://heresmygps.com/service/';
 	protected $service_param = array('X-APP-KEY'=>'myGPs~@!');
 
 	function __construct()
@@ -20,7 +20,7 @@ class User extends CI_Controller {
 		);
 	}
 
-	updateChannelID()
+	function updateChannelID()
 	{
 		try{
 
@@ -29,9 +29,16 @@ class User extends CI_Controller {
 
 			if( !isset($channelID, $userID) )
 			{
-				throw new Exception("Invalid Parameters");
-				
+				throw new Exception("Invalid Parameters");				
 			}
+
+			$this->service_param['channel_id'] 	= $channelID;
+			$this->service_param['user_id'] 	= $userID;  
+
+			$map_det = $this->rest->get('updateMapID', $this->service_param, 'json');
+
+			//$output = array('nn' => $channelID, 'mm' => $userID);
+			echo json_encode($map_det);
 
 		}catch(Exception $e){
 

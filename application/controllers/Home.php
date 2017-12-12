@@ -6,7 +6,7 @@ class Home extends CI_Controller {
 
 	private $data = array('map_search_key'=>'','service_resp'=>array('status'=>''));
 
-	protected $api_url = 'http://hmgps.service/service/';//'http://heresmygps.com/service/';
+	protected $api_url = 'http://hmgps.api/service/';//'http://heresmygps.com/service/';
 	protected $service_param = array('X-APP-KEY'=>'myGPs~@!');
 
 	function __construct()
