@@ -39,7 +39,7 @@
     <link href="<?php echo site_url();?>assets/css/style.css" rel="stylesheet" />
     <script src="<?php echo site_url(); ?>assets/js/lib/jquery.min.js?v1.12.0"></script>
     <script src="<?php echo base_url();?>assets/js/social-buttons-share.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9lLFL8ATbz-WsGewJcoSxQbEnpQI_JA"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClXC4q5fI1C8arpQ22WVOwvtsfh9a-eLw"></script>
     <script src="<?php echo base_url();?>assets/js/infobox.js"></script>
     
  
