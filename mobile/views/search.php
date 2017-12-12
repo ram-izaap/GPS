@@ -28,7 +28,7 @@
      var base_url  = '<?php echo base_url();?>';
      var  serchval = '<?php echo ($map_search_key)?$map_search_key:get_cookie("map_search"); ?>';
      var popuptrigger = '<?php echo ($map_search_key)?$map_search_key:get_cookie("map_search"); ?>';
-     var joined_mapp = $("#joined_map").val();
+     
      (function() {
       geolocation();
     
@@ -390,24 +390,8 @@
           <h4 class="modal-title">Quick share - Current map</h4>
         </div>
         <div class="modal-body">
-          <div id="sharemap_mobile">
-             <div id="websitesearch_text"></div>
-              <div class="sec-9 clearfix"> 
-                  <a href="javascript:;" onclick="copyToClipboard('#search','#websitesearch_text')" >
-                    <img src="<?php echo base_url();?>assets/images/copy.png"  class="img-responsive" alt="copy" />
-                  </a>
-               </div>
-
-                <div class="sec-9 clearfix"> 
-                  <a href="sms:?body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?>" class="sms"  >
-                    <img src="<?php echo base_url();?>assets/images/sms.png"  class="img-responsive" alt="sms" target="_blank" />
-                  </a>
-               </div>
-               <div class="sec-9 clearfix"> 
-                  <a href="mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?> " target="_blank" >
-                    <img src="<?php echo base_url();?>assets/images/email_send.png"  class="img-responsive" alt="email" />
-                  </a>
-               </div>   
+            <div id="sharemap_mobile">
+               
             </div>
             <div class="sec-9">
                 <input name="joined_map" id="joined_map" type="hidden" />
@@ -441,7 +425,25 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="shr_mp_content" style="display: none;">
+    <div id="websitesearch_text"></div>
+              <div class="sec-9 clearfix"> 
+                  <a href="javascript:;" onclick="copyToClipboard('#search','#websitesearch_text')" >
+                    <img src="<?php echo base_url();?>assets/images/copy.png"  class="img-responsive" alt="copy" />
+                  </a>
+               </div>
 
+                <div class="sec-9 clearfix"> 
+                  <a href="sms:?body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?>" class="sms"  >
+                    <img src="<?php echo base_url();?>assets/images/sms.png"  class="img-responsive" alt="sms" target="_blank" />
+                  </a>
+               </div>
+               <div class="sec-9 clearfix"> 
+                  <a href="mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: <?php $grp = (!empty($map_search_key))?$map_search_key:get_cookie("map_search"); echo site_url('search/'.$grp);?> " target="_blank" >
+                    <img src="<?php echo base_url();?>assets/images/email_send.png"  class="img-responsive" alt="email" />
+                  </a>
+               </div> 
+</div>
 <style type="text/css">
 .google-add.right-add02 {
     margin: auto;
@@ -744,10 +746,10 @@ $('#map').css({"height": vph + 'px'});
               });
               markers.push(marker);
         }  
-       // participant_txt = (locations.length > 5)?"More":"";
+       
        
         for (var i = 0; i < locations.length; i++) {  
-           // if(i <= 5){
+       
            staticmap = (locations[i][7]!='')?locations[i][7]:"";
           var dat    = new Date((contents[i][1]*1000));
           var tp     = locations[i][3];
@@ -809,7 +811,7 @@ $('#map').css({"height": vph + 'px'});
             
             //center on current position
             if(splitStr == '' && trackedStr ==''){
-                posclick(sel_group_id);
+                //posclick(sel_group_id);
             }
             
             if(trackedStr == '') {
@@ -846,25 +848,19 @@ $('#map').css({"height": vph + 'px'});
             
             clues += '<li><a href="javascript:posclick('+ i + ')"><div class="p-parti"><span class="name"><b>DN: </b> '+gpus+'</span><br /><span class="name"><b>CHID: </b>'+ctrack+'</span></div></a><div class="p-find-iocn"><a href="javascript:posclick('+ i + ')" class="myposition sprite-image">&nbsp;</a><a href="javascript:myclick('+ i + ',1)" class="statuspop sprite-image">&nbsp;</a></div></li>';
           }
-        //}
        }
        
         if(inv_pt!=''){
             
             invisible_pt = '<li class="text-center invisible-head">Invisible Participants</li>';
             invisible_pt +=  inv_pt;
-            //filters += filters1; 
         }
          //added clues header 
         if(clues!=''){
              static_cluess  = '<li class="text-center invisible-head">Static Maps/Clues</li>';
              static_cluess  += clues;
-          //  filters  += clues;
         }
         
-        //alert(filters);
-        
-      //  $("#participants-list").html(partcipanthead + filters +'<li class="text-center"><a href="'+site_url+'search/'+join_key+'/all">'+participant_txt+'</a></li>');
         $("#tab1").html(partcipanthead+filters);
         $("#tab2").html(invisible_pt);
         $("#tab3").html(static_cluess);
@@ -1013,7 +1009,7 @@ $('#map').css({"height": vph + 'px'});
          bounds.extend(markers[i].position);
          map.fitBounds(bounds);
          map.setCenter(markers[i].getPosition());
-         setTimeout(function(){ map.setZoom(16); },4000);
+       //  setTimeout(function(){ map.setZoom(16); },4000);
     }
    
     function rotate90() {

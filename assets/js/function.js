@@ -5,12 +5,30 @@ function msover(x) {
     $(x).attr("title","Double Click On Map you can get address");
 }
 
+function render_social_share()
+{
+  var shr_ct = $("#shr_mp_content").html();   
+  
+  $("#sharemap_mobile").html(shr_ct);
+  
+  $("#sharemap_mobile").socialButtonsShare({
+      socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
+      url: site_url+'/search/'+joined_mapp,
+      type: $("#joined_map").val(),
+      text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+      sharelabel: false
+    });
+}
 
 function share_map(chid)
 {
     //joined_mapp = chid;
-   joined_mapp =  $("#joined_map").val(chid);
-   map_channel =  $("#phone").val(chid);
+    $("#joined_map").val(chid);
+    $("#phone").val(chid);
+   joined_mapp =  $("#joined_map").val();
+   map_channel =  $("#phone").val();
+   
+  render_social_share();     
 }
 
 
@@ -166,13 +184,8 @@ $("#searchmapshare_mobile").socialButtonsShare({
   sharelabel: false
 });
 
-$("#sharemap_mobile").socialButtonsShare({
-  socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
-  url: site_url+'/search/'+joined_mapp,
-  type: $("#joined_map").val(),
-  text: "\nMy Map ID is "+joined_mapp+"\n\n View my location @ "+site_url+"/search/"+joined_mapp+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
-  sharelabel: false
-});
+render_social_share();   
+
 
 
 function ajax_loader(type)
