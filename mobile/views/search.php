@@ -251,8 +251,10 @@
     <!-- Map Layer -->
     <div class="map-layer-top clearfix">
       <!-- <span class="cMapid"> Current Map ID is <i></i> <b><?php // echo $search_val;?></b> </span> -->
-      <span class="g__map--id"> Guest Map id <b><?php echo $display_name; ?></b></span>
-      
+      <div class="m-channel-info">
+        <span> Display Name: <b><?php echo $display_name; ?></b></span>
+        <span> Map id: <b><?php echo $display_name; ?></b></span>
+      </div>
     
          <span class="mobile--share">
            <a  data-toggle="modal" data-target="#searchshare_mb">
@@ -260,9 +262,9 @@
           </span> 
 
 
-      <span class="mobile--back pull-right">
+      <!-- <span class="mobile--back pull-right">
         <a href="<?php echo base_url(); ?>"><i class="fa fa-arrow-left"></i> Back </a>
-      </span>
+      </span> -->
       <!-- <span class="top-share pull-right"> 
         <a data-toggle="modal" data-target="#searchshare">
           <i class="fa fa-share-alt fa-2x"></i>

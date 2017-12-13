@@ -130,7 +130,8 @@
                            <div class="user-tagg">User Tag Options</div>
                            <div class="dis-paly">
                            <input class="display-name" type="text" name="display_name" id="display_name" value="<?php echo $display_name;?>" placeholder="Display Name" />
-                           <a class="display_popup" data-toggle="modal" data-target="#update_displayname" id="display_pp" ></a>                 			
+                           <a class="display_popup" data-toggle="modal" data-target="#update_displayname" id="display_pp" ></a> 
+                           <a class="display_popup" data-toggle="modal" data-target="#update_map_id" id="display_popup_map_id" ></a>                			
                            <div class="arrow_box"></div>
                            </div>
                         </div> 
@@ -239,7 +240,7 @@ ondragstart="drag(event)" alt="Responsive image" /></span>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Display Name & Phone Number </h4>
+          <h4 class="modal-title">Update Display Name & Phone Number KKK</h4>
         </div>
         <div class="modal-body">
           <div class="manual-address">
@@ -285,6 +286,46 @@ ondragstart="drag(event)" alt="Responsive image" /></span>
                 </div>
             </div>
           </div>
+
+  <div class="modal fade" id="update_map_id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+    
+      <!-- Modal content-->
+      <form name="upd_disp_name" id="upd_disp_name">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title text-center"><b>Update Map ID</b></h4>
+          </div>
+        <div class="modal-body">
+         <!--  -->
+        <div class="tab-wrapper">
+
+          
+         <input type="hidden" name="guest_user_id" id="guest_user_id" value="<?php echo $user_id; ?>"  />
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="displayName">              
+              <div class="panel-gutter">
+                <div class="">
+                  <input type="text" class="form-control" name="custom_map_id" aria-describedby="basic-addon1" id="custom_map_id" placeholder="Map ID" value="" />
+                </div>
+              </div>              
+            </div>            
+          </div>
+        </div>
+        <!--  -->
+        </div>
+        <div class="modal-footer">  
+         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_map_id();" > Accept </button>
+          <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
 <style>
    .manual-address input[type="text"] {
         min-width:200px;

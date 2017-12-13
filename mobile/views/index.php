@@ -151,7 +151,7 @@
    <input name="phone" id="phone" type="hidden" />
   <a class="display_popup" data-toggle="modal" data-target="#update_displayname" id="display_pp"></a>    
 <center class="bg">
-  
+  <a class="display_popup" data-toggle="modal" data-target="#update_map_id" id="display_popup_map_id" ></a> 
   <div class="container">
       <div class="logo">
         <a href="<?php echo base_url();?>" title="911 GPS">
@@ -166,8 +166,8 @@
         </div>
         <div class="col-xs-4">
           <div class="pencil-cover">
-            <input type="text" placeholder="<?php echo $search_val;?>" value="<?php echo $rand_channelid;?>" class="edit-id text">
-            <span class="edit-ico glyphicon glyphicon-pencil __web-inspector-hide-shortcut__" aria-hidden="true"></span>
+            <input type="text" placeholder="<?php echo $search_val;?>" value="<?php echo $rand_channelid;?>" class="edit-id text edit-map-id">
+            <span class="edit-map-id edit-ico glyphicon glyphicon-pencil __web-inspector-hide-shortcut__" aria-hidden="true"></span>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@
         <div class="col-xs-12">
           <div class="pencil-cover">
             <input type="text" placeholder="Enter Your Name" class="text" name="display" id="display_name" value="<?php echo $display_name;?>" />
-            <button class="edit-ico  glyphicon glyphicon-ok" aria-hidden="true" data-text="Submit" data-color="green" data-position="left" style="display:block;" onclick="create_map('guest_pos_type',<?php echo $usrchk;?>,'.popover-content #guest_address','manual');"  ></button>
+            <button class="edit-display-name edit-ico glyphicon glyphicon-pencil" aria-hidden="true" data-text="Submit" data-color="green" data-position="left" style="display:block;" ></button>
             <label for="display-name">Your Public User Tag Display Name. (optional)</label>
           </div>
         </div>
@@ -402,5 +402,45 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="update_map_id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+    
+      <!-- Modal content-->
+      <form name="upd_disp_name" id="upd_disp_name">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title text-center"><b>Update Map ID</b></h4>
+          </div>
+        <div class="modal-body">
+         <!--  -->
+        <div class="tab-wrapper">
+
+          
+         <input type="hidden" name="guest_user_id" id="guest_user_id" value="<?php echo $user_id; ?>"  />
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="displayName">              
+              <div class="panel-gutter">
+                <div class="">
+                  <input type="text" class="form-control" name="custom_map_id" aria-describedby="basic-addon1" id="custom_map_id" placeholder="Map ID" value="" />
+                </div>
+              </div>              
+            </div>            
+          </div>
+        </div>
+        <!--  -->
+        </div>
+        <div class="modal-footer">  
+         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_map_id();" > Accept </button>
+          <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </form>
     </div>
   </div>
