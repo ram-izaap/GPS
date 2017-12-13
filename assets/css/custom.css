@@ -1135,46 +1135,57 @@ text-align:center;
 
 @media (max-width:767px)
 {
-.top-visible, .top-exit, .top-my-map { height:71px; }
-.pencil-cover input {
-    float: right;
-    min-width: 100px;
-}
+	.top-visible, .top-exit, .top-my-map { height:71px; }
+	.pencil-cover input {
+	    float: right;
+	    min-width: 100px;
+	}
 
-.map-sel { float:right;}
+	.map-sel { float:right;}
 
-.timer { text-align:center;
-    position: fixed;
-    bottom: 7px;
-    z-index: 99999;
-    left: 130px;}
-.timer-btn { width:76px;}
-#geolocationBtn { margin:12px 13px !important;}
-.timer-btn h2 { font-size:12px;}
-.timer .pull-right { float:none !important;}
-.timer-btn .btn { font-size:12px; padding:8px 4px;}
-.top-my-map a {
-   color:#fff !important;
-   font-size:8px;
-   width: 100%;
-    display: inline-block;
-}
-.top-my-map a b
-{
-	font-size:14px;
-	width: 100%;
-    display: inline-block;
-}
-.top-my-map img {
-    max-width: 28px;
-  max-height: 28px;
-    margin: 0 11px;
-}
+	.timer { text-align:center;
+	    position: fixed;
+	    bottom: 7px;
+	    z-index: 99999;
+	    left: 130px;}
+	.timer-btn { width:76px;}
+	#geolocationBtn { margin:12px 13px !important;}
+	.timer-btn h2 { font-size:12px;}
+	.timer .pull-right { float:none !important;}
+	.timer-btn .btn { font-size:12px; padding:8px 4px;}
+	.top-my-map a {
+	   color:#fff !important;
+	   font-size:8px;
+	   width: 100%;
+	    display: inline-block;
+	}
+	.top-my-map a b
+	{
+		font-size:14px;
+		width: 100%;
+	    display: inline-block;
+	}
+	.top-my-map img {
+	    max-width: 28px;
+	  max-height: 28px;
+	    margin: 0 11px;
+	}
 
-.map-sel span input[type="radio"] {
-    margin-top: -1px;
-    vertical-align: middle;
-}
+	.map-sel span input[type="radio"] {
+	    margin-top: -1px;
+	    vertical-align: middle;
+	}
+
+	.m-channel-info span{
+		overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    font-size: 12px;
+	    width: 50%;
+	}
+
+	.m-channel-info span:first-child{float: left;}
+	.m-channel-info span:last-child{float: right;text-align: right;}
 
 }
 
@@ -1502,3 +1513,5 @@ span.mobile--share {
     color: #fff !important;
     font-size: 14px !important;
 }
+
+
