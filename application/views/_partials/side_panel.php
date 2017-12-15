@@ -59,7 +59,7 @@
     <div class="col-sm-6">
      <label for="">Make Visible on Map</label>
      <div id="visiblestatus2">
-         <?php //$this->load->view('visible_status',$this->data); ?>
+         <?php $this->load->view('_partials/visible_status', array('visible' => $visible)); ?>
       </div>
     </div>
 

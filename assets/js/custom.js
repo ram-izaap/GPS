@@ -16,6 +16,7 @@ function openNav(id,device_type) {
 }
 
 function closeNav(id) {
+  
     document.getElementById(id).style.width = "0";
     $('body').removeClass('active');
     $('.nav-close').removeClass('navDisabled');

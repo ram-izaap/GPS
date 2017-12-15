@@ -167,18 +167,13 @@
              </div>
 
 
-
-
-
            </div>
 
       </div>
 
     </div>
 
-  <!-- interior page End -->
-
- <span class="nav-close" onclick="closeNav()"> x <b>Close</b> </span>
+  
 
 
 
