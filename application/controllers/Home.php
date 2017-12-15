@@ -47,6 +47,16 @@ class Home extends AppController {
 
        	$this->data['map_disp_str'] = $mapDispStr;
 
+       	
+
+       	$params = array('user_id' => $userInfo['user_id'], 'channel_id' => $userInfo['channel_id']);
+		$resp = $this->rest->get('group_info', $params, 'json');
+		
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$this->data['visible'] = $resp->data->is_view;
+		}
+
 		$this->layout->view('desktop/home/index', $this->data);
 	}
 

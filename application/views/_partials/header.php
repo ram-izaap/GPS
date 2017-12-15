@@ -98,7 +98,7 @@
             </a>
 
             <div id="visiblestatus" class="top-visible">
-               <?php //$this->load->view('visible_status', $this->data); ?>
+               <?php $this->load->view('_partials/visible_status', array('visible' => $visible)); ?>
             </div>
 
          </div>
