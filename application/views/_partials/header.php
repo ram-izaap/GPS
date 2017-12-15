@@ -1,5 +1,6 @@
 
 <?php 
+       
        $key      = ($map_search_key)?$map_search_key:$user_info['channel_id']; 
        $shareurl = base_url()."search/".$key; 
        $uri      = $this->uri->segment(1);

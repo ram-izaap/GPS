@@ -313,7 +313,7 @@
                           <input type="radio" class="itxt" name="custom_disp_update" id="system_disp_update" <?php echo ($display_name!='' && $updated_type=='system')?'checked="checked"':""; ?> />
                         </label>
                       </span>
-                    <input type="text" class="form-control" value="Use System Generated" disabled="disabled" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" value="Use System Generated:<?php echo $display_name; ?>" disabled="disabled" aria-describedby="basic-addon2">
                   </div>
               </div>
 
@@ -339,7 +339,7 @@
                           <input type="radio" class="itxt" name="custom_phone_update" id="system_phonenumber" <?php echo ($phonenumber!='' && $updated_phonenumber=='system')?'checked="checked"':""; ?> />
                         </label>
                       </span>
-                    <input type="text" class="form-control" value="Use System Generated" disabled="disabled" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" value="Use System Generated:<?php echo $phonenumber; ?>" disabled="disabled" aria-describedby="basic-addon2">
                   </div>
               </div>
 

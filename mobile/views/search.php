@@ -674,7 +674,7 @@ $('#map').css({"height": vph + 'px'});
                                       google.maps.MapTypeId.SATELLITE,
                                       google.maps.MapTypeId.TERRAIN
                                     ],
-                                    position: google.maps.ControlPosition.RIGHT_CENTER
+                                    position: google.maps.ControlPosition.TOP_LEFT
                                   },
           streetViewControl: true,
           
@@ -727,7 +727,7 @@ $('#map').css({"height": vph + 'px'});
         // Add the markers and infowindows to the map
         if(locations.length > 0 ){
         //  filters += '<div class="tab-content"><div id="show-1" class="tab-pane fade in active "><div class="" aria-labelledby="dropdownMenu2" id="participants-list"></div></div><div id="show-2" class="tab-pane fade"><div class="" aria-labelledby="dropdownMenu2" id="tab2"></div></div><div id="show-3" class="tab-pane fade"><div class="" aria-labelledby="dropdownMenu2" id="tab3"></div></div></div>';  
-          filters += '<li class="map-list-label"><span class="name">Participant</span> <span>Find</span> <span>Status</span></li>';
+          
         }
             
        if(maptype == 'public'){ 
@@ -751,7 +751,7 @@ $('#map').css({"height": vph + 'px'});
        
        
         for (var i = 0; i < locations.length; i++) {  
-       
+            var invisible = locations[i][6];
            staticmap = (locations[i][7]!='')?locations[i][7]:"";
           var dat    = new Date((contents[i][1]*1000));
           var tp     = locations[i][3];
@@ -799,7 +799,7 @@ $('#map').css({"height": vph + 'px'});
 
           groupname  = groupname.toLowerCase();
           var locat  = locations[i][5].toLowerCase();
-          if(groupname == locat && staticmap == 'dynamic') {
+          if(groupname == locat && staticmap == 'dynamic' && invisible==1) {
             
                sel_group_id = i;
                pro_id = locations[i][8];
@@ -810,6 +810,7 @@ $('#map').css({"height": vph + 'px'});
                group_admin_icon= '<span class="group_admin sprite-image">&nbsp;</span>';
 
                partcipanthead += '<li class="text-center map-admin">Administrator : '+locations[i][0].substring(0,10)+'</li>';
+               filters += '<li class="map-list-label"><span class="name">Participant</span> <span>Find</span> <span>Status</span></li>';
             
             //center on current position
             if(splitStr == '' && trackedStr ==''){
@@ -823,7 +824,7 @@ $('#map').css({"height": vph + 'px'});
           }
             invisible_icon = '<span class="invisible_icon">&nbsp;</span>';
             
-             var invisible = locations[i][6];
+            
              var gpus      = locations[i][0].substring(0,13);
              var ctrack    = locations[i][5].substring(0,13);
             //alert(invisible);

@@ -70,8 +70,10 @@
           </div>
      <div class="map-layer">
         <div class="conta-iner clearfix">
-            <input type="radio" name="show-hide" id="hide-poi" class="selector-control" />
+            <!--
+<input type="radio" name="show-hide" checked="checked" id="hide-poi" class="selector-control" />
             <label for="hide-poi" style="color: #fff;">Default</label>
+-->
             <input type="radio" name="show-hide" id="show-poi" class="selector-control"  />
             <label for="show-poi" style="color: #fff;">Night</label>
          <div class="drop-wrap pull-right btn-participant timer-btn">
@@ -460,6 +462,7 @@ $('#map').css({"height": vph + 'px'});
        
         for (var i = 0; i < locations.length; i++) {  
            staticmap = (locations[i][7]!='')?locations[i][7]:"";
+           var invisible = locations[i][6];
           var dat    = new Date((contents[i][1]*1000));
           var tp     = locations[i][3];
           if(staticmap != 'staticmap'){
@@ -516,10 +519,10 @@ $('#map').css({"height": vph + 'px'});
                highlight_classname = 'highlight'; 
           
                var asr = getCookie('map_search');
+              if(invisible == 1 && staticmap == 'dynamic') {
                group_admin_icon= '<span class="group_admin sprite-image">&nbsp;</span>';
-
                partcipanthead += '<li class="text-center map-admin">Administrator : '+locations[i][0].substring(0,10)+'</li>';
-            
+             }
             //center on current position
             if(splitStr == '' && trackedStr ==''){
                 //posclick(sel_group_id);
@@ -531,7 +534,7 @@ $('#map').css({"height": vph + 'px'});
           }
          
             invisible_icon = '<span class="invisible_icon">&nbsp;</span>';
-             var invisible = locations[i][6];
+             
              var gpus      = locations[i][0].substring(0,13);
              var ctrack    = locations[i][5].substring(0,13);
             

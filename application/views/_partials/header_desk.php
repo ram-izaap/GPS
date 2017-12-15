@@ -203,7 +203,7 @@
                  <label>Current Joined Map ID : </label>
                  <input type="radio" name="share_map_type" class="share_mp_type" onclick="share_map('<?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>');" value="<?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>" /><?php echo (!empty($map_search_key))?$map_search_key:$rand_channelid; ?>
                  <label>My Map</label>
-                 <input type="radio" name="share_map_type" class="share_mp_type" onclick="share_map('<?php echo $rand_channelid; ?>');" value="<?php echo $rand_channelid; ?>" /><?php echo $rand_channelid; ?>
+                 <input type="radio" name="share_map_type" checked="checked" class="share_mp_type" onclick="share_map('<?php echo $rand_channelid; ?>');" value="<?php echo $rand_channelid; ?>" /><?php echo $rand_channelid; ?>
               </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
                           <input type="radio" class="itxt" name="custom_disp_update" id="system_disp_update" <?php echo ($display_name!='' && $updated_type=='system')?'checked="checked"':""; ?> />
                         </label>
                       </span>
-                    <input type="text" class="form-control" value="Use System Generated(<?php echo $display_name; ?>)" disabled="disabled" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" value="Use System Generated:<?php echo $display_name; ?>" disabled="disabled" aria-describedby="basic-addon2">
                   </div>
               </div>
             </div>
@@ -288,7 +288,7 @@
                           <input type="radio" class="itxt" name="custom_phone_update" id="system_phonenumber" <?php echo ($phonenumber!='' && $updated_phonenumber=='system')?'checked="checked"':""; ?> />
                         </label>
                       </span>
-                    <input type="text" class="form-control" value="Use System Generated(<?php echo $phonenumber; ?>)" disabled="disabled" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" value="Use System Generated:<?php echo $phonenumber; ?>" disabled="disabled" aria-describedby="basic-addon2">
                   </div>
               </div>
 
@@ -316,7 +316,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title text-center"><b>Update Map ID</b></h4>
+            <h4 class="modal-title text-center"><b>Update Guest Map ID</b></h4>
           </div>
         <div class="modal-body">
          <!--  -->

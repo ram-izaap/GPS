@@ -6,7 +6,7 @@ class Home extends CI_Controller {
 
 	private $data = array('map_search_key'=>'','service_resp'=>array('status'=>''));
 
-	protected $api_url = 'http://heresmygps.com/service/';
+	protected $api_url = 'http://localhost/GPS-API/service/';
 
 	protected $service_param = array('X-APP-KEY'=>'myGPs~@!');
 
@@ -37,7 +37,7 @@ class Home extends CI_Controller {
 				set_cookie($cookie);	
 				$this->data['map_search_key'] = $this->uri->segment(2);
                 
-                redirect("https://911gps.me/".$this->uri->segment(2));
+                redirect("http://localhost/GPS/".$this->uri->segment(2));
 		}
 
 		 $this->data['user_info'] = "";
@@ -50,22 +50,20 @@ class Home extends CI_Controller {
          $user_data  = $this->db->query("select default_id from user where id='".$user_id."'")->row_array();
          $group_data = $this->db->query("select id from groups where join_key='".$join_key."'")->row_array();
          $user_group = $this->db->query("select ug.* from user_groups ug where ug.user_id='".$user_id."' and ug.group_id='".$group_data['id']."'")->row_array();
-         $this->data['visible'] = $user_group['is_view'];
+         $this->data['visible']                 = $user_group['is_view'];
          $this->data['current_joined_group_id'] = (!empty($group_data['id']))?$group_data['id']:"";
-         $this->data['manual_address'] = $this->user_manual_address($user_id,"search");
+         $this->data['manual_address']          = $this->user_manual_address($user_id,"search");
          
     }
 
 	public function index()
 	{ 
-
 		$this->layout->view('index',$this->data);
 	}
 
 
 	public function search($search='',$ajax=0)
 	{
-	  
 		try{
 
 			$joinkey='';
@@ -507,24 +505,22 @@ class Home extends CI_Controller {
     
     
 	function get_user_details(){
-
+        // echo get_cookie('map_user_id'); exit;
 		 $this->service_param['user_id']  = get_cookie('map_user_id');
 
 		if(!empty($this->service_param['user_id'])){
 
 			$userchk = $this->rest->get('user_exist_check', $this->service_param, 'json');
-
+         
 			$userchk = (array)$userchk;
 
-			if(!empty($userchk) && $userchk['status']=='error')
-			{
+			if(!empty($userchk) && $userchk['status']=='error'){
 				delete_cookie('map_user_id');
-
 				$this->service_param['user_id'] = 0;
 			}	
 		}
 
-	 $join_key = get_cookie('map_search');
+	  $join_key = get_cookie('map_search');
 
 		if(!empty($this->service_param['user_id'])){
   		
@@ -532,7 +528,7 @@ class Home extends CI_Controller {
 			$userdet = $this->rest->get('get_channel_byuser', $this->service_param, 'json');
 
 			$userdet = (array)$userdet;
-      //echo 'ghhg';customPrint($userdet, FALSE);customPrint($this->service_param);
+            
 			if(!empty($userdet) && $userdet['status']=='success'){	
 				$this->data['user_info'] = array('channel_id' => $userdet['user']->channel_id, 'display_name'=>$userdet['user']->udispname,'phonenumber' => $userdet['user']->phonenumber , 'user_id'=>$userdet['user']->user_id,'group_id'=>$userdet['user']->group_id,'joined_group'=>$userdet['joined_group'],"updated_type" => $userdet['user']->updated_type, "updated_phonenumber" => $userdet['user']->updated_phonenumber);
 			}
@@ -610,18 +606,16 @@ class Home extends CI_Controller {
         $this->service_param['updated_type']	= 'system';
         $this->service_param['updated_phonenumber'] = 'system';
 		
-       //customPrint($this->service_param); 
    		$register = $this->rest->get('user_register', $this->service_param, 'json');
    		$register = (array)$register;
-
+       
    		if(!empty($register) && isset($register['status'])){
 
    			if($register['status']=='success'){
                                                                               
 	   			//user position save                                                   
 	   			$this->user_position_save($register['user_id'],$latlong[0],$latlong[1],$manual_address,$type,FALSE);
-	   			
-
+	   		  
 	   			$cookie = array(
 					'name' => 'map_user_id',
 					'value' => $register['user_id'],
@@ -629,7 +623,7 @@ class Home extends CI_Controller {
 					'path'   => '/',
 					);
 				set_cookie($cookie);	
-
+                
 				$outputs['status']='success';
 				$outputs['msg']   ='Successfully registerd as a guest or existing user!';
 				$outputs['join_key']= (get_cookie('map_search')!='')?get_cookie('map_search'):'';
@@ -637,32 +631,24 @@ class Home extends CI_Controller {
         $this->service_param['user_id']   = $register['user_id'];
         $this->service_param['join_key']  = $outputs['join_key'];
 
-        
         $userdet = $this->rest->get('get_channel_byuser', $this->service_param, 'json');
-
         $userdet = (array)$userdet;
-        //echo 'ghhg';customPrint($userdet, FALSE);customPrint($this->service_param);
-        if(!empty($userdet) && $userdet['status']=='success')
-        {  
-          $outputs['user_info'] = array('channel_id' => $userdet['user']->channel_id, 'display_name'=>$userdet['user']->udispname,'phonenumber' => $userdet['user']->phonenumber , 'user_id'=>$userdet['user']->user_id,'group_id'=>$userdet['user']->group_id,'joined_group'=>$userdet['joined_group'],"updated_type" => $userdet['user']->updated_type, "updated_phonenumber" => $userdet['user']->updated_phonenumber);
-        }
-
         
-
+                if(!empty($userdet) && $userdet['status']=='success'){  
+                  $outputs['user_info'] = array('channel_id' => $userdet['user']->channel_id, 'display_name'=>$userdet['user']->udispname,'phonenumber' => $userdet['user']->phonenumber , 'user_id'=>$userdet['user']->user_id,'group_id'=>$userdet['user']->group_id,'joined_group'=>$userdet['joined_group'],"updated_type" => $userdet['user']->updated_type, "updated_phonenumber" => $userdet['user']->updated_phonenumber);
+                }
 	   		}	
 	   		else
 	   		{
 	   			$outputs['status']='error';
 				$outputs['msg']   = $register['msg'];
 	   		}
-
 	   	}
 	   	else
 	   	{
 	   		$outputs['status']='error';
 			$outputs['msg']   = 'Bad request please try after some time! ';
 	   	}	
-		
 	//	$this->get_user_details();
 		echo json_encode($outputs);
 		exit;	

@@ -47,6 +47,7 @@ class Home extends CI_Controller {
          $group_data = $this->db->query("select id from groups where join_key='".$join_key."'")->row_array();
          $user_group = $this->db->query("select ug.* from user_groups ug where ug.user_id='".$user_id."' and ug.group_id='".$group_data['id']."'")->row_array();
          $this->data['visible'] = $user_group['is_visible'];
+         //print_r($group_data); exit;
          $this->data['current_joined_group_id'] = (!empty($group_data['id']))?$group_data['id']:"";
          $this->data['manual_address'] = $this->user_manual_address($user_id,"search");
     }

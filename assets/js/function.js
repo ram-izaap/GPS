@@ -261,16 +261,11 @@ function create_map(input_type,callback,elm,type,clsname){
 function guest_registration(type,clsname)
 {
 	var latlon = $("#latlang").val();
-       //  alert(latlon);
+       
       	var p=0;
         var errors='';        
         var addtype = 'current';
-
         
-      	if($('#phone').val()==''){
-      		errors += "Channel ID should be minimum 3 characters \n"; p=1;
-      	}
-
         var loctype = $("input[name=guest_pos_type]:checked").val();
 
         if(loctype==1){
@@ -279,7 +274,6 @@ function guest_registration(type,clsname)
             var add = $('.popover-content #guest_address').val();
             if(add!=''){
 
-              //latlon = $('#map_pos').val();
               latlon = (latlon!='')?latitude+":"+longitude:$('.popover-content #guest_address').val();
               
               addtype= 'manual';          
@@ -296,8 +290,7 @@ function guest_registration(type,clsname)
         else
         {
             if($('.popover-content #guest_address').val()!=''){
-              // alert(123);
-              //latlon = $('#map_pos').val();
+              
               latlon = (latlon!='')?latitude+":"+longitude:$('.popover-content #guest_address').val();
               
               addtype   = 'manual';          
@@ -319,7 +312,7 @@ function guest_registration(type,clsname)
         
         addtype = (latitude!='')?'current':addtype;
         
-        var data = {latlon:latitude+":"+longitude,phone:$('#phone').val(),display:$('#display_name').val(),type:addtype};
+        var data = {latlon:latitude+":"+longitude,phone:$('#display_name').val(),display:$('#display_name').val(),type:addtype};
 
         $.post(site_url+'/home/guest_registration', data, function(response){
 
@@ -547,6 +540,7 @@ function invisible_participant(user_id,grp_id,visible)
     $.post(site_url+'/home/invisible_participant', data, function(response){
     $("#wait").css("display", "none");
           $("#visiblestatus").html(response.msg);
+          location.href = site_url+serchval;
           if($("#visiblestatus2"))
              $("#visiblestatus2").html(response.msg);
             
@@ -560,7 +554,7 @@ function remove_user_from_all_groups()
      $.post(site_url+'/home/remove_user_from_all_groups', data, function(response){
         $("#wait").css("display", "none");
           alert(response.msg);
-          location.href = site_url+'search/'+map_channel;
+          location.href = site_url+'search/'+user_info.channel_id;
     }, "json");
 }
 
