@@ -116,6 +116,8 @@ class REST
      */
     public function get($uri, $params = array(), $format = NULL)
     {
+        $params['X-APP-KEY'] = $this->api_key;
+
         if ($params)
         {
             $uri .= '?'.(is_array($params) ? http_build_query($params) : $params);
@@ -233,6 +235,8 @@ class REST
             $this->format($format);
         }
 
+        $params['X-APP-KEY'] = $this->api_key;
+        
         $this->http_header('Accept', $this->mime_type);
 
         // Initialize cURL session

@@ -22,7 +22,8 @@ class Layout {
 		$this->data = array_merge($this->data, $data);
 		
 
-		if (DEVICE_MONITOR == 'yes') {
+		if ( $this->CI->agent->is_mobile()  ) 
+		{
 			$this->CI->load->view('_partials/header', $this->data);
         	$this->CI->load->view($view_name, $this->data);
 		    $this->data['mobile_header'] = 'yes';
