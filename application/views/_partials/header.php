@@ -19,9 +19,18 @@
       <!-- Bootstrap -->
       <link href="<?php echo site_url();?>assets/css/style.css" rel="stylesheet" />
       <script src="<?php echo site_url(); ?>assets/js/lib/jquery.min.js?v1.12.0"></script>
+      <script src="<?php echo site_url();?>/assets/js/jquery-ui.js"></script>
       <script src="<?php echo base_url();?>assets/js/social-buttons-share.js"></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClXC4q5fI1C8arpQ22WVOwvtsfh9a-eLw"></script>
-      <script src="<?php echo base_url();?>assets/js/infobox.js"></script>    
+      <script src="<?php echo base_url();?>assets/js/infobox.js"></script> 
+  
+      <!--GLOBAL VARS-->
+      <script>
+        var site_url = '<?php echo site_url();?>';
+        var base_url = '<?php echo base_url();?>';
+        var user_info = <?php echo json_encode($user_info);?>;
+      </script>
+
    </head>
    <body class="<?php echo $page; ?>">
       
@@ -91,10 +100,10 @@
          <!-- 3nd Block -->
          <div class="col-sm-3 block-3 block-right pull-right">
 
-            <a onclick="remove_user_from_all_groups();" class="all-map pull-right">Exit <small>All Maps</small></a>
+            <a onclick="removeAllMaps();" class="all-map pull-right">Exit <small>All Maps</small></a>
             
             <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>" class="my-map pull-right" >
-              <?php $map_disp_str;?>
+              <?php echo $map_disp_str;?>
             </a>
 
             <div id="visiblestatus" class="top-visible">

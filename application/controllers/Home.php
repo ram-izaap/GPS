@@ -57,8 +57,49 @@ class Home extends AppController {
 			$this->data['visible'] = $resp->data->is_view;
 		}
 
+		$this->data['user_info'] = $this->data;
+
 		$this->layout->view('desktop/home/index', $this->data);
 	}
 
+	/*
+	*	Update groups's visiblily 
+	*/
+	public function updateVisible()
+	{
+		$userID 	= $_POST['user_id'];
+		$channelID 	= $_POST['channel_id'];
+		$view 		= $_POST['visible'];
+
+		$params = array('user_id' => $userID, 'group_id' => $channelID, 'view' => $view);
+		$resp = $this->rest->get('group_status', $params, 'json');
+		
+		$visible_html = $this->load->view('_partials/visible_status', array('visible' => $view), TRUE );
+
+        echo json_encode(array("status" => "success",'visible_html' => $visible_html),200);
+	}
 	
+
+	public function removeAllMaps()
+	{
+		$userID = $this->input->post('user_id');
+
+		$params = array('user_id' => $userID);
+		$resp = $this->rest->get('remove_user_from_all_groups', $params, 'json');
+		customPrint((array)$resp);
+		$output = array();
+
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$output['status']	= 'success';
+            $output['msg']     = "Removed user from all groups successfully";
+		}
+		else
+		{
+			$output['status']	= 'error';
+            $output['msg']     	= "Something went wrong.";
+		}
+
+		echo json_encode($output);
+	}
 }
