@@ -35,7 +35,7 @@ class Layout {
         	$this->CI->load->view('_partials/header', $this->data);
         	$this->CI->load->view($view_name, $this->data);           
             $this->data['mobile_header'] = 'no';
-			$this->CI->load->view('_partials/header_desk', $this->data);
+			$this->CI->load->view('_partials/side_panel', $this->data);
         }
 
 		$this->CI->load->view('_partials/footer', $this->data);
