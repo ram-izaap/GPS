@@ -100,12 +100,12 @@
   </div>
   <div class="foot-nav">
     <ul>
-      <li><a href="<?php echo site_url();?>">Home</a></li>
+      <li><a href="<?php echo site_url();?>home">Home</a></li>
       <li><a href="<?php echo site_url();?>search/<?php echo $channel_id; ?>">Search</a></li>
       <li><a href="<?php echo site_url();?>">About Us</a></li>
-      <li><a href="<?php echo site_url();?>help">Help</a></li>
-      <li><a href="<?php echo site_url();?>tellus">Tell us your story</a></li>
-      <li><a href="<?php echo site_url();?>privacy-policy-and-terms-and-conditions">Privacy Policy & Terms and Conditions</a></li>
+      <li><a href="<?php echo site_url();?>home/Help">Help</a></li>
+      <li><a href="<?php echo site_url();?>home/Tellus">Tell us your story</a></li>
+      <li><a href="<?php echo site_url();?>home/Privacy_policy">Privacy Policy & Terms and Conditions</a></li>
     </ul>
   </div>
   

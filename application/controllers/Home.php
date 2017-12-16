@@ -18,6 +18,39 @@ class Home extends AppController {
 	}
 
 
+   public function Aboutus()
+	{
+		$this->getCommonData();
+		$this->layout->view('aboutus',$this->data);
+	}
+
+
+	public function Help()
+	{
+		$this->getCommonData();
+		$this->layout->view('help',$this->data);
+	}
+
+	public function Tellus()
+	{
+		$this->getCommonData();
+		$this->layout->view('tellus',$this->data);
+	}
+
+    public function Privacy_policy()
+	{
+		$this->getCommonData();
+		$this->layout->view('privacy_policy',$this->data);
+	}
+
+	// public function index()
+	// {
+	// 	$this->getCommonData();
+
+	// 	$this->layout->view('desktop/home/index', $this->data);
+	// }
+
+
 	/*public function search( $search_key = '')
 	{
 		$userInfo = $this->getUserInfo(80617);
@@ -172,4 +205,8 @@ class Home extends AppController {
 		echo json_encode($output);
 	}
 
+
+
 }
+
+
