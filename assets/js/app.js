@@ -1,4 +1,29 @@
 
+var Element = (function ( $ )
+{
+    function Element ( selector, data )
+    {
+        this.selector = selector || '<div><div></div></div>';
+
+        this.template = $( selector );
+
+        // this.element = $( selector ).clone();
+        this.element = $( this.template.html() );
+
+        this.element.data = data || {};
+
+        this.element.removeAttr('id');
+    }
+
+    Element.prototype.render = function () { return this.element; };
+
+    return Element;
+
+})( jQuery );
+
+
+
+
 var mapManager = {};
 var map;
 (function ( module )
@@ -7,6 +32,11 @@ var map;
     var infowindow;
     var markers = [];
     var styles;
+
+    var visibles = [];
+    var invisibles = [];
+    var clues = [];
+
 
     module.init = function ( callback )
     {
@@ -106,7 +136,87 @@ var map;
                 })(marker, i));
 
             markers.push(marker);
+
+            module.renderParticipants( locations[i], i );
         }
+
+        $("#tab1").html(visibles);
+        $("#tab2").html(invisibles);
+        $("#tab3").html(clues);
+
+        $('#participants-count').html(visibles.length);
+    };
+
+    module.renderParticipants = function( location, location_index )
+    {
+        var mapType = location.location_type,
+            visible = location.visible;
+
+        var template = new Element('#participant-template'),
+            $element = template.element;
+
+        $element.find('.myposition').on('click', function(){
+            module.locatePosition( location_index );
+        });
+
+        $element.find('.statuspop').on('click', function(){
+            module.locateAndOpenInfo( location_index );
+        });
+
+        if( mapType == 'dynamic' )
+        {
+            if( visible == '1' )
+            {
+                $element.find('.display_name').html(location.display_name);
+                $element.find('.channel_id').html(location.channel_id);
+
+                visibles.push( $element );
+            }
+            else if( visible == '0' )
+            {
+                $element.find('.display_name').html(location.display_name);
+                $element.find('.channel_id').html(location.channel_id);
+
+                invisibles.push( $element );
+            }
+        } 
+        else if( mapType == 'staticmap' && visible == '' )
+        {
+            $element.find('.display_name').html(location.display_name);
+            $element.find('.channel_id').html(location.channel_id);
+
+            clues.push( $element );
+        }
+    };
+
+    module.locatePosition = function( positionIndex )
+    {
+        if( typeof markers[positionIndex] == 'undefined' ) return;
+
+        var current_marker = markers[positionIndex];
+
+        var bounds = new google.maps.LatLngBounds();        
+            bounds.extend( current_marker.position );
+        
+        map.fitBounds(bounds);
+        map.setZoom(21);
+        map.setCenter( current_marker.getPosition() );
+    };
+
+    module.locateAndOpenInfo = function( positionIndex )
+    {
+        if( typeof markers[positionIndex] == 'undefined' ) return;
+
+        var current_marker = markers[positionIndex];
+
+        google.maps.event.trigger(current_marker, "click");
+
+        var bounds = new google.maps.LatLngBounds();        
+            bounds.extend( current_marker.position );
+        
+        map.fitBounds(bounds);
+        map.setZoom(21);
+        map.setCenter( current_marker.getPosition() );
     };
 
 

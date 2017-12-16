@@ -18,12 +18,12 @@ class Search extends AppController {
 
 		$params = array(
 				'user_id' => 80617, 
-				'join_key' => 'Miranda'
+				'join_key' => 'Jeffnative'
 			);
 
 		$map_data = $this->rest->get('search_map', $params, 'json');
 
-		customPrint($map_data);
+		//customPrint($map_data);
 		
 		//prepare member-locations
 		$locations = array();
@@ -105,10 +105,11 @@ class Search extends AppController {
 		//customPrint( $map_data->static_maps );
 		
 		$output = array(
-				'join_key' => '',
-				'locations' => json_encode( $locations )
+				'info' => '',
+				'locations' => $locations
 			);
-		$this->data['map_data'] = $output;
+
+		$this->data['map_data'] = json_encode( $output );
 
 		$this->layout->view('desktop/search/index', $this->data);
 	}
