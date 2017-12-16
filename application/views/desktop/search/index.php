@@ -43,7 +43,69 @@
    <div class="row participant">
       <div id="latlang" style=""></div>
       <div id="map" style="width:100%;"></div>
-      <div class="btn-group btn-participant" ></div>      
+      <div class="btn-group btn-participant" ></div>   
+
+      <div class="map-layer">
+        <div class="conta-iner clearfix">
+          
+          <!--NIGHT MODE -->  
+          <input type="radio" name="mode_type" id="deafult_mode" value="deafult" class="selector-control"  />
+          <label for="deafult_mode" style="color: #fff;">Default</label>
+
+          <input type="radio" name="mode_type" id="night_mode" value="night" class="selector-control"  />
+          <label for="night_mode" style="color: #fff;">Night</label>
+
+          <div class="drop-wrap pull-right btn-participant timer-btn">
+            <div class="dropup">
+              
+              <button class="btn btn-default dropdown-toggle parti" type="button" id="dropdownMenu2" data-toggle="dropdown" >
+                Participants <b>(<span id="count-participants">0</span>)</b>
+                <span class="caret"></span>
+              </button>
+
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="participants-list">
+                 <a class="close_pop" onclick="add_toggle();">CLOSE</a>
+                 <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#show-1">
+                       <i class="fa fa-users" aria-hidden="true"></i> Visible
+                       </a>
+                    </li>
+                    <li>
+                       <a data-toggle="tab" href="#show-2"><i class="fa fa-users" aria-hidden="true"></i> Invisible </a>
+                    </li>
+                    <li><a data-toggle="tab" href="#show-3">
+                       <i class="fa fa-users" aria-hidden="true"></i> Clues
+                       </a>
+                    </li>
+                 </ul>
+                 <div class="tab-content">
+                    <div id="show-1" class="tab-pane fade in active ">
+                       <div class="" aria-labelledby="dropdownMenu2" id="tab1"></div>
+                    </div>
+                    <div id="show-2" class="tab-pane fade">
+                       <div class="" aria-labelledby="dropdownMenu2" id="tab2"></div>
+                    </div>
+                    <div id="show-3" class="tab-pane fade">
+                       <div class="" aria-labelledby="dropdownMenu2" id="tab3"></div>
+                    </div>
+                 </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class=" pull-right ">
+             <span class="btn btn-default">
+             <span id="re-load"><time>00:00</time></span>
+             <i class="fa fa-repeat refresh-clk" aria-hidden="true"></i>
+             </span>
+          </div>
+
+
+        </div>
+      </div>
+
    </div>
 </div>
 
