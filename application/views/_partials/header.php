@@ -36,8 +36,7 @@
       
       <div id="wait" style="display:none; width:69px; height:89px; position:absolute; top:50%; left:50%; padding:2px;"></div>
       
-      <a class="display_popup" data-toggle="modal" data-target="#update_displayname" id="display_pp"></a>
-      <a class="display_popup" data-toggle="modal" data-target="#update_map_id" id="display_popup_map_id"></a>
+      
       <input  value="0" name="latlang" id="latlang" type="hidden">
       <input class="form-control" value="" name="map_pos" id="map_pos" type="hidden">
       <input  value="" name="joined_map" id="joined_map" type="hidden" />

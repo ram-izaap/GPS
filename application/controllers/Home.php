@@ -86,7 +86,7 @@ class Home extends AppController {
 
 		$params = array('user_id' => $userID);
 		$resp = $this->rest->get('remove_user_from_all_groups', $params, 'json');
-		customPrint((array)$resp);
+		//customPrint((array)$resp);
 		$output = array();
 
 		if( is_object($resp) && $resp->status == 'success' )
@@ -102,4 +102,39 @@ class Home extends AppController {
 
 		echo json_encode($output);
 	}
+
+	public function updateDisplayNameAndPhone()
+	{
+		$userID 		= $this->input->post('user_id');
+		$display_name 	= $this->input->post('display_name');
+		$update_type 	= $this->input->post('update_type');
+		$phone_number 	= $this->input->post('phone_number');
+
+		$params = array(
+			'user_id'		=> $userID,
+			'display_name' 	=> $display_name,
+			'update_type' 	=> $update_type,
+			'phone_number' 	=> $phone_number
+			);
+
+		$resp = $this->rest->get('update_user_info', $params, 'json');
+
+		
+
+		$output = array();
+
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$output['status']	= 'success';
+            $output['msg']     = "Updated successfully.";
+		}
+		else
+		{
+			$output['status']	= 'error';
+            $output['msg']     	= "Something went wrong.";
+		}
+
+		echo json_encode($output);
+	}
+
 }

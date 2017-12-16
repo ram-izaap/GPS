@@ -26,7 +26,7 @@
        
         <input class="display-name text-field" type="text" name="display_name" id="display_name" value="<?php echo $display_name;?>" placeholder="Display Name" />
       
-        <button class="edit tool-tip" data-text="Edit" data-color="green" data-position="left" onclick="trig_disp_popup('display_pp');"  > <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit" /> </button>
+        <button type="button" class="edit tool-tip" data-text="Edit" data-color="green" data-position="left" onclick="openModals('display_name_update')"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit" /> </button>
 
       </div>
     </div>
@@ -40,7 +40,7 @@
        
        <input type="text"  id="phone" value="<?php echo $channel_id;?>" name="phone" class="map-id form-control text-field" readonly />
       
-        <button class="edit tool-tip" data-text="Edit" onclick="trig_disp_popup('display_popup_map_id');"  data-color="green" data-position="left"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit"> </button>
+        <button type="button" class="edit tool-tip" data-text="Edit" onclick="openModals('map_id_update');"  data-color="green" data-position="left"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit"> </button>
 
       </div>
     </div>
@@ -158,137 +158,9 @@
     </div>
   </div>
   
-  <div class="modal fade" id="update_displayname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-    
-      <!-- Modal content-->
-      <form name="upd_disp_name" id="upd_disp_name">
-      <div class="modal-content">
-         <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title text-center"><b>Update Display Name &amp; Phone Number</b></h4>
-      </div>
-        <div class="modal-body">
-         <!--  -->
-        <div class="tab-wrapper">
+  
 
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#displayName" aria-controls="displayName" role="tab" data-toggle="tab">Display Name</a>
-            </li>
-
-            <li role="presentation">
-              <a href="#PhoneNumber" aria-controls="PhoneNumber" role="tab" data-toggle="tab">Phone Number</a>
-            </li>
-          </ul>
-         <input type="hidden" name="guest_user_id" id="guest_user_id" value="<?php echo $user_id; ?>"  />
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="displayName">
-              
-              <div class="panel-gutter">
-                  <div class="input-group">
-                      <span class="input-group-addon">
-                        <label for="Dname">
-                           <input type="radio" class="itxt" name="custom_disp_update"  id="custom_disp_update" <?php echo ($display_name!='' && $updated_type=='custom')?'checked="checked"':""; ?> />
-                        </label>
-                      </span>
-                    <input type="text" class="form-control" name="custom_display_name" aria-describedby="basic-addon1" onkeypress="return displayup('#custom_disp_update');" id="custom_display_name" placeholder="Custom Display Name" value="" />
-                  </div>
-              </div>
-
-              <div class="panel-gutter">
-                  <div class="input-group">
-                      <span class="input-group-addon">
-                        <label for="Dname1">
-                          <input type="radio" class="itxt" name="custom_disp_update" id="system_disp_update" <?php echo ($display_name!='' && $updated_type=='system')?'checked="checked"':""; ?> />
-                        </label>
-                      </span>
-                    <input type="text" class="form-control" value="Use System Generated(<?php echo $display_name; ?>)" disabled="disabled" aria-describedby="basic-addon2">
-                  </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="PhoneNumber">
-
-              <div class="panel-gutter">
-                  <div class="input-group">
-                      <span class="input-group-addon">
-                        <label for="Dno">
-                          <input type="radio" class="itxt" name="custom_phone_update" id="custom_phone_update" <?php echo ($phonenumber!='' && $updated_phonenumber=='custom')?'checked="checked"':""; ?>  />
-                        </label>
-                      </span>
-                      <input type="text" class="form-control" placeholder="Custom Phone Number" aria-describedby="basic-addon1" name="custom_phonenumber" onkeypress="return displayup('#custom_phone_update');" id="custom_phonenumber" value="" />
-                    
-                  </div>
-              </div>
-
-              <div class="panel-gutter" style="<?php echo ($phonenumber == ''?'display:none':''); ?>"" >
-                  <div class="input-group">
-                      <span class="input-group-addon">
-                        <label for="Dno1">
-                          <input type="radio" class="itxt" name="custom_phone_update" id="system_phonenumber" <?php echo ($phonenumber!='' && $updated_phonenumber=='system')?'checked="checked"':""; ?> />
-                        </label>
-                      </span>
-                    <input type="text" class="form-control" value="Use System Generated(<?php echo $phonenumber; ?>)" disabled="disabled" aria-describedby="basic-addon2">
-                  </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        </div>
-        <div class="modal-footer">  
-         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_disp_name();" > Accept </button>
-          <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal fade" id="update_map_id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-    
-      <!-- Modal content-->
-      <form name="upd_disp_name" id="upd_disp_name">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title text-center"><b>Update Map ID</b></h4>
-          </div>
-        <div class="modal-body">
-         <!--  -->
-        <div class="tab-wrapper">
-
-          
-         <input type="hidden" name="guest_user_id" id="guest_user_id" value="<?php echo $user_id; ?>"  />
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="displayName">              
-              <div class="panel-gutter">
-                <div class="">
-                  <input type="text" class="form-control" name="custom_map_id" aria-describedby="basic-addon1" id="custom_map_id" placeholder="Map ID" value="" />
-                </div>
-              </div>              
-            </div>            
-          </div>
-        </div>
-        <!--  -->
-        </div>
-        <div class="modal-footer">  
-         <button type="button" name="update_dis_name" class="btn btn-default btn-green" id="update_dis_name" onclick="update_map_id();" > Accept </button>
-          <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
+  
   
 <div id="shr_mp_content" style="display: none;">
 <div id="websitesearch_text"></div>

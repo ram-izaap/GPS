@@ -105,5 +105,31 @@ class AppController extends CI_Controller {
 		return $randomID;
 
 	}
+
+	public function getModalConent( $type = '')
+	{
+		$data = array();
+		$data['content'] = $this->load->view('modals/'.$type, array(), TRUE);
+
+		echo json_encode( $data );
+	}
+
+	function updateChannelID()
+	{
+		try{
+			$channelID 	= $_POST['channel_id'];
+			$userID 	= $_POST['user_id'];
+			if( !isset($channelID, $userID) )
+			{
+				throw new Exception("Invalid Parameters");				
+			}
+			$this->service_param['channel_id'] 	= $channelID;
+			$this->service_param['user_id'] 	= $userID;  
+			$map_det = $this->rest->get('updateMapID', $this->service_param, 'json');
+			//$output = array('nn' => $channelID, 'mm' => $userID);
+			echo json_encode($map_det);
+		}catch(Exception $e){
+		}
+	}
 	
 }
