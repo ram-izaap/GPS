@@ -240,7 +240,11 @@ $(function(){
     
 //FUNCTIONS
 
-
+function add_toggle()
+{
+   $("#dropdownMenu2").attr("data-toggle","dropdown");  
+   $(".dropup").removeClass('open');
+}
 
 function showLoader(flag) {
     if (typeof flag == 'undefined') flag = true;

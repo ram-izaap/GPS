@@ -23,6 +23,7 @@ class Search extends AppController {
 
 		$map_data = $this->rest->get('search_map', $params, 'json');
 
+		customPrint($map_data);
 		
 		//prepare member-locations
 		$locations = array();
@@ -87,16 +88,6 @@ class Search extends AppController {
 
 		foreach($static_maps as $static_map)
 		{
-			// array($svalue[$j]->map_name,
-			// 	$svalue[$j]->lat,
-			// 	$svalue[$j]->lon,
-			// 	'',
-			// 	'',
-			// 	$gp['join_key'],
-			// 	'',
-			// 	'staticmap',
-			// 	$svalue[$j]->user_id);
-
 			$location = array(
 								'display_name' 	=> $static_map->map_name,
                                 'lat' 			=> $static_map->lat,
@@ -113,7 +104,11 @@ class Search extends AppController {
 
 		//customPrint( $map_data->static_maps );
 		
-		$this->data['locations'] = json_encode( $locations );
+		$output = array(
+				'join_key' => '',
+				'locations' => json_encode( $locations )
+			);
+		$this->data['map_data'] = $output;
 
 		$this->layout->view('desktop/search/index', $this->data);
 	}
