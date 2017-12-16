@@ -1,3 +1,125 @@
+
+var mapManager = {};
+
+(function ( module )
+{
+    var map;
+    var infowindow;
+    var markers = [];
+
+    module.init = function ( callback )
+    {
+        console.log('KKKK', locations);
+        var zoomlvl = 5;
+        map = new google.maps.Map(document.getElementById('map'), {
+              zoom: zoomlvl,
+              center: {lat: parseFloat(locations[0].lat), lng: parseFloat(locations[0].lang)},
+              gestureHandling: 'greedy',
+              mapTypeControl: true,
+              mapTypeControlOptions: {
+                                       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                                       mapTypeIds: [                                
+                                         google.maps.MapTypeId.ROADMAP,
+                                         google.maps.MapTypeId.SATELLITE,
+                                         google.maps.MapTypeId.TERRAIN
+                                       ],
+                                       position: google.maps.ControlPosition.RIGHT_BOTTOM
+                                     },
+             streetViewControl: true,
+             zoomControl: true,
+             zoomControlOptions: {
+                 position: google.maps.ControlPosition.RIGHT_BOTTOM,
+             },
+             streetViewControlOptions: {
+               position: google.maps.ControlPosition.RIGHT_BOTTOM
+             },
+             rotateControlOptions:{
+                                   position: google.maps.ControlPosition.RIGHT_BOTTOM
+                                 },
+             
+             scaleControl:true,
+             scrollwheel:false,
+             panControl: true,
+             panControlOptions: { position: google.maps.ControlPosition.RIGHT_BOTTOM
+                                 },
+            
+             overviewMapControl:true,
+             rotateControl:true,
+            
+             heading: 90,
+             tilt: 45,
+             fullscreenControl:true
+
+            });
+
+
+        infowindow = new google.maps.InfoWindow({
+                 maxWidth: 300 
+               });
+      
+
+        module.renderLocations();  
+    };
+
+
+    module.renderLocations = function()
+    {
+        for (var i = 0; i < locations.length; i++) 
+        {
+          
+            if(locations[i].location_type != 'staticmap')
+            {
+                var iconcustom = {
+                     url: 'http://911gps.me/assets/images/violet-icon.png', 
+                     scaledSize: new google.maps.Size(80, 40)
+                 };
+
+                var labeltext = {text:locations[i].display_name,color:"white"};     
+            }
+            else
+            {
+             iconcustom = '';
+             labeltext  = '';
+            }
+
+               
+
+            var marker = new google.maps.Marker({
+                 position: new google.maps.LatLng(parseFloat(locations[i].lat), parseFloat(locations[i].lang)),
+                 map: map,
+                 animation: google.maps.Animation.DROP,
+                 label:labeltext,
+                 title: locations[i].display_name+'\nUpdated : ',
+                 optimized: false,
+                 draggable:false,
+                 icon:iconcustom,
+                 zIndex:9999+i
+                });
+
+                google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
+                       return function() {
+                         var cont = 'Hi sakhdjksah:: '+ locations[i].display_name;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
+                         infowindow.setContent(cont);
+                         infowindow.open(map, marker);
+                       }
+                })(marker, i));
+
+            markers.push(marker);
+        }
+    };
+
+})( mapManager || ( mapManager = {} ) );
+
+
+
+mapManager.init();
+
+
+    
+
+
+
+
 function showLoader(flag) {
     if (typeof flag == 'undefined') flag = true;
 

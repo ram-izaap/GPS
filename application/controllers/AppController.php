@@ -19,6 +19,55 @@ class AppController extends CI_Controller {
 			);
 	}
 
+	public function getCommonData()
+	{
+		$userInfo = $this->getUserInfo(80617);
+		$searchKey = '';
+
+		//customPrint($this->data['user_info']);
+		$this->data = array_merge($this->data, $userInfo);
+
+		$this->data['search_key'] = $searchKey;
+
+		$this->data['user_action'] = ( (int)$userInfo['user_id'] ) ? 'user_update':'guest_registration';
+		$uri      = $this->uri->segment(1);
+       	$page     = ($uri == 'search' || $uri!='help' || $uri!='tellus' || $uri!='privacy-policy-and-terms-and-conditions')?"search-page":"";
+
+       	$this->data['uri'] 	= $uri;
+       	$this->data['page'] = $page;
+
+       	$key = $userInfo['channel_id'];
+       	if( $this->data['search_key'] )
+       	{
+       		$key = $this->data['search_key'];
+       	}
+       	$this->data['shareurl'] = base_url()."search/".$key;
+
+       	//prepare my map display string part
+       	$mapDispStr = "Return to <small>My Map</small>";
+       	if( $searchKey == '' )
+       	{
+       		$mapDispStr = "View <small>My Map</small>";
+       	}
+       	else if( $searchKey == $userInfo['channel_id'] )
+       	{
+       		$mapDispStr = "My <small>Map</small>";
+       	}
+
+       	$this->data['map_disp_str'] = $mapDispStr;
+
+       	
+
+       	$params = array('user_id' => $userInfo['user_id'], 'channel_id' => $userInfo['channel_id']);
+		$resp = $this->rest->get('group_info', $params, 'json');
+		
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$this->data['visible'] = $resp->data->is_view;
+		}
+
+		$this->data['user_info'] = $this->data;
+	}
 
 	public function getUserInfo( $userID = 0 )
 	{ 

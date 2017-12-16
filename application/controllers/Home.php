@@ -12,55 +12,90 @@ class Home extends AppController {
 	
 	public function index()
 	{
-		$userInfo = $this->getUserInfo(80617);
-		$searchKey = '';
-
-		//customPrint($this->data['user_info']);
-		$this->data = array_merge($this->data, $userInfo);
-
-		$this->data['search_key'] = $searchKey;
-
-		$this->data['user_action'] = ( (int)$userInfo['user_id'] ) ? 'user_update':'guest_registration';
-		$uri      = $this->uri->segment(1);
-       	$page     = ($uri == 'search' || $uri!='help' || $uri!='tellus' || $uri!='privacy-policy-and-terms-and-conditions')?"search-page":"";
-
-       	$this->data['uri'] 	= $uri;
-       	$this->data['page'] = $page;
-
-       	$key = $userInfo['channel_id'];
-       	if( $this->data['search_key'] )
-       	{
-       		$key = $this->data['search_key'];
-       	}
-       	$this->data['shareurl'] = base_url()."search/".$key;
-
-       	//prepare my map display string part
-       	$mapDispStr = "Return to <small>My Map</small>";
-       	if( $searchKey == '' )
-       	{
-       		$mapDispStr = "View <small>My Map</small>";
-       	}
-       	else if( $searchKey == $userInfo['channel_id'] )
-       	{
-       		$mapDispStr = "My <small>Map</small>";
-       	}
-
-       	$this->data['map_disp_str'] = $mapDispStr;
-
-       	
-
-       	$params = array('user_id' => $userInfo['user_id'], 'channel_id' => $userInfo['channel_id']);
-		$resp = $this->rest->get('group_info', $params, 'json');
-		
-		if( is_object($resp) && $resp->status == 'success' )
-		{
-			$this->data['visible'] = $resp->data->is_view;
-		}
-
-		$this->data['user_info'] = $this->data;
+		$this->getCommonData();
 
 		$this->layout->view('desktop/home/index', $this->data);
 	}
+
+
+	/*public function search( $search_key = '')
+	{
+		$userInfo = $this->getUserInfo(80617);
+
+		$params = array(
+				'user_id' => 80617, 
+				'join_key' => 'Miranda'
+			);
+
+		$map_data = $this->rest->get('search_map', $params, 'json');
+
+		
+		//prepare member-locations
+		$locations = array();
+		foreach($map_data->members as $member)
+		{
+
+			if( $member->user->profile->flag == 0 ) continue;
+
+			$user_type = $member->user->profile->user_type;
+
+			$last_seen_time = date('d-m-Y H:i', $member->user->group->last_seen_time);
+			$last_seen_time = strtotime($last_seen_time);
+
+			//24 hours last update time check
+			$twenty_four_time = date('d-m-Y H:i',strtotime('-24 hour'));
+			$twenty_four_time = strtotime($twenty_four_time);
+
+			//if( $twenty_four_time > $last_seen_time ) continue;
+			
+			//-1Hr
+			$current_time = date('d-m-Y H:i',strtotime('-1 hour'));
+			$current_time = strtotime($current_time);
+
+			$within_limit	= true;
+			if( $current_time <= $last_seen_time )
+			{
+				$within_limit = true;
+			}
+
+			if( ($current_time > $last_seen_time) && ($twenty_four_time < $last_seen_time) ) 
+			{  
+			  if($user_type == 'member') {
+			     //continue;
+			  }
+				$within_limit = false;
+			}
+
+
+			 
+			$channel_id  = $member->user->profile->default_id;
+			$phone_num   = $member->user->profile->phonenumber;
+
+			$location = array(
+								'display_name' 	=> $member->user->profile->display_name,
+                                'lat' 			=> $member->user->position->lat,
+                                'lang' 			=> $member->user->position->lon,
+                                'user_type' 	=> $member->user->profile->user_type,
+                                'channel_id'	=> $member->user->profile->default_id,
+                                'visible' 		=> $member->user->group->view,
+                                'location_type' => 'dynamic',
+                                'user_id' 		=> $member->user->profile->id
+							);
+
+			$locations[] = $location;
+
+		}
+
+
+		$output = array('locations' => $locations);
+
+		//echo json_encode(value)
+		//customPrint( $locations);
+
+		$this->layout->view('desktop/home/index', $this->data);
+	}*/
+
+
 
 	/*
 	*	Update groups's visiblily 
