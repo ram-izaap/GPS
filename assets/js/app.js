@@ -40,6 +40,7 @@ var map;
     var participants = [];
 
     var myCurrentPos = undefined;
+    var adminInfo = undefined;
 
     module.init = function ( callback )
     {
@@ -141,6 +142,12 @@ var map;
 
             if( mapType == 'dynamic' )
             {
+                //get admin data
+                if( location.user_type == 'admin' )
+                {
+                    adminInfo = location;
+                }
+
                 if( visible == '1' )
                 {
                     $element.find('.display_name').html(location.display_name);
@@ -181,32 +188,56 @@ var map;
         console.log(visibles);
         console.log(clues);
         console.log(invisibles);
+        console.log(adminInfo);
     };
 
     module.render = function( data, type )
     {
         for (var i = 0; i < data.length; i++) 
         {
+            var adminIcon = '';
+
             if( type == 'visibles' || type == 'clues' )
             {
                 module.renderMarkers( data[i], i, type );
+
+                if( data[i].user_type == 'admin' )
+                {
+                    adminIcon = '<span class="group_admin sprite-image">&nbsp;</span>';
+                }
+                
             }
 
             //Add header
             if( i == 0 )
             {
+                var $title = '';
+                
+                if( adminInfo !== undefined ) $title = $('<li class="text-center map-admin">Administrator : '+  adminInfo.display_name +'</li>');
+
                 var $header = $('<li class="map-list-label">' +
                                 '<span class="name">Participant</span>' + 
                                 '<span>Find</span>' + 
                                 '<span>Status</span></li>');
 
-                if( type == 'visibles' ) $('#tab1').append($header);
-                if( type == 'invisibles' )
+                switch( type)
                 {
-                    $header.find('span:nth-child(2)').remove();
-                    $('#tab2').append($header);
+                    case 'visibles':
+                        $('#tab1').append($title, $header);
+                        break;
+
+                    case 'invisibles':
+                        $header.find('span:nth-child(2)').remove();
+                        $('#tab2').append($title, $header);
+                        break;
+
+                    case 'clues':
+                        $title = '<li class="text-center invisible-head">Static Maps/Clues</li>';
+                        $('#tab3').append($title, $header);
+                        break;
+
                 }
-                if( type == 'clues' ) $('#tab3').append($header);
+
             }
 
 
@@ -215,15 +246,24 @@ var map;
 
             $element.find('.display_name').html( data[i].display_name );
             $element.find('.channel_id').html( data[i].channel_id );
-            $element.attr('data-type', type);
-            $element.attr('data-index', i);
 
+            if( adminIcon !== '' )
+            {
+                $element.find('.p-find-iocn').prepend( adminIcon );  
+            }
+
+            $element.find('.myposition').attr( 'data-type', type);
+            $element.find('.myposition').attr( 'data-index', i);
+
+            $element.find('.statuspop').attr( 'data-type', type);
+            $element.find('.statuspop').attr('data-index', i);
+            
             $element.find('.myposition').on('click', function(){
-                module.locatePosition( $element.attr('data-index'), $element.attr('data-type') );
+                module.locatePosition( $(this).attr('data-index'), $(this).attr('data-type') );
             });
 
             $element.find('.statuspop').on('click', function(){
-                module.locateAndOpenInfo( $element.attr('data-index'), $element.attr('data-type') );
+                module.locateAndOpenInfo( $(this).attr('data-index'), $(this).attr('data-type') );
             });
 
             if( type == 'visibles' )
@@ -253,7 +293,7 @@ var map;
         if(location.location_type != 'staticmap')
         {
             var iconcustom = {
-                 url: 'http://911gps.me/assets/images/violet-icon.png', 
+                 url: location.marker_color, 
                  scaledSize: new google.maps.Size(80, 40)
              };
 
@@ -261,18 +301,20 @@ var map;
         }
         else
         {
-         iconcustom = '';
-         labeltext  = '';
+            iconcustom = '';
+            labeltext  = '';
         }
 
            
 
+        var last_seen_time = new Date(location.last_seen_time);
+        
         var marker = new google.maps.Marker({
              position: new google.maps.LatLng(parseFloat(location.lat), parseFloat(location.lang)),
              map: map,
              animation: google.maps.Animation.DROP,
              label:labeltext,
-             title: location.display_name+'\nUpdated : ',
+             title: location.display_name+'\nUpdated : '+formatTime( last_seen_time ),
              optimized: false,
              draggable:false,
              icon:iconcustom,
@@ -281,7 +323,7 @@ var map;
 
         google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
                return function() {
-                 var cont = 'Hi sakhdjksah:: '+ location.display_name;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
+                 var cont = 'Hi sakhdjksah:: '+ index + ':::' +type;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
                  infowindow.setContent(cont);
                  infowindow.open(map, marker);
                }
@@ -524,10 +566,11 @@ $(document).ready(function(){
 
     $('#search_btn').off('click').on('click', doSearch);
 
+    //jpTimer();
 });
 
 
-//TIMER
+//HELPER FUNCTIONS
 function jpTimer(){
   var secTime = 0,
       minTime = 0,
@@ -573,9 +616,31 @@ function jpTimer(){
   }, 1000);
 }
              
-//jpTimer();
 
 
+function formatTime(date) 
+{
+
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+
+    var month = (date .getMonth()+1);
+    month = month < 10 ? '0'+month : month;
+
+    var day = days[date.getDay()];
+    var fulldate = date .getDate()+"-"+ month +"-"+date .getFullYear();
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+
+    var strTime = hours + ':' + minutes + ' ' + ampm + ' '+ day + ' ' + fulldate;
+
+    return strTime;
+}
 
     
 //FUNCTIONS

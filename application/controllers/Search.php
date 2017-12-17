@@ -95,6 +95,28 @@ class Search extends AppController {
 			$channel_id  = $member->user->profile->default_id;
 			$phone_num   = $member->user->profile->phonenumber;
 
+			$img = base_url()."assets/images/red-icon.png";
+
+			if( $within_limit ) 
+			{
+				if( $map_data->type != 'public' )
+				{
+					if( $member->user->profile->user_type == 'admin' )
+					{
+						$img = base_url()."assets/images/violet-icon.png";
+					}
+					else
+					{
+						$img = base_url()."assets/images/green-icon.png";
+					}
+					
+				}
+				else
+				{
+					$img = base_url()."assets/images/orange-icon.png";
+				}
+			}
+
 			$location = array(
 								'display_name' 	=> $member->user->profile->display_name,
                                 'lat' 			=> $member->user->position->lat,
@@ -103,7 +125,9 @@ class Search extends AppController {
                                 'channel_id'	=> $member->user->profile->default_id,
                                 'visible' 		=> $member->user->group->view,
                                 'location_type' => 'dynamic',
-                                'user_id' 		=> $member->user->profile->id
+                                'user_id' 		=> $member->user->profile->id,
+                                'marker_color'  => $img,
+                                'last_seen_time'=> $last_seen_time * 1000
 							);
 
 			$locations[] = $location;
