@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class AppController extends CI_Controller {
 
 	protected $data = array();
-	public $userID = 0;
+	public $userID 	= 0;
+	public $joinKey = '';
 
 	public function __construct()
 	{
@@ -19,8 +20,9 @@ class AppController extends CI_Controller {
 				) 
 			);
 
-		//Set UserIDS
-		$this->setUserID( );
+		//Set UserID & JOIN_KEy
+		$this->setUserID();
+		$this->setJoinKey();
 
 	}
 
@@ -292,6 +294,32 @@ class AppController extends CI_Controller {
 		else if( (int)$uid_cookie )
 		{
 			$this->userID = $uid_cookie;
+		}
+
+	}
+
+
+	public function setJoinKey( $joinKey = '' )
+	{
+		
+		$joinKey_cookie = get_cookie('join_key');
+
+		if( $joinKey != '' )
+		{
+			$this->joinKey = $joinKey;
+
+			$cookie = array(
+					'name' => 'join_key',
+					'value' => $this->joinKey,
+					'expire' => time()+20000,
+					'path'   => '/',
+					);
+
+			set_cookie($cookie);
+		}
+		else if( $joinKey_cookie != '' )
+		{
+			$this->joinKey = $joinKey_cookie;
 		}
 
 	}

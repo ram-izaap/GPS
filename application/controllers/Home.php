@@ -62,10 +62,11 @@ class Home extends AppController {
                             
             // }     
 
-        	$resp = $this->rest->get('user_position_save', $params, 'json');
+        	$response = $this->rest->get('user_position_save', $params, 'json');
         	if( is_object($resp) && $resp->status == 'success' ){}
         	
         	$this->setUserID( $resp->user_id );
+        	$this->setJoinKey( $resp->default_id);
 
         	$output['status']		= 'success';
 			$output['msg']   		= 'Successfully registerd as a guest or existing user!';
