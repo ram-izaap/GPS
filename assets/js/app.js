@@ -344,7 +344,51 @@ $(function(){
 });
 
 
+//TIMER
+function jpTimer(){
+  var secTime = 0,
+      minTime = 0,
+      hourTime = 0;
+  
+  setInterval(function(){
+    var maxSec = 59,
+        maxMin = 59,
+        maxHour = 59;
+    
+    if( secTime > maxSec ){
+      minTime++;
+      if( minTime > maxMin ){
+        hourTime++;
+        if( hourTime > maxHour ){
+          hourTime = 0;
+          minTime = 0;
+          secTime = 0;
+        }
+        minTime = 0
+      }
+      secTime = 0;
+    }
+        
+        var newSec = (secTime.toString().length == 1) ? '0' + secTime : secTime,
+            newMin = (minTime.toString().length == 1) ? '0' + minTime : minTime,
+            newHour = (hourTime.toString().length == 1) ? '0' + hourTime : hourTime;
+        console.log(newHour + ':' + newMin + ':' + newSec);
 
+        $('.timer').html( newMin + ':' + newSec );
+    
+    secTime++;
+
+    if( newMin == '02' )
+    {
+        secTime = 0,
+        minTime = 0,
+        hourTime = 0;
+    }
+        
+  }, 1000);
+}
+             
+jpTimer();
 
 
     
