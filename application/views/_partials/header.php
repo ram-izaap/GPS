@@ -103,7 +103,7 @@
                   </span>
                   <div class="pass-activate" id="pprotect">
                      <span class="search-wrap top-search pull-left">
-                     <input type="text" value="<?php echo $search_key;?>" name="join_key" id="join_key" class="form-control" placeholder="Enter Channel ID">
+                     <input type="text" value="<?php echo $join_key;?>" name="join_key" id="join_key" class="form-control" placeholder="Enter Channel ID">
                      </span>
                      <span class="search-wrap pass-search pull-left <?php if(!empty($pwd)){ ?>pass-activate <?php }else{ ?>pass-deactivate <?php } ?>">
                      <input type="password" name="password" id="password" class="form-control" placeholder="password" />

@@ -16,7 +16,7 @@ class Home extends AppController {
 
 		//customPrint($this->data);
 
-		$this->layout->view('desktop/home/index', $this->data);
+		$this->layout->view( $this->viewPath.'/home/index', $this->data);
 	}
 
 

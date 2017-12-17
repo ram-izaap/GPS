@@ -98,7 +98,6 @@
           <div class=" pull-right ">
              <span class="btn btn-default">
              <span id="re-load"><time class="timer">00:00</time></span>
-             <i class="fa fa-repeat refresh-clk" aria-hidden="true"></i>
              </span>
           </div>
 

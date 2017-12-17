@@ -189,7 +189,7 @@ class Search extends AppController {
 
 		//customPrint( $this->data );
 
-		$this->layout->view('desktop/search/index', $this->data);
+		$this->layout->view($this->viewPath.'/search/index', $this->data);
 	}
 
 }

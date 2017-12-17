@@ -7,9 +7,17 @@ class AppController extends CI_Controller {
 	public $userID 	= 0;
 	public $joinKey = '';
 
+	public $isMobile = FALSE;
+	public $viewPath = 'desktop';
+
 	public function __construct()
 	{
 		parent::__construct();
+
+		//Set Device Type
+		$this->isMobile = $this->agent->is_mobile();
+
+		if( $this->isMobile ) $this->viewPath = 'mobile';
 
 		//initialize REST
 		$this->rest->initialize( 
@@ -59,14 +67,14 @@ class AppController extends CI_Controller {
 
 
        	//prepare my map display string part ( for Home page )
-       	$mapDispStr = "Return to <small>My Map</small>";
+       	$mapDispStr = $this->isMobile ? "<b>Return to</b>My Map":"Return to <small>My Map</small>";
        	if( $searchKey == '' )
        	{
-       		$mapDispStr = "View <small>My Map</small>";
+       		$mapDispStr = $this->isMobile ? "<b>View</b>My Map":"View <small>My Map</small>";
        	}
        	else if( $searchKey == $userInfo['channel_id'] )
        	{
-       		$mapDispStr = "My <small>Map</small>";
+       		$mapDispStr = $this->isMobile ? "<b>My</b>My Map":"My <small>Map</small>";
        	}
 
        	$this->data['map_disp_str'] = $mapDispStr;
@@ -107,7 +115,8 @@ class AppController extends CI_Controller {
 							'group_id'=> $user->group_id,
 							'joined_group'=> $resp->joined_group,
 							"updated_type" => $user->updated_type, 
-							"updated_phonenumber" => $user->updated_phonenumber
+							"updated_phonenumber" => $user->updated_phonenumber,
+							"join_key" => $this->joinKey
 						);
 
 			return $userInfo;
