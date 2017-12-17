@@ -58,7 +58,7 @@
           <div class="drop-wrap pull-right btn-participant timer-btn">
             <div class="dropup">
               
-              <button class="btn btn-default dropdown-toggle parti" type="button" id="dropdownMenu2" data-toggle="dropdown" >
+              <button class="btn btn-default dropdown-toggle parti rama" type="button" id="dropdownMenu2" data-toggle="dropdown" >
                 Participants <b>(<span id="participants-count">0</span>)</b>
                 <span class="caret"></span>
               </button>

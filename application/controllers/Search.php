@@ -17,8 +17,8 @@ class Search extends AppController {
 
 
 		$params = array(
-				'user_id' => 80617, 
-				'join_key' => 'Jeffnative'
+				'user_id' => 80698, 
+				'join_key' => 'Miranda'//'GQ45BF'
 			);
 
 		$map_data = $this->rest->get('search_map', $params, 'json');

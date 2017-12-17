@@ -30,12 +30,14 @@ var map;
 {
     //var map;
     var infowindow;
-    var markers = [];
+    var visibles_markers = [];
+    var clues_markers = [];
     var styles;
 
     var visibles = [];
     var invisibles = [];
     var clues = [];
+    var participants = [];
 
     var myCurrentPos = undefined;
 
@@ -106,111 +108,200 @@ var map;
 
         module.addYourLocationButton(map);
 
-        module.renderLocations();  
+        module.prepareData();
+
+        module.render( visibles, 'visibles');
+        module.render( invisibles, 'invisibles');
+        module.render( clues, 'clues');  
     };
 
 
-    module.renderLocations = function()
+    module.prepareData = function( )
     {
-        for (var i = 0; i < locations.length; i++) 
+        for (var i = 0; i < locations.length; i++)
         {
-          
-            if(locations[i].location_type != 'staticmap')
+            var location = locations[i];
+
+
+            var mapType = location.location_type,
+                visible = location.visible,
+                addToParticipants = false;
+
+
+            var template = new Element('#participant-template'),
+                $element = template.element;
+
+            $element.find('.myposition').on('click', function(){
+                module.locatePosition( i );
+            });
+
+            $element.find('.statuspop').on('click', function(){
+                module.locateAndOpenInfo( i );
+            });
+
+            if( mapType == 'dynamic' )
             {
-                var iconcustom = {
-                     url: 'http://911gps.me/assets/images/violet-icon.png', 
-                     scaledSize: new google.maps.Size(80, 40)
-                 };
+                if( visible == '1' )
+                {
+                    $element.find('.display_name').html(location.display_name);
+                    $element.find('.channel_id').html(location.channel_id);
 
-                var labeltext = {text:locations[i].display_name,color:"white"};     
-            }
-            else
+                    visibles.push( location );
+
+                    //Add to partcipants list
+                    addToParticipants = true;
+                    
+                }
+                else if( visible == '0' )
+                {
+                    $element.find('.display_name').html(location.display_name);
+                    $element.find('.channel_id').html(location.channel_id);
+
+                    invisibles.push( location );
+                }
+            } 
+            else if( mapType == 'staticmap' && visible == '' )
             {
-             iconcustom = '';
-             labeltext  = '';
+                $element.find('.display_name').html(location.display_name);
+                $element.find('.channel_id').html(location.channel_id);
+
+                clues.push( location );
+
+                //Add to partcipants list
+                addToParticipants = true;
             }
 
-               
-
-            var marker = new google.maps.Marker({
-                 position: new google.maps.LatLng(parseFloat(locations[i].lat), parseFloat(locations[i].lang)),
-                 map: map,
-                 animation: google.maps.Animation.DROP,
-                 label:labeltext,
-                 title: locations[i].display_name+'\nUpdated : ',
-                 optimized: false,
-                 draggable:false,
-                 icon:iconcustom,
-                 zIndex:9999+i
-                });
-
-                google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
-                       return function() {
-                         var cont = 'Hi sakhdjksah:: '+ locations[i].display_name;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
-                         infowindow.setContent(cont);
-                         infowindow.open(map, marker);
-                       }
-                })(marker, i));
-
-            markers.push(marker);
-
-            module.renderParticipants( locations[i], i );
+            //
+            if( addToParticipants )
+            {
+                //participants.push( location );
+            }            
         }
+        
+        console.log(visibles);
+        console.log(clues);
+        console.log(invisibles);
+    };
 
-        $("#tab1").html(visibles);
-        $("#tab2").html(invisibles);
-        $("#tab3").html(clues);
+    module.render = function( data, type )
+    {
+        for (var i = 0; i < data.length; i++) 
+        {
+            if( type == 'visibles' || type == 'clues' )
+            {
+                module.renderMarkers( data[i], i, type );
+            }
+
+            //Add header
+            if( i == 0 )
+            {
+                var $header = $('<li class="map-list-label">' +
+                                '<span class="name">Participant</span>' + 
+                                '<span>Find</span>' + 
+                                '<span>Status</span></li>');
+
+                if( type == 'visibles' ) $('#tab1').append($header);
+                if( type == 'invisibles' )
+                {
+                    $header.find('span:nth-child(2)').remove();
+                    $('#tab2').append($header);
+                }
+                if( type == 'clues' ) $('#tab3').append($header);
+            }
+
+
+            var template = new Element('#participant-template'),
+                $element = template.element;
+
+            $element.find('.display_name').html( data[i].display_name );
+            $element.find('.channel_id').html( data[i].channel_id );
+            $element.attr('data-type', type);
+            $element.attr('data-index', i);
+
+            $element.find('.myposition').on('click', function(){
+                module.locatePosition( $element.attr('data-index'), $element.attr('data-type') );
+            });
+
+            $element.find('.statuspop').on('click', function(){
+                module.locateAndOpenInfo( $element.attr('data-index'), $element.attr('data-type') );
+            });
+
+            if( type == 'visibles' )
+            {
+                $("#tab1").append($element);
+            }
+            else if( type == 'invisibles' )
+            {
+                $element.find('.myposition, .statuspop').remove();
+                $element.find('.p-find-iocn').html('<span class="invisible_icon">&nbsp;</span>');
+                
+                $("#tab2").append($element);
+            }
+            else if( type == 'clues' )
+            {
+                $("#tab3").append($element);
+            }
+
+        }
 
         $('#participants-count').html(visibles.length);
     };
 
-    module.renderParticipants = function( location, location_index )
+    
+    module.renderMarkers = function( location, index, type )
     {
-        var mapType = location.location_type,
-            visible = location.visible;
-
-        var template = new Element('#participant-template'),
-            $element = template.element;
-
-        $element.find('.myposition').on('click', function(){
-            module.locatePosition( location_index );
-        });
-
-        $element.find('.statuspop').on('click', function(){
-            module.locateAndOpenInfo( location_index );
-        });
-
-        if( mapType == 'dynamic' )
+        if(location.location_type != 'staticmap')
         {
-            if( visible == '1' )
-            {
-                $element.find('.display_name').html(location.display_name);
-                $element.find('.channel_id').html(location.channel_id);
+            var iconcustom = {
+                 url: 'http://911gps.me/assets/images/violet-icon.png', 
+                 scaledSize: new google.maps.Size(80, 40)
+             };
 
-                visibles.push( $element );
-            }
-            else if( visible == '0' )
-            {
-                $element.find('.display_name').html(location.display_name);
-                $element.find('.channel_id').html(location.channel_id);
-
-                invisibles.push( $element );
-            }
-        } 
-        else if( mapType == 'staticmap' && visible == '' )
-        {
-            $element.find('.display_name').html(location.display_name);
-            $element.find('.channel_id').html(location.channel_id);
-
-            clues.push( $element );
+            var labeltext = {text:location.display_name,color:"white"};     
         }
-    };
+        else
+        {
+         iconcustom = '';
+         labeltext  = '';
+        }
 
-    module.locatePosition = function( positionIndex )
+           
+
+        var marker = new google.maps.Marker({
+             position: new google.maps.LatLng(parseFloat(location.lat), parseFloat(location.lang)),
+             map: map,
+             animation: google.maps.Animation.DROP,
+             label:labeltext,
+             title: location.display_name+'\nUpdated : ',
+             optimized: false,
+             draggable:false,
+             icon:iconcustom,
+             zIndex:9999+index
+            });
+
+        google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
+               return function() {
+                 var cont = 'Hi sakhdjksah:: '+ location.display_name;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
+                 infowindow.setContent(cont);
+                 infowindow.open(map, marker);
+               }
+        })(marker, index, type));
+
+        if( type == 'visibles' ) visibles_markers.push( marker );
+        if( type == 'clues' ) clues_markers.push( marker );        
+        
+    }
+
+    module.locatePosition = function( index, type, callback )
     {
-        if( typeof markers[positionIndex] == 'undefined' ) return;
+        console.log(type, index);
+        console.log(visibles_markers);
 
-        var current_marker = markers[positionIndex];
+        if( type == 'visibles' && typeof visibles_markers[index] == 'undefined' ) return;
+
+        if( type == 'clues' && typeof clues_markers[index] == 'undefined' ) return;
+
+        var current_marker = ( type == 'visibles' ) ? visibles_markers[index]: clues_markers[index];
 
         var bounds = new google.maps.LatLngBounds();        
             bounds.extend( current_marker.position );
@@ -218,22 +309,15 @@ var map;
         map.fitBounds(bounds);
         map.setZoom(21);
         map.setCenter( current_marker.getPosition() );
+
+        if( typeof callback == 'function' ) callback( current_marker );
     };
 
-    module.locateAndOpenInfo = function( positionIndex )
+    module.locateAndOpenInfo = function( index, type )
     {
-        if( typeof markers[positionIndex] == 'undefined' ) return;
-
-        var current_marker = markers[positionIndex];
-
-        google.maps.event.trigger(current_marker, "click");
-
-        var bounds = new google.maps.LatLngBounds();        
-            bounds.extend( current_marker.position );
-        
-        map.fitBounds(bounds);
-        map.setZoom(21);
-        map.setCenter( current_marker.getPosition() );
+        module.locatePosition( index, type, function( current_marker ){
+            google.maps.event.trigger(current_marker, "click");
+        });
     };
 
 
@@ -415,7 +499,7 @@ var map;
 mapManager.init();
 
 //Onload functions
-$(function(){
+$(document).ready(function(){
 
     $("input[name='mode_type']").off('click').on('click', function(){
         console.log(this.value);
@@ -423,6 +507,11 @@ $(function(){
     });
 
     $("#deafult_mode").prop('checked', true);
+
+    // $("#dropdownMenu2").mouseover(function(){
+    //     console.log('llllllllll');
+    //     $("#dropdownMenu2").removeAttr('data-toggle'); 
+    // });
 
 });
 
