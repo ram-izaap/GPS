@@ -50,6 +50,23 @@ class Search extends AppController {
 		$my_visible = '';
 		//prepare member-locations
 		$locations = array();
+
+		//public map location
+		if( $map_data->type == 'public' )
+		{
+			$location = array(
+								'display_name' 	=> $map_data->description,
+                                'lat' 			=> $map_data->lat,
+                                'lang' 			=> $map_data->lon,
+                                'user_type' 	=> 'admin',
+                                'channel_id'	=> $map_data->join_key,
+                                'visible' 		=> $map_data->is_view,
+                                'location_type' => $map_data->location_type,
+                                'user_id' 		=> $map_data->user_id,
+							);
+			$locations[] = $location;
+		}
+
 		foreach($map_data->members as $member)
 		{
 

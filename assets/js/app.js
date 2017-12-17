@@ -121,24 +121,10 @@ var map;
     {
         for (var i = 0; i < locations.length; i++)
         {
-            var location = locations[i];
+            var location = locations[i],
+                mapType = location.location_type,
+                visible = location.visible;
 
-
-            var mapType = location.location_type,
-                visible = location.visible,
-                addToParticipants = false;
-
-
-            var template = new Element('#participant-template'),
-                $element = template.element;
-
-            $element.find('.myposition').on('click', function(){
-                module.locatePosition( i );
-            });
-
-            $element.find('.statuspop').on('click', function(){
-                module.locateAndOpenInfo( i );
-            });
 
             if( mapType == 'dynamic' )
             {
@@ -150,39 +136,25 @@ var map;
 
                 if( visible == '1' )
                 {
-                    $element.find('.display_name').html(location.display_name);
-                    $element.find('.channel_id').html(location.channel_id);
-
                     visibles.push( location );
-
-                    //Add to partcipants list
-                    addToParticipants = true;
                     
                 }
                 else if( visible == '0' )
                 {
-                    $element.find('.display_name').html(location.display_name);
-                    $element.find('.channel_id').html(location.channel_id);
-
                     invisibles.push( location );
                 }
             } 
             else if( mapType == 'staticmap' && visible == '' )
             {
-                $element.find('.display_name').html(location.display_name);
-                $element.find('.channel_id').html(location.channel_id);
-
                 clues.push( location );
-
-                //Add to partcipants list
-                addToParticipants = true;
+            }
+            else
+            {
+                //PUBLIC MAP
+                visibles.push( location );
             }
 
-            //
-            if( addToParticipants )
-            {
-                //participants.push( location );
-            }            
+                      
         }
         
         console.log(visibles);
@@ -308,7 +280,7 @@ var map;
            
 
         var last_seen_time = new Date(location.last_seen_time);
-        
+
         var marker = new google.maps.Marker({
              position: new google.maps.LatLng(parseFloat(location.lat), parseFloat(location.lang)),
              map: map,
