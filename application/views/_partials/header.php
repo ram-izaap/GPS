@@ -92,7 +92,7 @@
             </a>
             </span>
 
-            <form method='post' action='<?php echo site_url('search');?>'>
+            <form method='post' id="main_search" action='<?php echo site_url('search');?>'>
                <div class="search-full">
                   <span class="dropdown search-filter pull-left">
                      <a href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Search By  <span class="caret"></span>
@@ -103,14 +103,14 @@
                   </span>
                   <div class="pass-activate" id="pprotect">
                      <span class="search-wrap top-search pull-left">
-                     <input type="text" value="<?php echo $search_key;?>" name="search" id="search" class="form-control" placeholder="Enter Channel ID">
+                     <input type="text" value="<?php echo $search_key;?>" name="join_key" id="join_key" class="form-control" placeholder="Enter Channel ID">
                      </span>
                      <span class="search-wrap pass-search pull-left <?php if(!empty($pwd)){ ?>pass-activate <?php }else{ ?>pass-deactivate <?php } ?>">
-                     <input type="password" name="pwwd" id="pwd" class="form-control" placeholder="password" />
+                     <input type="password" name="password" id="password" class="form-control" placeholder="password" />
                      </span>
                   </div>
                   <span class="tool-tip pull-left top-search-icon" data-text="Search" data-color="green" data-position="left">
-                  <input type="submit" value="" class="go-search subm" id="allow_dy" />       
+                  <input type="button" value="" class="go-search subm" id="search_btn" />       
                   </span>
                </div>
                <div class="password-search" style="display:none;">

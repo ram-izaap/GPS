@@ -516,10 +516,13 @@ $(document).ready(function(){
         $("#dropdownMenu2").removeAttr('data-toggle'); 
     });
 
+    //If First time user, do register
     if( user_info.user_id == '' ) 
     {
         setTimeout(function(){ doGuestRegistration(); },5000);        
     }
+
+    $('#search_btn').off('click').on('click', doSearch);
 
 });
 
@@ -576,6 +579,17 @@ function jpTimer(){
 
     
 //FUNCTIONS
+
+function doSearch()
+{
+    
+    var joinKey = $('input[name="join_key"]').val(),
+        pwd = $('input[name="password"]').val();
+
+
+    $('#main_search').submit();
+    //console.log(joinKey, pwd);
+}
 
 function add_toggle()
 {
@@ -792,7 +806,7 @@ function doGuestRegistration()
 
                 //update global user_info 
                 user_info = response.user_info;
-                
+
             }
         }, 'json');
     }

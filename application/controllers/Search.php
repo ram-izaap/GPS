@@ -10,19 +10,41 @@ class Search extends AppController {
 		parent::__construct();
 	}
 
-	public function index()
+	public function index( $jkey = '' )
 	{
+		//load common data
 		$this->getCommonData();
 
-
+		//get join_key
+		if( $jkey !== '' )
+		{
+			$this->joinKey = $jkey;
+		}
+		else if( $this->input->post('join_key') !== '' )
+		{
+			$this->joinKey = $this->input->post('join_key');
+		}
+		//save JOIN KEY
+		$this->setJoinKey( $this->joinKey );
 
 		$params = array(
-				'user_id' => 80698, 
-				'join_key' => 'Miranda'//'GQ45BF'
+				'user_id' => $this->userID,
+				'join_key' => $this->joinKey
 			);
 
-		$map_data = $this->rest->get('search_map', $params, 'json');
+		$passwd = $this->input->post('password');
 
+		if( $passwd !== '' )
+		{
+			$params['password'] = $passwd;
+
+			$map_data = $this->rest->get('check_group_password', $params, 'json');
+		}
+		else
+		{
+			$map_data = $this->rest->get('search_map', $params, 'json');
+		}
+		
 		//customPrint($map_data);
 		
 		//prepare member-locations
@@ -110,6 +132,10 @@ class Search extends AppController {
 			);
 
 		$this->data['map_data'] = json_encode( $output );
+
+		$this->data['search_key'] = $this->joinKey;
+
+		//customPrint( $this->data );
 
 		$this->layout->view('desktop/search/index', $this->data);
 	}

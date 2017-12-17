@@ -30,6 +30,7 @@ class AppController extends CI_Controller {
 	{
 		//echo $this->userID;die;
 		$userInfo = $this->getUserInfo( $this->userID );
+		
 		$searchKey = '';
 
 		//customPrint($this->data['user_info']);
@@ -37,7 +38,11 @@ class AppController extends CI_Controller {
 
 		$this->data['search_key'] = $searchKey;
 
-		$this->data['user_action'] = ( (int)$userInfo['user_id'] ) ? 'user_update':'guest_registration';
+
+
+		//$this->data['user_action'] = ( (int)$userInfo['user_id'] ) ? 'user_update':'guest_registration';
+		
+		
 		$uri      = $this->uri->segment(1);
        	$page     = ($uri == 'search' || $uri!='help' || $uri!='tellus' || $uri!='privacy-policy-and-terms-and-conditions')?"search-page":"";
 
@@ -51,7 +56,9 @@ class AppController extends CI_Controller {
        	}
        	$this->data['shareurl'] = base_url()."search/".$key;
 
-       	//prepare my map display string part
+
+
+       	//prepare my map display string part ( for Home page )
        	$mapDispStr = "Return to <small>My Map</small>";
        	if( $searchKey == '' )
        	{
