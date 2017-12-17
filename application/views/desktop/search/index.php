@@ -56,7 +56,7 @@
           <label for="night_mode" style="color: #fff;">Night</label>
 
           <div class="drop-wrap pull-right btn-participant timer-btn">
-            <div class="dropup">
+            <div class="dropup open">
               
               <button class="btn btn-default dropdown-toggle parti rama" type="button" id="dropdownMenu2" data-toggle="dropdown" >
                 Participants <b>(<span id="participants-count">0</span>)</b>
