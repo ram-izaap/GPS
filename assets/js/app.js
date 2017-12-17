@@ -37,6 +37,7 @@ var map;
     var invisibles = [];
     var clues = [];
 
+    var myCurrentPos = undefined;
 
     module.init = function ( callback )
     {
@@ -88,6 +89,22 @@ var map;
                  maxWidth: 300 
                });
       
+
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                myCurrentPos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                    };
+
+                console.log('My Position', myCurrentPos);
+            });
+
+        }
+
+        module.addYourLocationButton(map);
 
         module.renderLocations();  
     };
@@ -325,6 +342,72 @@ var map;
 
     };
 
+    module.addYourLocationButton = function (map, marker) 
+    {
+        var controlDiv = document.createElement('div');
+
+        var firstChild = document.createElement('button');
+        firstChild.style.backgroundColor = '#fff';
+        firstChild.style.border = 'none';
+        firstChild.style.outline = 'none';
+        firstChild.style.width = '28px';
+        firstChild.style.height = '28px';
+        firstChild.style.borderRadius = '2px';
+        firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+        firstChild.style.cursor = 'pointer';
+        firstChild.style.marginRight = '10px';
+        firstChild.style.padding = '0';
+        firstChild.title = 'Your Location';
+        controlDiv.appendChild(firstChild);
+
+        var secondChild = document.createElement('div');
+        secondChild.style.margin = '5px';
+        secondChild.style.width = '18px';
+        secondChild.style.height = '18px';
+        secondChild.style.backgroundImage = 'url(https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-2x.png)';
+        secondChild.style.backgroundSize = '180px 18px';
+        secondChild.style.backgroundPosition = '0 0';
+        secondChild.style.backgroundRepeat = 'no-repeat';
+        firstChild.appendChild(secondChild);
+
+        google.maps.event.addListener(map, 'center_changed', function () {
+            secondChild.style['background-position'] = '0 0';
+        });
+
+        firstChild.addEventListener('click', function () {
+            var imgX = '0',
+                animationInterval = setInterval(function () {
+                    imgX = imgX === '-18' ? '0' : '-18';
+                    secondChild.style['background-position'] = imgX+'px 0';
+                }, 500);
+
+            if( myCurrentPos )
+            {
+                var myMarker = new google.maps.Marker({
+                  map: map,
+                  position: myCurrentPos,
+                  animation: google.maps.Animation.DROP
+                });
+
+                map.setCenter(myCurrentPos);
+                map.setZoom(21);
+                clearInterval(animationInterval);
+                secondChild.style['background-position'] = '-144px 0';
+            }
+            else
+            {
+                clearInterval(animationInterval);
+                secondChild.style['background-position'] = '0 0';
+            }            
+
+            
+        });
+
+        controlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+    };
+    
+
 })( mapManager || ( mapManager = {} ) );
 
 
@@ -372,7 +455,7 @@ function jpTimer(){
         var newSec = (secTime.toString().length == 1) ? '0' + secTime : secTime,
             newMin = (minTime.toString().length == 1) ? '0' + minTime : minTime,
             newHour = (hourTime.toString().length == 1) ? '0' + hourTime : hourTime;
-        console.log(newHour + ':' + newMin + ':' + newSec);
+        //console.log(newHour + ':' + newMin + ':' + newSec);
 
         $('.timer').html( newMin + ':' + newSec );
     
@@ -383,12 +466,15 @@ function jpTimer(){
         secTime = 0,
         minTime = 0,
         hourTime = 0;
+
+        window.location.reload();
     }
         
   }, 1000);
 }
              
-jpTimer();
+//jpTimer();
+
 
 
     

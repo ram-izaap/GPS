@@ -134,5 +134,5 @@
 
   var map_data = <?php echo $map_data;?>;
   var locations = map_data.locations;
-  
+
 </script>
