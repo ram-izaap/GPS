@@ -497,8 +497,8 @@ var map;
 })( mapManager || ( mapManager = {} ) );
 
 
+if( locations.length )  mapManager.init();
 
-mapManager.init();
 
 //Onload functions
 $(document).ready(function(){
@@ -515,6 +515,11 @@ $(document).ready(function(){
      $("#dropdownMenu2").mouseover(function(){
         $("#dropdownMenu2").removeAttr('data-toggle'); 
     });
+
+    if( user_info.user_id == '' ) 
+    {
+        setTimeout(function(){ doGuestRegistration(); },5000);        
+    }
 
 });
 
@@ -750,4 +755,54 @@ function updateMapID() {
 
 function changeRadioStatus(id) {
   $(id).prop("checked", true);
+}
+
+
+function doGuestRegistration()
+{
+    var latlon = $("#latlang").val(),
+        data = {},
+        flag = false;
+    
+    if( latlon == 'INVALID')   
+    {
+
+
+    }
+    else
+    {
+        flag = true;
+
+        data = {
+            lat: myCurrentPos.lat,
+            lng: myCurrentPos.lng,
+            phone_number: user_info.phonenumber,
+            display_name: user_info.display_name,
+            reg_type: 'current'
+        };
+    }
+
+    if( flag )
+    {
+        showLoader();
+        $.post(site_url + 'home/guestRegistration', data, function(response) {
+            showLoader( false );
+            alert(response.msg);
+            if (response.status == 'success') {
+
+                //update global user_info 
+                user_info = response.user_info;
+                
+            }
+        }, 'json');
+    }
+
+
+
+    
+    
+
+
+
+       
 }

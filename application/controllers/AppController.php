@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class AppController extends CI_Controller {
 
 	protected $data = array();
+	public $userID = 0;
 
 	public function __construct()
 	{
@@ -17,11 +18,16 @@ class AppController extends CI_Controller {
 					'api_key' => X_APP_KEY 
 				) 
 			);
+
+		//Set UserIDS
+		$this->setUserID( );
+
 	}
 
 	public function getCommonData()
 	{
-		$userInfo = $this->getUserInfo(80617);
+		//echo $this->userID;die;
+		$userInfo = $this->getUserInfo( $this->userID );
 		$searchKey = '';
 
 		//customPrint($this->data['user_info']);
@@ -65,6 +71,10 @@ class AppController extends CI_Controller {
 		{
 			$this->data['visible'] = $resp->data->is_view;
 		}
+		else
+		{
+			$this->data['visible'] = '1';// default value
+		}
 
 		$this->data['user_info'] = $this->data;
 	}
@@ -101,11 +111,11 @@ class AppController extends CI_Controller {
 	private function getDefaultUserData()
 	{
 		$randomID =  $this->getRandomChannelID();
-
+		
 		$userInfo = array(
 						'channel_id' 	=> $randomID, 
 						'display_name'	=> $randomID,
-						'phonenumber' 	=> '' ,
+						'phonenumber' 	=> $randomID,
 						'user_id'		=> '',
 						'group_id'		=>	'',
 						'joined_group'	=>	'',
@@ -133,14 +143,14 @@ class AppController extends CI_Controller {
 
 	public function getRandomChannelID()
 	{
-		$randomID = get_cookie('rand_channelid');
+		$randomID = get_cookie('random_channelid');
 
-		$resp = $this->rest->get('user_exist_check', array(), 'json');
+		$resp = $this->rest->get('random_number_generation', array(), 'json');
 
 		if( is_object($resp) && $resp->status == 'success' )
 		{
 			$cookie = array(
-					'name' => 'rand_channelid',
+					'name' => 'random_channelid',
 					'value' => $resp->random_id,
 					'expire' => time()+20000,
 					'path'   => '/',
@@ -179,6 +189,111 @@ class AppController extends CI_Controller {
 			echo json_encode($map_det);
 		}catch(Exception $e){
 		}
+	}
+
+
+	/*
+	*	Update groups's visiblily 
+	*/
+	public function updateVisible()
+	{
+		$userID 	= $_POST['user_id'];
+		$channelID 	= $_POST['channel_id'];
+		$view 		= $_POST['visible'];
+
+		$params = array('user_id' => $userID, 'group_id' => $channelID, 'view' => $view);
+		$resp = $this->rest->get('group_status', $params, 'json');
+		
+		$visible_html = $this->load->view('_partials/visible_status', array('visible' => $view), TRUE );
+
+        echo json_encode(array("status" => "success",'visible_html' => $visible_html),200);
+	}
+	
+
+	public function removeAllMaps()
+	{
+		$userID = $this->input->post('user_id');
+
+		$params = array('user_id' => $userID);
+		$resp = $this->rest->get('remove_user_from_all_groups', $params, 'json');
+		//customPrint((array)$resp);
+		$output = array();
+
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$output['status']	= 'success';
+            $output['msg']     = "Removed user from all groups successfully";
+		}
+		else
+		{
+			$output['status']	= 'error';
+            $output['msg']     	= "Something went wrong.";
+		}
+
+		echo json_encode($output);
+	}
+
+	public function updateDisplayNameAndPhone()
+	{
+		$userID 		= $this->input->post('user_id');
+		$display_name 	= $this->input->post('display_name');
+		$update_type 	= $this->input->post('update_type');
+		$phone_number 	= $this->input->post('phone_number');
+
+		$params = array(
+			'user_id'		=> $userID,
+			'display_name' 	=> $display_name,
+			'update_type' 	=> $update_type,
+			'phone_number' 	=> $phone_number
+			);
+
+		$resp = $this->rest->get('update_user_info', $params, 'json');
+
+		
+
+		$output = array();
+
+		if( is_object($resp) && $resp->status == 'success' )
+		{
+			$output['status']	= 'success';
+            $output['msg']     = "Updated successfully.";
+		}
+		else
+		{
+			$output['status']	= 'error';
+            $output['msg']     	= "Something went wrong.";
+		}
+
+		echo json_encode($output);
+	}
+	
+
+
+
+
+	public function setUserID( $uid = 0 )
+	{
+		
+		$uid_cookie = get_cookie('user_id');
+
+		if( (int)$uid )
+		{
+			$this->userID = $uid;
+
+			$cookie = array(
+					'name' => 'user_id',
+					'value' => $this->userID,
+					'expire' => time()+20000,
+					'path'   => '/',
+					);
+
+			set_cookie($cookie);
+		}
+		else if( (int)$uid_cookie )
+		{
+			$this->userID = $uid_cookie;
+		}
+
 	}
 	
 }

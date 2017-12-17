@@ -29,6 +29,43 @@
         var site_url = '<?php echo site_url();?>';
         var base_url = '<?php echo base_url();?>';
         var user_info = <?php echo json_encode($user_info);?>;
+
+        var map_data, locations = [], myCurrentPos = undefined;
+
+        //Get Lat nad Lang values
+        if (navigator.geolocation) {
+
+            var options = {
+                            enableHighAccuracy: true,
+                           timeout:            30000,  // milliseconds (30 seconds)
+                           maximumAge:         600000 // milliseconds (10 minutes)
+               };
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+               myCurrentPos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+               };
+
+               $("#latlang").val(myCurrentPos.lat + ":" + myCurrentPos.lng);
+
+                console.log('My Position', myCurrentPos);
+            }, 
+            function(err) {
+               if(err.code == 1) 
+                {
+                   $("#latlang").val('INVALID');
+                }
+                else if( err.code == 2) 
+                {
+                   $("#latlang").val('INVALID');
+                }
+            }, 
+            options);            
+
+        }
+
       </script>
 
    </head>
@@ -37,7 +74,7 @@
       <div id="wait" style="display:none; width:69px; height:89px; position:absolute; top:50%; left:50%; padding:2px;"></div>
       
       
-      <input  value="0" name="latlang" id="latlang" type="hidden">
+      <input  value="0" name="latlang" id="latlang" type="hidden" value="INVALID">
       <input class="form-control" value="" name="map_pos" id="map_pos" type="hidden">
       <input  value="" name="joined_map" id="joined_map" type="hidden" />
       <input name="phone" id="phone" type="hidden" />
