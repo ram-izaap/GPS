@@ -616,7 +616,7 @@ function updateVisibleStatus() {
 
     var data = {
         user_id: user_info.user_id,
-        channel_id: user_info.channel_id,
+        channel_id: user_info.join_key,
         visible: user_info.visible == '1' ? '0' : '1'
     };
 

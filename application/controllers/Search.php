@@ -47,12 +47,19 @@ class Search extends AppController {
 		
 		//customPrint($map_data);
 		
+		$my_visible = '';
 		//prepare member-locations
 		$locations = array();
 		foreach($map_data->members as $member)
 		{
 
 			if( $member->user->profile->flag == 0 ) continue;
+
+			if( $member->user->profile->id == $this->userID )
+			{
+				$my_visible = $member->user->group->view;
+			}
+
 
 			$user_type = $member->user->profile->user_type;
 
@@ -134,6 +141,10 @@ class Search extends AppController {
 		$this->data['map_data'] = json_encode( $output );
 
 		$this->data['search_key'] = $this->joinKey;
+
+		$this->data['user_info']['join_key'] 	=  $this->joinKey;
+		$this->data['user_info']['visible'] 	= $my_visible;
+		$this->data['visible'] 					= $my_visible;
 
 		//customPrint( $this->data );
 
