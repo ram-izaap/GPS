@@ -295,7 +295,7 @@ var map;
     module.locatePosition = function( index, type, callback )
     {
         console.log(type, index);
-        console.log(visibles_markers);
+        //console.log(visibles_markers);
 
         if( type == 'visibles' && typeof visibles_markers[index] == 'undefined' ) return;
 
@@ -303,11 +303,13 @@ var map;
 
         var current_marker = ( type == 'visibles' ) ? visibles_markers[index]: clues_markers[index];
 
+        console.log(current_marker.position);
+
         var bounds = new google.maps.LatLngBounds();        
             bounds.extend( current_marker.position );
         
         map.fitBounds(bounds);
-        map.setZoom(21);
+        map.setZoom(16);
         map.setCenter( current_marker.getPosition() );
 
         if( typeof callback == 'function' ) callback( current_marker );
@@ -508,10 +510,11 @@ $(document).ready(function(){
 
     $("#deafult_mode").prop('checked', true);
 
-    // $("#dropdownMenu2").mouseover(function(){
-    //     console.log('llllllllll');
-    //     $("#dropdownMenu2").removeAttr('data-toggle'); 
-    // });
+    $("[data-toggle='dropdown']").dropdown();
+
+     $("#dropdownMenu2").mouseover(function(){
+        $("#dropdownMenu2").removeAttr('data-toggle'); 
+    });
 
 });
 
