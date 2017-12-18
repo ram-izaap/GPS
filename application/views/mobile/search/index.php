@@ -227,6 +227,22 @@
   </li>
 </div>
 
+<div id="ram1122" style="display: none;">
+  <li>
+    <div class="p-parti">
+      <span class="name"><b>DN:</b></span>
+      <span class="name display_name"></span>
+      <br/>
+      <span class="name"><b>CHID:</b></span>
+      <span class="name channel_id"></span>
+    </div>
+    <div class="p-find-iocn">
+      <a href="javascript:;" class="myposition sprite-image">&nbsp;</a>
+      <a href="javascript:;" class="statuspop sprite-image">&nbsp;</a>
+    </div>
+  </li>
+</div>
+
 
 
 

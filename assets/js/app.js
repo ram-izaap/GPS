@@ -38,18 +38,34 @@ var share_map_id;
     var visibles = [];
     var invisibles = [];
     var clues = [];
+    var publicLocations = []; //Only for Public Map
+
     var participants = [];
 
     var myCurrentPos = undefined;
     var adminInfo = undefined;
+    var trackingUser ;
 
     module.init = function ( callback )
     {
-        console.log('KKKK', locations);
-        var zoomlvl = 5;
+
+        module.prepareData();
+
+        if( map_data.type == 'public' )
+        {
+            publicLocations = locations.splice(0,1);//.push( locations.splice(0,1) );
+        }
+
+        console.log('publicLocations', publicLocations);
+        trackingUser = adminInfo;
+        // console.log(adminInfo);
+        // return;
+        
+        var zoomlvl = 13;
+
         map = new google.maps.Map(document.getElementById('map'), {
               zoom: zoomlvl,
-              center: {lat: parseFloat(locations[0].lat), lng: parseFloat(locations[0].lang)},
+              center: {lat: parseFloat(trackingUser.lat), lng: parseFloat(trackingUser.lang)},
               gestureHandling: 'greedy',
               mapTypeControl: true,
               mapTypeControlOptions: {
@@ -86,12 +102,12 @@ var share_map_id;
              tilt: 45,
              fullscreenControl:true
 
-            });
+        });
 
 
         infowindow = new google.maps.InfoWindow({
-                 maxWidth: 300 
-               });
+            maxWidth: 300 
+        });
       
 
         if (navigator.geolocation) {
@@ -110,11 +126,16 @@ var share_map_id;
 
         module.addYourLocationButton(map);
 
-        module.prepareData();
+        //module.prepareData();
 
         module.render( visibles, 'visibles');
         module.render( invisibles, 'invisibles');
-        module.render( clues, 'clues');  
+        module.render( clues, 'clues');
+
+        if( publicLocations.length )
+        {
+            module.renderMarkers(publicLocations[0], 0, 'publicLocations');
+        }  
     };
 
 
@@ -152,7 +173,7 @@ var share_map_id;
             else
             {
                 //PUBLIC MAP
-                visibles.push( location );
+                //visibles.push( location );
             }
 
                       
@@ -295,17 +316,33 @@ var share_map_id;
              zIndex:9999+index
             });
 
-        google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
+        google.maps.event.addDomListener(marker, 'click', (function(marker, i, type, location, module) {
+               
+               //var content = module.renderInfoWindow( location );
                return function() {
-                 var cont = 'Hi sakhdjksah:: '+ index + ':::' +type;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
-                 infowindow.setContent(cont);
+
+                    var template = new Element('#map_info_wndow'),
+                        $element = template.element;
+
+                 //var cont = content;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
+                 infowindow.setContent($element.html());
                  infowindow.open(map, marker);
                }
-        })(marker, index, type));
+
+        })(marker, index, type, location, module));
 
         if( type == 'visibles' ) visibles_markers.push( marker );
         if( type == 'clues' ) clues_markers.push( marker );        
         
+    }
+
+    module.renderInfoWindow = function( location )
+    {
+        //return 'rutoiweru';
+        var template = new Element('#ram1122'),
+            $element = template.element;
+
+        return $element;
     }
 
     module.locatePosition = function( index, type, callback )
@@ -618,10 +655,6 @@ function formatTime(date)
 
     
 //FUNCTIONS
-function test111()
-{
-    console.log('sdasd');return true;
-}
 
 function doSearch()
 {
