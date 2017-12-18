@@ -13,7 +13,7 @@
     
     <div class="current-map">
       <div class="col-sm-12">
-        <span class="cMapid"> Current Joined Map ID is <i></i> <b><?php echo $search_key;?></b> </span>
+        <span class="cMapid"> Current Joined Map ID is <i></i> <b><?php echo $join_key;?></b> </span>
       </div>
     </div>
 
@@ -67,7 +67,7 @@
       <label for="" data-or="true">Enter Manual address</label>
       <input type="text" class="text-field" placeholder="Add your Address" id="guest_address" />
       
-      <button type="submit" onclick="create_map('guest_pos_type',<?php echo $user_action;?>,'#guest_address','manual');" class="btn btn-info btn-mupdate">
+      <button type="submit" onclick="create_map('guest_pos_type','','#guest_address','manual');" class="btn btn-info btn-mupdate">
         Update
       </button>
 
@@ -77,21 +77,15 @@
   <div class="content-row border clearfix">
     <div class="col-sm-6">
         <div class="return-map-footer">
-           <?php $uri = $this->uri->segment(1); if(((!empty($channel_id)) && ($search_key != $channel_id) && empty($search_key)) || ($uri != 'search')) { ?>
-        <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>" class="view-map">View My Map</a>
-        <?php } else if(!empty($search_key) && ($search_key != $channel_id)) { ?>
-         <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>" > Return to <span>My Map</span></a>
-         <?php }else if($search_key == $channel_id){?>
-        <a href="<?php echo site_url();?>search/<?php echo $channel_id;?>" > 
-            My <small></small>Map
-        </a>
-        <?php } else{}?>
+          <a href="<?php echo base_url('search/'.$channel_id);?>" class="view-map">
+            <?php echo $map_disp_str;?>
+          </a>
         </div>
     </div>
     
     <div class="col-sm-6">
       <div class="exit-map-footer">
-        <a href="javascript:void(0);" onclick="remove_user_from_all_groups();">
+        <a href="javascript:void(0);" onclick="removeAllMaps();">
           Exit <span>All Maps</span>       
         </a>
       </div>
@@ -112,8 +106,7 @@
 
   <div class="foot-lable clearfix">
     <div class="col-sm-4">
-     <a href="https://play.google.com/store/apps/details?id=com.hmgps&hl=en" target="_blank" class="app-store tool-tip" data-text="Coming Soon" data-color="orange">
-    
+     <a href="https://play.google.com/store/apps/details?id=com.hmgps&hl=en" target="_blank" class="app-store tool-tip" data-text="Coming Soon" data-color="orange">    
         <img src="<?php echo site_url();?>assets/images/app-store.png" class="img-responsive" alt="">
       </a>
     </div>

@@ -112,7 +112,7 @@
 
                   <p>Your map is not live yet so others can't see your location. Click 
 
-                  <a href="<?php echo base_url();?>search/<?php echo $rand_channelid; ?>">View My Map</a> to make live and use the controls on the left to change views to Satellite, Terrain, etc.</p>
+                  <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>">View My Map</a> to make live and use the controls on the left to change views to Satellite, Terrain, etc.</p>
 
                </div>
 

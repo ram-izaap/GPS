@@ -12,9 +12,6 @@ class Search extends AppController {
 
 	public function index( $jkey = '' )
 	{
-		//load common data
-		$this->getCommonData();
-
 		//get join_key
 		if( $jkey !== '' )
 		{
@@ -183,9 +180,12 @@ class Search extends AppController {
 
 		$this->data['search_key'] = $this->joinKey;
 
-		$this->data['user_info']['join_key'] 	=  $this->joinKey;
-		$this->data['user_info']['visible'] 	= $my_visible;
-		$this->data['visible'] 					= $my_visible;
+		//$this->data['user_info']['join_key'] 	=  $this->joinKey;
+		//$this->data['user_info']['visible'] 	= $my_visible;
+		//$this->data['visible'] 					= $my_visible;
+
+		//load common data
+		$this->getCommonData();
 
 		//customPrint( $this->data );
 
