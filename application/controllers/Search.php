@@ -55,11 +55,12 @@ class Search extends AppController {
 								'display_name' 	=> $map_data->description,
                                 'lat' 			=> $map_data->lat,
                                 'lang' 			=> $map_data->lon,
-                                'user_type' 	=> 'admin',
+                                'user_type' 	=> 'public',
                                 'channel_id'	=> $map_data->join_key,
                                 'visible' 		=> $map_data->is_view,
                                 'location_type' => $map_data->location_type,
                                 'user_id' 		=> $map_data->user_id,
+                                'marker_color'  => base_url()."assets/images/orange-icon.png"
 							);
 			$locations[] = $location;
 		}
@@ -173,6 +174,7 @@ class Search extends AppController {
 		
 		$output = array(
 				'info' => '',
+				'type' => $map_data->type,
 				'locations' => $locations
 			);
 

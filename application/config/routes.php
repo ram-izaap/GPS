@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 
+$route['search'] = 'search/index';
+$route['(:any)'] = 'search/index/$1';
 $route['search/(:any)'] = 'search/index/$1';
 $route['search/(:any)/(:any)'] = 'search/index/$1/$2';
 

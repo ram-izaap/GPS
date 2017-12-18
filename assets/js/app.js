@@ -37,18 +37,34 @@ var map;
     var visibles = [];
     var invisibles = [];
     var clues = [];
+    var publicLocations = []; //Only for Public Map
+
     var participants = [];
 
     var myCurrentPos = undefined;
     var adminInfo = undefined;
+    var trackingUser ;
 
     module.init = function ( callback )
     {
-        console.log('KKKK', locations);
-        var zoomlvl = 5;
+
+        module.prepareData();
+
+        if( map_data.type == 'public' )
+        {
+            publicLocations = locations.splice(0,1);//.push( locations.splice(0,1) );
+        }
+
+        console.log('publicLocations', publicLocations);
+        trackingUser = adminInfo;
+        // console.log(adminInfo);
+        // return;
+        
+        var zoomlvl = 13;
+
         map = new google.maps.Map(document.getElementById('map'), {
               zoom: zoomlvl,
-              center: {lat: parseFloat(locations[0].lat), lng: parseFloat(locations[0].lang)},
+              center: {lat: parseFloat(trackingUser.lat), lng: parseFloat(trackingUser.lang)},
               gestureHandling: 'greedy',
               mapTypeControl: true,
               mapTypeControlOptions: {
@@ -85,12 +101,12 @@ var map;
              tilt: 45,
              fullscreenControl:true
 
-            });
+        });
 
 
         infowindow = new google.maps.InfoWindow({
-                 maxWidth: 300 
-               });
+            maxWidth: 300 
+        });
       
 
         if (navigator.geolocation) {
@@ -109,11 +125,16 @@ var map;
 
         module.addYourLocationButton(map);
 
-        module.prepareData();
+        //module.prepareData();
 
         module.render( visibles, 'visibles');
         module.render( invisibles, 'invisibles');
-        module.render( clues, 'clues');  
+        module.render( clues, 'clues');
+
+        if( publicLocations.length )
+        {
+            module.renderMarkers(publicLocations[0], 0, 'publicLocations');
+        }  
     };
 
 
@@ -151,7 +172,7 @@ var map;
             else
             {
                 //PUBLIC MAP
-                visibles.push( location );
+                //visibles.push( location );
             }
 
                       
@@ -617,10 +638,6 @@ function formatTime(date)
 
     
 //FUNCTIONS
-function test111()
-{
-    console.log('sdasd');return true;
-}
 
 function doSearch()
 {
