@@ -17,8 +17,8 @@
          </div>
          <div class="col-xs-4">
             <div class="pencil-cover">
-               <input type="text" placeholder="<?php echo $channel_id;?>" value="<?php echo $channel_id;?>" class="edit-id text edit-map-id">
-               <span class="edit-map-id edit-ico glyphicon glyphicon-pencil __web-inspector-hide-shortcut__" aria-hidden="true"></span>
+               <input type="text" placeholder="<?php echo $channel_id;?>" value="<?php echo $channel_id;?>" class="edit-id text edit-map-id" onclick="openModals('map_id_update');" >
+               <span class="edit-map-id edit-ico glyphicon glyphicon-pencil __web-inspector-hide-shortcut__" aria-hidden="true" onclick="openModals('map_id_update');"></span>
             </div>
          </div>
       </div>
@@ -28,7 +28,7 @@
          <div class="col-xs-12">
             <div class="pencil-cover">
                <input type="text" placeholder="Enter Your Name" class="text" name="display" id="display_name" value="<?php echo $display_name;?>" />
-               <button class="edit-display-name edit-ico glyphicon glyphicon-pencil" aria-hidden="true" data-text="Submit" data-color="green" data-position="left" style="display:block;" ></button>
+               <button type="button" onclick="openModals('display_name_update');" class="edit-display-name edit-ico glyphicon glyphicon-pencil" aria-hidden="true" data-text="Submit" data-color="green" data-position="left" style="display:block;" ></button>
                <label for="display-name">Your Public User Tag Display Name. (optional)</label>
             </div>
          </div>
@@ -61,7 +61,7 @@
                <div class="input-group">
                   <input type="text" value="<?php echo $join_key;?>" name="join_key" id="join_key" class="form-control" placeholder="Enter channel ID">
                   <span class="input-group-btn">
-                     <input class="btn btn-default"  id="search_btn" name="submit" type="button" value="SEARCH" />
+                     <input class="btn btn-default"  id="search_btn1" name="submit" type="submit" value="SEARCH" />
                   </span>
                </div>
                <!-- /input-group -->

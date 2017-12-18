@@ -65,25 +65,5 @@ $(".submit").on("click",function()
       
   });
 
-
-
-  $('.edit-display-name, .edit-map-id').off('click').on('click', function(){
-    
-    if( $(this).hasClass('edit-display-name') )
-    {
-      console.log('edit-display-name');
-      $("#display_pp").trigger("click");
-
-    }
-    else
-    {
-      console.log('edit-map-id');
-      
-      $('#custom_map_id').val( user_info.channel_id );
-      $("#display_popup_map_id").trigger("click");
-    }
-
-  });
-
 });
 

@@ -257,6 +257,7 @@ var share_map_id;
 
         }
 
+        
         $('#participants-count').html(visibles.length);
     };
 
@@ -617,6 +618,10 @@ function formatTime(date)
 
     
 //FUNCTIONS
+function test111()
+{
+    console.log('sdasd');return true;
+}
 
 function doSearch()
 {
@@ -626,7 +631,7 @@ function doSearch()
 
 
     $('#main_search').submit();
-    //console.log(joinKey, pwd);
+    console.log(joinKey, pwd);
 }
 
 function add_toggle()
@@ -789,7 +794,8 @@ function updateMapID() {
 
     var data = {
         user_id: user_info.user_id,
-        channel_id: mapID
+        channel_id: mapID,
+        updateCookie: (user_info.join_key == user_info.channel_id)
     };
 
     //console.log(data);
@@ -850,7 +856,7 @@ function doGuestRegistration()
 
                 //update global user_info 
                 user_info = response.user_info;
-
+                openModals( 'display_name_update' );
             }
         }, 'json');
     }

@@ -159,7 +159,7 @@
                
                <div class="dropup">
                   <button class="btn btn-default dropdown-toggle parti" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Participants (<span id="count-participants">0</span>) <span class="caret"></span>
+                  Participants (<span id="participants-count">0</span>) <span class="caret"></span>
                   </button>
                   <div class="dropdown-menu" id="participants-list">
                      <a class="close_pop" onclick="add_toggle();">CLOSE</a>
@@ -211,12 +211,21 @@
    </div>
 
 
-<script>
-
-  var map_data = <?php echo $map_data;?>;
-  var locations = map_data.locations;
-
-</script>
+<div id="participant-template" style="display: none;">
+  <li>
+    <div class="p-parti">
+      <span class="name"><b>DN:</b></span>
+      <span class="name display_name"></span>
+      <br/>
+      <span class="name"><b>CHID:</b></span>
+      <span class="name channel_id"></span>
+    </div>
+    <div class="p-find-iocn">
+      <a href="javascript:;" class="myposition sprite-image">&nbsp;</a>
+      <a href="javascript:;" class="statuspop sprite-image">&nbsp;</a>
+    </div>
+  </li>
+</div>
 
 
 

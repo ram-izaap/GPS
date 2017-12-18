@@ -125,13 +125,3 @@
 </div>
 
 
-<script src="<?php echo base_url();?>assets/js/geolocationmarker-compiled.js"></script>
-<script src="<?php echo base_url();?>assets/js/show_position.js"></script>    
-
-
-<script>
-
-  var map_data = <?php echo $map_data;?>;
-  var locations = map_data.locations;
-
-</script>
