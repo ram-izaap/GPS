@@ -627,11 +627,37 @@ function doSearch()
 {
     
     var joinKey = $('input[name="join_key"]').val(),
-        pwd = $('input[name="password"]').val();
-
-
-    $('#main_search').submit();
+        pwd     = $('input[name="password"]').val();
+    
     console.log(joinKey, pwd);
+    
+    var data    = {
+                    join_key: joinKey,
+                    password: pwd   
+    };
+    
+    showLoader();
+
+    $.post(site_url + 'search/validateJoinKey', data, function(response) {
+
+        showLoader(false);
+        
+        if(response.status == 'success'){
+            $('#main_search').submit();
+        }
+        else
+        {
+            alert(response.msg);
+            if(response.type == 'password'){
+              $('input[name="password"]').removeAttr('placeholder');  
+              $('input[name="password"]').focus();
+            }  
+            return false;
+        }
+
+    }, "json"); 
+
+    
 }
 
 function add_toggle()

@@ -191,5 +191,64 @@ class Search extends AppController {
 
 		$this->layout->view($this->viewPath.'/search/index', $this->data);
 	}
+    
+   	public function validateJoinKey()
+	{
+
+        $this->joinKey = '';
+        
+		if( $this->input->post('join_key') !== '' )
+		{
+			$this->joinKey = $this->input->post('join_key');
+		}
+		//save JOIN KEY
+		$this->setJoinKey( $this->joinKey );
+        
+
+		$params    = array('join_key' => $this->joinKey );
+		$groupData = $this->rest->get('group_dt', $params, 'json');
+        
+        $res = array();
+        
+        //validate group
+        if($groupData->status == 'success'){
+            if($groupData->data->password_protect == 1)
+              $protectionType = 'password';
+            else if($groupData->data->allow_deny == 1)
+              $protectionType = 'allow_deny';
+            else
+              $protectionType = 'normal';
+              
+              
+            if($protectionType == 'normal'){
+              $res = array("status" => "success", "msg" => "");
+            }  
+            else if($protectionType == 'allow_deny'){
+              $res = array( "status" => "error","type" => $protectionType ,"msg" => "This map has been protected. Do you want to send join request?");
+            }  
+            else
+            {
+                $passwd = $this->input->post('password');    
+                if(empty($passwd)){
+                    $res = array( "status" => "error","type" => $protectionType ,"msg" => 'This map has been password protected so please enter password');
+                }
+                else if($passwd == $groupData->data->password){
+                    $res = array( "status" => "success");
+                }
+                else
+                {
+                    $res = array( "status" => "error", "type" => $protectionType ,"msg" => "Please Enter Correct Password");
+                }
+            }
+                    
+        }
+        else
+        {
+            $res = array( "status" => "error", "msg" => $groupData->msg);
+        }
+        
+        echo json_encode($res);
+        exit;
+    }
 
 }

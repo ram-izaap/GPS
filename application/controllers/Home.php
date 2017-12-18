@@ -114,9 +114,6 @@ class Home extends AppController {
 
 	
 
-	
-
-
 
 }
 
