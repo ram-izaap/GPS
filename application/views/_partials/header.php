@@ -73,7 +73,7 @@
       
       <div id="wait" style="display:none; width:69px; height:89px; position:absolute; top:50%; left:50%; padding:2px;"></div>
       
-      
+      <div id="copy_clipboard"></div>
       <input  value="0" name="latlang" id="latlang" type="hidden" value="INVALID">
       <input class="form-control" value="" name="map_pos" id="map_pos" type="hidden">
       <input  value="" name="joined_map" id="joined_map" type="hidden" />
@@ -121,7 +121,7 @@
                   <input type="reset" value="" class="pull-left" />
                   </span>
                </div>
-               <span class="top-share"> <a data-toggle="modal" data-target="#searchshare"><i class="fa fa-share-alt fa-2x"></i></a></span>
+               <span class="top-share"> <a data-toggle="modal" data-target="#searchshare" onclick="openModals('social_share');"><i class="fa fa-share-alt fa-2x"></i></a></span>
             </form>
          </div>
 
