@@ -66,7 +66,7 @@ function convert_latlon($address)
    
     $geolocation = array(); 
      
-    $url = "http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false";
+    $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=AIzaSyC5yDjm5C5z4MTT6g4qFjfcFF1wdsq7ydI";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -77,6 +77,7 @@ function convert_latlon($address)
     curl_close($ch);
     
     $response_a     = json_decode($response);
+    
     $geolocation[0] = $response_a->results[0]->geometry->location->lat;
     $geolocation[1] = $response_a->results[0]->geometry->location->lng;
     
