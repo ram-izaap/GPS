@@ -8,7 +8,7 @@
           <h4 class="modal-title">Quick share - Current map</h4>
         </div>
         <div class="modal-body">
-          <input  />
+          
           <div id="searchmapshare">
                
             </div>
