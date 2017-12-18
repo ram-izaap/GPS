@@ -62,11 +62,13 @@ class Search extends AppController {
                                 'user_id' 		=> $map_data->user_id,
                                 'marker_color'  => base_url()."assets/images/orange-icon.png",
                                 'speed'			=> '',
-                                'accuracy'      => ''
+                                'accuracy'      => '',
+                                'profile_image' => ''
 							);
 			$locations[] = $location;
 		}
 
+		//Visibles & Invisibles
 		foreach($map_data->members as $member)
 		{
 
@@ -134,6 +136,14 @@ class Search extends AppController {
 				}
 			}
 
+			$profileImg = $member->user->profile->profile_image;
+
+			if( empty($profileImg) )
+			{
+				//Todo
+				$profileImg = base_url('assets/images/default-user.png');
+			}
+
 			$location = array(
 								'display_name' 	=> $member->user->profile->display_name,
                                 'lat' 			=> $member->user->position->lat,
@@ -146,7 +156,8 @@ class Search extends AppController {
                                 'marker_color'  => $img,
                                 'last_seen_time'=> $last_seen_time * 1000,
                                 'speed'			=> $member->user->position->speed,
-                                'accuracy'      => $member->user->position->accuracy
+                                'accuracy'      => $member->user->position->accuracy,
+                                'profile_image'   => $profileImg
 							);
 
 			$locations[] = $location;
@@ -169,9 +180,10 @@ class Search extends AppController {
                                 'visible' 		=> '',
                                 'location_type' => 'staticmap',
                                 'user_id' 		=> $static_map->user_id,
-                                'speed'			=> '0',
-                                'accuracy'      => '0',
-                                'notes' 		=> $static_map->notes
+                                'speed'			=> '',
+                                'accuracy'      => '',
+                                'notes' 		=> $static_map->notes,
+                                'profile_image' => $static_map->clue_image
 							);
 
 			$locations[] = $location;

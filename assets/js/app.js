@@ -318,15 +318,11 @@ var share_map_id;
 
         google.maps.event.addDomListener(marker, 'click', (function(marker, i, type, location, module) {
                
-               //var content = module.renderInfoWindow( location );
-               return function() {
-
-                    var template = new Element('#map_info_wndow'),
-                        $element = template.element;
-
-                 //var cont = content;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
-                 infowindow.setContent($element.html());
-                 infowindow.open(map, marker);
+               return function() 
+               {
+                    infowindow.close();
+                    infowindow.setContent( module.renderInfoWindow( location ) );
+                    infowindow.open(map, marker);
                }
 
         })(marker, index, type, location, module));
@@ -339,10 +335,41 @@ var share_map_id;
     module.renderInfoWindow = function( location )
     {
         //return 'rutoiweru';
-        var template = new Element('#ram1122'),
+        var template = new Element('#map_info_wndow'),
             $element = template.element;
 
-        return $element;
+        var last_seen_time = new Date(location.last_seen_time);
+
+        $element.find('.profile-img').attr('src', location.profile_image);
+
+        $element.find('.channel_id').html( location.channel_id );
+        $element.find('.display_name').html( location.display_name );
+        $element.find('.lastseen').html( formatTime( last_seen_time ) );
+
+        //speed
+        if( location.speed != '' )
+        {
+            $element.find('.speed').html( location.speed );
+        }
+        else
+        {
+            $element.find('.speed').remove();
+        }
+
+        //accuracy
+        if( location.speed != '' )
+        {
+            $element.find('.accuracy').html( location.accuracy );
+        }
+        else
+        {
+            $element.find('.accuracy').remove();
+        }
+
+        $element.find('.lat').html( location.lat );
+        $element.find('.lng').html( location.lang );
+
+        return $element.html();
     }
 
     module.locatePosition = function( index, type, callback )
@@ -386,6 +413,36 @@ var share_map_id;
 
         console.log(options);
     };
+
+    module.closeinfowindow = function ( closeid )
+    {
+        infowindow.close();
+
+        if(closeid != 1)
+        {
+           setTimeout(function(){ map.setZoom(16); },2000);
+        }
+    }
+
+    module.breadcrumb = function ( closeid )
+    {
+        infowindow.close();
+
+        if(closeid != 1)
+        {
+           setTimeout(function(){ map.setZoom(16); },2000);
+        }
+    }
+
+    module.clearTracking = function ( closeid )
+    {
+        infowindow.close();
+
+        if(closeid != 1)
+        {
+           setTimeout(function(){ map.setZoom(16); },2000);
+        }
+    }
 
     module.getModeOptions = function( type )
     {
