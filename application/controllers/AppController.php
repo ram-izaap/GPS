@@ -39,59 +39,42 @@ class AppController extends CI_Controller {
 		//echo $this->userID;die;
 		$userInfo = $this->getUserInfo( $this->userID );
 		
-		$searchKey = '';
+		
 
 		//customPrint($this->data['user_info']);
 		$this->data = array_merge($this->data, $userInfo);
 
-		$this->data['search_key'] = $searchKey;
 
-
-
-		//$this->data['user_action'] = ( (int)$userInfo['user_id'] ) ? 'user_update':'guest_registration';
-		
-		
 		$uri      = $this->uri->segment(1);
        	$page     = ($uri == 'search' || $uri!='help' || $uri!='tellus' || $uri!='privacy-policy-and-terms-and-conditions')?"search-page":"";
 
        	$this->data['uri'] 	= $uri;
        	$this->data['page'] = $page;
 
-       	$key = $userInfo['channel_id'];
-       	if( $this->data['search_key'] )
-       	{
-       		$key = $this->data['search_key'];
-       	}
-       	$this->data['shareurl'] = base_url()."search/".$key;
+       	$this->data['shareurl'] = base_url()."search/".$userInfo['channel_id'];
 
 
 
        	//prepare my map display string part ( for Home page )
-       	$mapDispStr = $this->isMobile ? "<b>Return to</b>My Map":"Return to <small>My Map</small>";
-       	if( $searchKey == '' )
+       	if( $this->router->fetch_class() == 'search' )
+       	{
+       		if( $this->joinKey == $userInfo['channel_id'] )
+       		{
+       			$mapDispStr = $this->isMobile ? "<b>My</b>My Map":"My <small>Map</small>";
+       		}
+       		else
+       		{
+       			$mapDispStr = $this->isMobile ? "<b>Return to</b>My Map":"Return to <small>My Map</small>";
+       		}
+       	}
+       	else
        	{
        		$mapDispStr = $this->isMobile ? "<b>View</b>My Map":"View <small>My Map</small>";
-       	}
-       	else if( $searchKey == $userInfo['channel_id'] )
-       	{
-       		$mapDispStr = $this->isMobile ? "<b>My</b>My Map":"My <small>Map</small>";
        	}
 
        	$this->data['map_disp_str'] = $mapDispStr;
 
        	
-
-       	$params = array('user_id' => $userInfo['user_id'], 'channel_id' => $userInfo['channel_id']);
-		$resp = $this->rest->get('group_info', $params, 'json');
-		
-		if( is_object($resp) && $resp->status == 'success' )
-		{
-			$this->data['visible'] = $resp->data->is_view;
-		}
-		else
-		{
-			$this->data['visible'] = '1';// default value
-		}
 
 		$this->data['user_info'] = $this->data;
 	}
@@ -119,6 +102,21 @@ class AppController extends CI_Controller {
 							"join_key" => $this->joinKey
 						);
 
+			$params = array(
+       			'user_id' => $user->user_id, 
+       			'channel_id' => $this->joinKey
+       		);
+			$resp = $this->rest->get('group_info', $params, 'json');
+			
+			if( is_object($resp) && $resp->status == 'success' )
+			{
+				$userInfo['visible'] = $resp->data->is_view;
+			}
+			else
+			{
+				$userInfo['visible'] = '1';// default value
+			}
+
 			return $userInfo;
 		}
 		
@@ -138,8 +136,12 @@ class AppController extends CI_Controller {
 						'group_id'		=>	'',
 						'joined_group'	=>	'',
 						"updated_type" 	=> 'system',
-						"updated_phonenumber" => "system"
+						"updated_phonenumber" => "system",
+						"join_key" 		=> $randomID,
+						"visible"       => '1'
 					);
+
+		$this->setJoinKey( $randomID );
 
 		return $userInfo;
 	}
