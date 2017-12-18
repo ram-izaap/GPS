@@ -27,6 +27,7 @@ var Element = (function ( $ )
 var mapManager = {};
 var map;
 var share_map_id;
+var geocoder;
 (function ( module )
 {
     //var map;
@@ -887,10 +888,8 @@ function doGuestRegistration()
         data = {},
         flag = false;
     
-    if( latlon == 'INVALID')   
-    {
-
-
+    if(1 == 1){
+      openModals('manual_address_popup');
     }
     else
     {
@@ -930,6 +929,50 @@ function doGuestRegistration()
        
 }
 
+//get lat long from manual address
+function getLatLong()
+{
+    var manual_addr  = $('input[name="manual_address"]').val();
+    
+    codeAddress(manual_addr); 
+    
+    var data         = {
+                        address: manual_addr      
+    };
+    
+    
+    showLoader( true );
+    
+    $.post(site_url + 'home/convertLatLong', data, function(response) {
+            showLoader( false );
+            if (response.status == 'success') {
+                $("#latlang").val(response.latlong);
+                doGuestRegistration();
+            }
+            else
+            {
+                alert(response.msg);
+                return false;
+            }
+    }, 'json');    
+}
+
+ function codeAddress(address) {
+   var geocoder = new google.maps.Geocoder();
+
+   // var address = document.getElementById('address').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        console.log(results[0].geometry.location);
+        alert(results[0].geometry.location);
+      if (status == 'OK') {
+       
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+
 //social share map section
 function share_map(type)
 {
@@ -947,11 +990,11 @@ function render_social_share(share_map_id)
       
       $("#searchmapshare").html(shr_ct); 
       
-      var sms_href   = 'sms:?body=Hi, View my location on live map and join me at: '+site_url+"/"+share_map_id;
-      var email_href = "mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: ";
+      var sms_href    = 'sms:?body=Hi, View my location on live map and join me at: '+site_url+"/"+share_map_id;
+      var email_href  = "mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: ";
           email_href += site_url+"/"+share_map_id;
-      var cpy        = "copyToClipboard('#copy_clipboard','#websitesearch_text','"+share_map_id+"')";
-     console.log(email_href);
+      var cpy         = "copyToClipboard('#copy_clipboard','#websitesearch_text','"+share_map_id+"')";
+     
      
      //copy clipboard adding onclick event
      $("#searchmapshare .cpy_clip").attr('onclick', cpy);

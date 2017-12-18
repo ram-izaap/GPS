@@ -69,7 +69,7 @@ class Home extends AppController {
         	$this->setJoinKey( $resp->default_id);
 
         	$output['status']		= 'success';
-			$output['msg']   		= 'Successfully registerd as a guest or existing user!';
+			$output['msg']   		= 'Successfully registerd as a guest user!';
 			$output['join_key'] 	= $display_name;
 			$output['user_info']   	= $this->getUserInfo( $this->userID );
         }
@@ -83,7 +83,24 @@ class Home extends AppController {
 	}
 
 
-
+   // convert manual address to latlong
+   public function convertLatLong()
+   {
+       $address     = $this->input->post('address');
+       $geolocation = convert_latlon($address);
+       
+       if(is_array($geolocation)){
+           $latlong = $geolocation[0].":".$gelocation[1];
+           $res     = array("status" => "success", "latlong" => $latlong);
+       }
+       else
+       {
+           $res     = array("status" => "error", "msg" => "Please Enter correct address!");
+       }
+       
+       echo json_encode($res);
+       exit;
+   }
 
 
 	// STATIC PAGES
