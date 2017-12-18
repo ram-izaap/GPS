@@ -26,6 +26,7 @@ var Element = (function ( $ )
 
 var mapManager = {};
 var map;
+var share_map_id;
 (function ( module )
 {
     //var map;
@@ -735,10 +736,16 @@ function openModals(type) {
         if (type == 'map_id_update') {
             $("#custom_map_id").val(user_info.channel_id);
         }
-
+     
         //now open modal
         $('#' + type).modal();
-
+        
+        if(type == 'social_share'){
+            render_social_share(user_info.channel_id);
+            $("#share_mp_join_key").html(user_info.join_key);
+            $("#share_mp_channel").html(user_info.channel_id);
+        }
+        
     }, 'json');
 }
 
@@ -879,4 +886,55 @@ function doGuestRegistration()
 
 
        
+}
+
+//social share map section
+function share_map(type)
+{
+    if(type == 'join_key')
+        share_map_id = user_info.join_key;
+    else
+        share_map_id = user_info.channel_id;
+    
+    render_social_share(share_map_id);     
+}
+
+function render_social_share(share_map_id)
+{
+      var shr_ct = $("#shr_mp_content").html();   
+      
+      $("#searchmapshare").html(shr_ct); 
+      
+      var sms_href   = 'sms:?body=Hi, View my location on live map and join me at: '+site_url+"/"+share_map_id;
+      var email_href = "mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: ";
+          email_href += site_url+"/"+share_map_id;
+      var cpy        = "copyToClipboard('#copy_clipboard','#websitesearch_text','"+share_map_id+"')";
+     console.log(email_href);
+     
+     //copy clipboard adding onclick event
+     $("#searchmapshare .cpy_clip").attr('onclick', cpy);
+     
+      //replace href in sms & email share
+      $("#searchmapshare .sms_share").attr('href', ''+sms_href);
+      $("#searchmapshare .email_share").attr('href', ''+email_href); 
+      
+      $("#searchmapshare").socialButtonsShare({
+      socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
+      url: site_url+'/search/'+share_map_id,
+      type: $("#joined_map").val(),
+      text: "\nMy Map ID is "+share_map_id+"\n\n View my location @ "+site_url+"/"+share_map_id+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+      sharelabel: false
+    });
+     
+}
+
+function copyToClipboard(element,altdiv,sharemp) {
+  var $temp = $("<input type='hidden'>");
+  $("body").append($temp);
+  $temp.val(site_url+sharemp).select();
+  document.execCommand("copy");
+  $temp.remove();
+  var url = site_url+sharemp;
+  $(altdiv).css("display","block").html("Copied "+url+" to clipboard");
+  $(altdiv).fadeOut(4000);
 }
