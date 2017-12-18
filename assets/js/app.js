@@ -316,17 +316,33 @@ var share_map_id;
              zIndex:9999+index
             });
 
-        google.maps.event.addDomListener(marker, 'click', (function(marker, i) {
+        google.maps.event.addDomListener(marker, 'click', (function(marker, i, type, location, module) {
+               
+               //var content = module.renderInfoWindow( location );
                return function() {
-                 var cont = 'Hi sakhdjksah:: '+ index + ':::' +type;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
-                 infowindow.setContent(cont);
+
+                    var template = new Element('#map_info_wndow'),
+                        $element = template.element;
+
+                 //var cont = content;//contents[i][0].replace("<<lastseen>>",formattime(dat) );
+                 infowindow.setContent($element.html());
                  infowindow.open(map, marker);
                }
-        })(marker, index, type));
+
+        })(marker, index, type, location, module));
 
         if( type == 'visibles' ) visibles_markers.push( marker );
         if( type == 'clues' ) clues_markers.push( marker );        
         
+    }
+
+    module.renderInfoWindow = function( location )
+    {
+        //return 'rutoiweru';
+        var template = new Element('#ram1122'),
+            $element = template.element;
+
+        return $element;
     }
 
     module.locatePosition = function( index, type, callback )

@@ -42,7 +42,7 @@ class Search extends AppController {
 			$map_data = $this->rest->get('search_map', $params, 'json');
 		}
 		
-		//customPrint($map_data);
+		//customPrint( $map_data->static_maps );
 		
 		$my_visible = '';
 		//prepare member-locations
@@ -60,7 +60,9 @@ class Search extends AppController {
                                 'visible' 		=> $map_data->is_view,
                                 'location_type' => $map_data->location_type,
                                 'user_id' 		=> $map_data->user_id,
-                                'marker_color'  => base_url()."assets/images/orange-icon.png"
+                                'marker_color'  => base_url()."assets/images/orange-icon.png",
+                                'speed'			=> '',
+                                'accuracy'      => ''
 							);
 			$locations[] = $location;
 		}
@@ -142,7 +144,9 @@ class Search extends AppController {
                                 'location_type' => 'dynamic',
                                 'user_id' 		=> $member->user->profile->id,
                                 'marker_color'  => $img,
-                                'last_seen_time'=> $last_seen_time * 1000
+                                'last_seen_time'=> $last_seen_time * 1000,
+                                'speed'			=> $member->user->position->speed,
+                                'accuracy'      => $member->user->position->accuracy
 							);
 
 			$locations[] = $location;
@@ -161,10 +165,13 @@ class Search extends AppController {
                                 'lat' 			=> $static_map->lat,
                                 'lang' 			=> $static_map->lon,
                                 'user_type' 	=> '',
-                                'channel_id'	=> $static_map->join_key,
+                                'channel_id'	=> $this->joinKey,
                                 'visible' 		=> '',
                                 'location_type' => 'staticmap',
                                 'user_id' 		=> $static_map->user_id,
+                                'speed'			=> '0',
+                                'accuracy'      => '0',
+                                'notes' 		=> $static_map->notes
 							);
 
 			$locations[] = $location;

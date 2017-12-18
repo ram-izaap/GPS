@@ -124,4 +124,68 @@
   </li>
 </div>
 
+<div id="map_info_wndow" style="display:none">
+   <div class="map-locator">
+      <div class="map-pic clearfix">
+         <div class="col-xs-4">
+            <img src="" class="img-responsive img-circle" alt="user-image">
+         </div>
+         <div class="col-xs-8">
+            <p> 
+              <i class="fa fa-user pull-left" aria-hidden="true"></i>
+              <small> HMGPS User ID</small> <small class="join_key"></small> 
+            </p>
+            <p> 
+              <i class="fa fa-user pull-left" aria-hidden="true"></i> 
+              <small>Display Name: </small> <small class="display_name"></small> 
+            </p>
+            <small></small>
+         </div>
+         <small></small>
+      </div>
+      <div class="map-record clearfix">
+         <small>
+            <div class="col-xs-12 clearfix">
+               <p> 
+                  <i class="fa fa-clock-o pull-left" aria-hidden="true"></i> 
+                  <small>Position Time Updated</small>
+                </p>
+                <p class="lastseen"></p>
+            </div>
+            <div class="col-xs-3 clearfix">
+               <p> <small>Speed</small> <small class="speed"></small> </p>
+            </div>
+            <div class="col-xs-6 clearfix">
+               <p> <small>Accuracy</small> <small class="accuray"></small>  </p>
+            </div>
+            <div class="col-xs-12 clearfix">
+              <p> 
+                <i class="fa fa-globe pull-left" aria-hidden="true"></i> 
+                <small>GPS Coordinate</small> 
+                <small class="lat"></small>, &nbsp;&nbsp;&nbsp;  
+                <small class="lon"></small> 
+              </p>
+            </div>
+         </small>
+      </div>
+
+      <small>
+
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group text-center" role="group">
+            <button onclick="breadcrumb(7);" class="btn btn-default btn-success"> OK </button>
+          </div>
+          <div class="btn-group" role="group">
+             <button onclick="clear_track()" class="btn btn-default btn-info">Clear Tracking</button>
+          </div>
+          <div class="btn-group" role="group">
+             <button onclick="closeinfowindow()" class="btn btn-default btn-danger"> Close </button>
+          </div>
+       </div>
+       
+      </small>
+
+   </div>   
+</div>
+
 
