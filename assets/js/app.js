@@ -256,6 +256,7 @@ var map;
 
         }
 
+        
         $('#participants-count').html(visibles.length);
     };
 

@@ -33,6 +33,7 @@
         var site_url = '<?php echo site_url();?>';
         var base_url = '<?php echo base_url();?>';
         var user_info = <?php echo json_encode($user_info);?>;
+        var controller = '<?php echo $this->router->fetch_class(); ?>';
 
         var map_data, locations = [], myCurrentPos = undefined;
 
@@ -70,9 +71,14 @@
 
         }
 
-      </script>
+        if( controller == 'search' )
+        {
+            map_data = <?php echo isset($map_data)?$map_data:"{locations:[]}";?>;
+            locations = map_data.locations;
+        }
 
       </script>
+
     
     <style>
       .martop{ margin-top:10px !important;}
