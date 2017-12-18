@@ -616,6 +616,10 @@ function formatTime(date)
 
     
 //FUNCTIONS
+function test111()
+{
+    console.log('sdasd');return true;
+}
 
 function doSearch()
 {
@@ -625,7 +629,7 @@ function doSearch()
 
 
     $('#main_search').submit();
-    //console.log(joinKey, pwd);
+    console.log(joinKey, pwd);
 }
 
 function add_toggle()
