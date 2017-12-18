@@ -205,6 +205,10 @@ class AppController extends CI_Controller {
 			$this->service_param['channel_id'] 	= $channelID;
 			$this->service_param['user_id'] 	= $userID;  
 			$map_det = $this->rest->get('updateMapID', $this->service_param, 'json');
+
+			//update cookie If flag is true
+			if( $_POST['updateCookie'] == 'true' ) $this->setJoinKey( $channelID );
+
 			//$output = array('nn' => $channelID, 'mm' => $userID);
 			echo json_encode($map_det);
 		}catch(Exception $e){

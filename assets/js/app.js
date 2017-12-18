@@ -782,7 +782,8 @@ function updateMapID() {
 
     var data = {
         user_id: user_info.user_id,
-        channel_id: mapID
+        channel_id: mapID,
+        updateCookie: (user_info.join_key == user_info.channel_id)
     };
 
     //console.log(data);
@@ -843,7 +844,7 @@ function doGuestRegistration()
 
                 //update global user_info 
                 user_info = response.user_info;
-
+                openModals( 'display_name_update' );
             }
         }, 'json');
     }
