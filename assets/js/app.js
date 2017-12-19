@@ -941,9 +941,9 @@ function updateDisplayName() {
       showLoader( false );
       alert(response.msg);
       if (response.status == 'success') {
-        if(controller == 'search' && user_info.join_key == user_info.channel_id)
-            location.href = site_url+channel_id;
-         else
+        // if(controller == 'search' && user_info.join_key == user_info.channel_id)
+        //     location.href = site_url+channel_id;
+        //  else
             location.reload();
       }
     }, 'json');
