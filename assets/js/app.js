@@ -629,7 +629,7 @@ var geocoder;
                     secondChild.style['background-position'] = imgX+'px 0';
                 }, 500);
 
-            if( myCurrentPos )
+            if( $.isEmptyObject(myCurrentPos)  )
             {
                 var myMarker = new google.maps.Marker({
                   map: map,
@@ -1056,6 +1056,7 @@ function getLatLong()
             else
             {   
                 //set myCurrentPos values
+                myCurrentPos = {};
                 myCurrentPos.lat = '13.040915799999999'//results[0].geometry.location.lat;
                 myCurrentPos.lng = '80.17330849999999'//results[0].geometry.location.lng;
 
