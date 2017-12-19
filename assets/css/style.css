@@ -10424,12 +10424,13 @@ body.active .nav-close {
     height: 28px; }
 
 .top-search-icon {
-  background: transparent url("../images/search-icon-new.png") no-repeat center center;
+  background: transparent url("../images/search-icon-new.gif") no-repeat center center;
   border: 0;
   display: inline-block;
   margin: 0 5px;
   position: relative;
-  top: 0!important; }
+  top: 0!important;
+  left:-5px; }
   .top-search-icon input {
     width: 32px;
     height: 52px; }
@@ -10451,8 +10452,9 @@ body.active .nav-close {
     display: inline-block;
     padding-right: 25px;
     background: url("../images/pencil-1.png") no-repeat right center;
+    background-size: 22px;
     margin-right: 0px;
-    background-size: 22px;     }
+         }
   .cMapid i {
     display: inline-block;
     width: 20px;
@@ -10465,6 +10467,10 @@ body.active .nav-close {
     font-size: 18px;
     color: #00ccff;
     padding-left: 5px; }
+
+    .cMapid.no-bg {
+      background-image: none;
+    }
 
 .top-share i {
   font-size: 0.9em;
@@ -11894,3 +11900,16 @@ a.close_pop {
   background-color:transparent !important;
 }
 .share-map .share_mp_type { margin:0 8px;}
+
+/* New style */
+
+.nav-trigger.pull-left {
+  height:45px;
+  width:20px;
+}
+
+.edit.tool-tip img {
+  position: relative;
+  top:-5px;
+  left:5px;
+}
