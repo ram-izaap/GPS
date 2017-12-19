@@ -135,21 +135,21 @@
          
          <!-- 2nd Block -->
          <div class="col-s-m-6 block-center">
-            <span class="cMapid" onclick="openModals('map_id_update');"> Your Map CH. ID.  <b><?php echo $channel_id;?></b> </span>
-            <span class="cMapid" onclick="openModals('display_name_update')"> Your Display Name: <b><?php echo $display_name;?></b> </span>
+            <span class="cMapid" onclick="openModals('map_id_update');" style="cursor: pointer;"> Your Map CH. ID.  <b><?php echo $channel_id;?></b> </span>
+            <span class="cMapid" onclick="openModals('display_name_update')" style="cursor: pointer;"> Your Display Name: <b><?php echo $display_name;?></b> </span>
          </div>
 
 
          <!-- 3nd Block -->
          <div class="col-sm-3 block-3 block-right pull-right">
 
-            <a onclick="removeAllMaps();" class="all-map pull-right">Exit <small>All Maps</small></a>
+            <a onclick="removeAllMaps();" class="all-map pull-right" style="cursor: pointer;">Exit <small>All Maps</small></a>
             
-            <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>" class="my-map pull-right" >
+            <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>" class="my-map pull-right" style="cursor: pointer;" >
               <?php echo $map_disp_str;?>
             </a>
 
-            <div id="visiblestatus" class="top-visible">
+            <div id="visiblestatus" class="top-visible" style="cursor: pointer;">
                <?php $this->load->view('_partials/visible_status', array('visible' => $visible)); ?>
             </div>
 

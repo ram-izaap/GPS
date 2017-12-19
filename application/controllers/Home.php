@@ -37,7 +37,7 @@ class Home extends AppController {
 		$params['profile_image']	= '';
 		$params['display_name']		= $display_name;
 		$params['device_id']		= '';
-        $params['login_type']		= 'website';
+        $params['login_type']		= 'guest';
         $params['password_protect']	= 0;
         $params['allow_deny']		= 0;
         $params['updated_type']		= 'system';

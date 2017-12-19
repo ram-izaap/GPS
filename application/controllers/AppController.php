@@ -131,7 +131,7 @@ class AppController extends CI_Controller {
 		$userInfo = array(
 						'channel_id' 	=> $randomID, 
 						'display_name'	=> $randomID,
-						'phonenumber' 	=> $randomID,
+						'phonenumber' 	=> '',
 						'user_id'		=> '',
 						'group_id'		=>	'',
 						'joined_group'	=>	'',

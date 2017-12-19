@@ -24,7 +24,8 @@
       </div>
       <div class="col-sm-6">
        
-        <input class="display-name text-field" type="text" name="display_name" id="display_name" value="<?php echo $display_name;?>" placeholder="Display Name" />
+       <!-- <input class="display-name text-field" type="text" name="display_name" id="display_name" value="<?php //echo $display_name;?>" placeholder="Display Name" />-->
+         <span><?php echo $display_name;?></span>
       
         <button type="button" class="edit tool-tip" data-text="Edit" data-color="green" data-position="left" onclick="openModals('display_name_update')"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit" /> </button>
 
@@ -38,7 +39,8 @@
       </div>
       <div class="col-sm-6">
        
-       <input type="text"  id="phone" value="<?php echo $channel_id;?>" name="phone" class="map-id form-control text-field" readonly />
+       <!-- <input type="text"  id="phone" value="<?php //echo $channel_id;?>" name="phone" class="map-id form-control text-field" readonly /> -->
+        <span><?php echo $channel_id;?></span>
       
         <button type="button" class="edit tool-tip" data-text="Edit" onclick="openModals('map_id_update');"  data-color="green" data-position="left"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit"> </button>
 
@@ -48,12 +50,14 @@
   </div>
 
 
-  <div class="left-nav">
+  <!--
+<div class="left-nav">
     <ul>
-      <li><a href="<?php echo site_url();?>search/<?php echo $channel_id; ?>"><i class="fa fa-search"></i>Search</a></li>
+      <li><a href="<?php //echo site_url();?>search/<?php //echo $channel_id; ?>"><i class="fa fa-search"></i>Search</a></li>
       <li><a data-toggle="modal" data-target="#searchshare" onclick="openModals('social_share');"><i class="fa fa-share-alt"></i> Share</a></li>     
     </ul>
   </div>
+-->
 
   <div class="content-row clearfix">
     <div class="col-sm-6">
@@ -63,15 +67,7 @@
       </div>
     </div>
 
-    <div class="col-sm-6 manual-address">
-      <label for="" data-or="true">Enter Manual address</label>
-      <input type="text" class="text-field" placeholder="Add your Address" id="guest_address" />
-      
-      <button type="submit" onclick="create_map('guest_pos_type','','#guest_address','manual');" class="btn btn-info btn-mupdate">
-        Update
-      </button>
-
-    </div>
+   
   </div>
 
   <div class="content-row border clearfix">
