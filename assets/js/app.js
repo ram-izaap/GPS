@@ -258,6 +258,14 @@ var geocoder;
 
                 }
 
+                //Add title for "All" tab
+                if( !$('#tab0 .map-admin').length )
+                {
+                    $('#tab0').append($title, $header);
+                }
+
+
+
             }
 
 
@@ -288,19 +296,21 @@ var geocoder;
 
             if( type == 'visibles' )
             {
-                $("#tab1").append($element);
+                $("#tab1, #tab0").append($element);
             }
             else if( type == 'invisibles' )
             {
                 $element.find('.myposition, .statuspop').remove();
                 $element.find('.p-find-iocn').html('<span class="invisible_icon">&nbsp;</span>');
                 
-                $("#tab2").append($element);
+                $("#tab2, #tab0").append($element);
             }
             else if( type == 'clues' )
             {
-                $("#tab3").append($element);
+                $("#tab3, #tab0").append($element);
             }
+
+            //$("#tab0").append($element);
 
         }
 

@@ -11570,7 +11570,7 @@ display: inline-block; margin-left: 5px;}
 div#searchmapshare > ul {display: inline-block; width: 100%;}
 
 body.search-page > footer{display: none;}
-#participants-list{min-width: 300px;}
+#participants-list{min-width: 350px;}
 .manual-address button {margin-top: 5px;}
 
 body.search-page {padding-top: 60px;}
