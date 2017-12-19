@@ -174,7 +174,7 @@
         <div class="track-buttons clearfix">
           <label for="1">
             Track User
-            <input value="track" class="track_userr" onclick="trackuser();" type="checkbox">
+            <input value="track" class="track_userr" onclick="mapManager.trackUser(this);" type="checkbox">
           </label>
           <label for="2">
             10 mins
@@ -220,7 +220,7 @@
             <button onclick="mapManager.breadcrumb();" type="button" class="btn btn-default btn-success"> OK </button>
           </div>
           <div class="btn-group" role="group">
-             <button onclick="mapManager.clearTracking()" type="button" class="btn btn-default btn-info">Clear Tracking</button>
+             <button onclick="mapManager.clearTracking(this)" type="button" class="btn btn-default btn-info">Clear Tracking</button>
           </div>
           <div class="btn-group" role="group">
              <button onclick="mapManager.closeinfowindow()" type="button" class="btn btn-default btn-danger"> Close </button>

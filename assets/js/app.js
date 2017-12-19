@@ -58,7 +58,11 @@ var geocoder;
         }
 
         console.log('publicLocations', publicLocations);
-        trackingUser = adminInfo;
+        
+        if( !trackingUser ) trackingUser = adminInfo;
+        trackingUser.join_key = map_data.join_key;
+        localStorage.setItem("tracking_user",JSON.stringify(trackingUser));
+        
         // console.log(adminInfo);
         // return;
         
@@ -142,11 +146,24 @@ var geocoder;
 
     module.prepareData = function( )
     {
+        var localTrackData = localStorage.getItem("tracking_user"),
+            checkTrackUser = true;
+    
+        if( localTrackData ) localTrackData = JSON.parse(localTrackData);        
+        
+        if( !localTrackData || localTrackData.join_key != map_data.join_key )
+        {
+            checkTrackUser = false;
+        }
+            
+        
         for (var i = 0; i < locations.length; i++)
         {
             var location = locations[i],
                 mapType = location.location_type,
                 visible = location.visible;
+
+
 
 
             if( mapType == 'dynamic' )
@@ -156,10 +173,18 @@ var geocoder;
                 {
                     adminInfo = location;
                 }
+                
+                
 
                 if( visible == '1' )
                 {
                     visibles.push( location );
+                    
+                    
+                    if( checkTrackUser && localTrackData.channel_id == location.channel_id )
+                    {
+                        trackingUser = location;
+                    }
                     
                 }
                 else if( visible == '0' )
@@ -322,7 +347,7 @@ var geocoder;
                return function() 
                {
                     infowindow.close();
-                    infowindow.setContent( module.renderInfoWindow( location ) );
+                    infowindow.setContent( module.renderInfoWindow( location, type, i ) );
                     infowindow.open(map, marker);
                }
 
@@ -333,7 +358,7 @@ var geocoder;
         
     }
 
-    module.renderInfoWindow = function( location )
+    module.renderInfoWindow = function( location, type, index )
     {
         //return 'rutoiweru';
         var template = new Element('#map_info_wndow'),
@@ -369,7 +394,16 @@ var geocoder;
 
         $element.find('.lat').html( location.lat );
         $element.find('.lng').html( location.lang );
-
+        
+        var localTrackData = JSON.parse(localStorage.getItem('tracking_user'));
+        if(localTrackData.channel_id == location.channel_id)
+        {
+            $element.find('.track_userr').attr( "checked", "checked");
+        }
+        
+         $element.find('.track_userr').attr( 'data-type', type);
+         $element.find('.track_userr').attr( 'data-index', index);
+         
         return $element.html();
     }
 
@@ -438,16 +472,30 @@ var geocoder;
         }
     }
 
-    module.clearTracking = function ( closeid )
+    module.clearTracking = function ( obj )
     {
-        infowindow.close();
-
-        if(closeid != 1)
-        {
-           setTimeout(function(){ map.setZoom(16); },2000);
-        }
+        console.log(obj);
+        return;
+        //infowindow.close();
+//
+//        if(closeid != 1)
+//        {
+//           setTimeout(function(){ map.setZoom(16); },2000);
+//        }
     }
 
+   //update track user
+   module.trackUser = function ( obj )
+   {
+        var trackUserIndex = $(obj).attr('data-index');
+        
+        if(typeof visibles[trackUserIndex] == 'undefined') return false;
+        
+        visibles[trackUserIndex].join_key = map_data.join_key;
+        localStorage.setItem("tracking_user",JSON.stringify(visibles[trackUserIndex]));
+   }
+
+  
     module.getModeOptions = function( type )
     {
         if( typeof type == 'undefined' ) type = 'default';

@@ -194,6 +194,7 @@ class Search extends AppController {
 		$output = array(
 				'info' => '',
 				'type' => $map_data->type,
+                'join_key' => $this->joinKey,
 				'locations' => $locations
 			);
 
