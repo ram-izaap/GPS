@@ -38,8 +38,8 @@
 
             var options = {
                             enableHighAccuracy: true,
-                           timeout:            30000,  // milliseconds (30 seconds)
-                           maximumAge:         600000 // milliseconds (10 minutes)
+                           timeout:            30000,   //milliseconds (30 seconds),
+                           maximumAge:         600000  //milliseconds (10 minutes)
                };
 
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -81,7 +81,7 @@
       <div id="wait" style="display:none; width:69px; height:89px; position:absolute; top:50%; left:50%; padding:2px;"></div>
       
       <div id="copy_clipboard"></div>
-      <input  value="0" name="latlang" id="latlang" type="hidden" value="INVALID">
+      <input name="latlang" id="latlang" type="hidden" value="INVALID">
       <input class="form-control" value="" name="map_pos" id="map_pos" type="hidden">
       <input  value="" name="joined_map" id="joined_map" type="hidden" />
       <input name="phone" id="phone" type="hidden" />
@@ -135,8 +135,8 @@
          
          <!-- 2nd Block -->
          <div class="col-s-m-6 block-center">
-            <span class="cMapid"> Your Map CH. ID.  <b><?php echo $channel_id;?></b> </span>
-            <span class="cMapid"> Your Display Name: <b><?php echo $display_name;?></b> </span>
+            <span class="cMapid" onclick="openModals('map_id_update');"> Your Map CH. ID.  <b><?php echo $channel_id;?></b> </span>
+            <span class="cMapid" onclick="openModals('display_name_update')"> Your Display Name: <b><?php echo $display_name;?></b> </span>
          </div>
 
 

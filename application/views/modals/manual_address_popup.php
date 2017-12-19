@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-sm" role="document">
     
       <!-- Modal content-->
-      <form name="manual_addr" id="manual_addr">
+      
       <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -32,6 +32,5 @@
           <button type="button" class="btn btn-default btn-gray" data-dismiss="modal">Cancel</button>
         </div>
       </div>
-      </form>
     </div>
   </div>

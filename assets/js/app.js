@@ -392,8 +392,11 @@ var geocoder;
         map.fitBounds(bounds);
         map.setZoom(16);
         map.setCenter( current_marker.getPosition() );
-
+        
         if( typeof callback == 'function' ) callback( current_marker );
+        
+        //close participant menu
+        add_toggle(); 
     };
 
     module.locateAndOpenInfo = function( index, type )
@@ -751,6 +754,8 @@ function doSearch()
     
 }
 
+
+
 function add_toggle()
 {
    $("#dropdownMenu2").attr("data-toggle","dropdown");  
@@ -888,7 +893,10 @@ function updateDisplayName() {
       showLoader( false );
       alert(response.msg);
       if (response.status == 'success') {
-        location.reload();
+        if(controller == 'search' && user_info.join_key == user_info.channel_id)
+            location.href = site_url+channel_id;
+         else
+            location.reload();
       }
     }, 'json');
 
@@ -926,7 +934,10 @@ function updateMapID() {
         alert(response.msg);
 
         if (response.status == 'success') {
-            location.reload();
+            if(controller == 'search' && user_info.join_key == user_info.channel_id)
+                location.href = site_url+mapID;
+            else
+                location.reload();
         }
 
 
@@ -945,7 +956,8 @@ function doGuestRegistration()
         data = {},
         flag = false;
     
-    if(1 == 1){
+    if(latlon == 'INVALID'){
+     //if(1==1){   
       openModals('manual_address_popup');
     }
     else
@@ -976,58 +988,44 @@ function doGuestRegistration()
         }, 'json');
     }
 
-
-
-    
-    
-
-
-
-       
 }
 
 //get lat long from manual address
 function getLatLong()
 {
-    var manual_addr  = $('input[name="manual_address"]').val();
-    
-    codeAddress(manual_addr); 
-    
-    var data         = {
-                        address: manual_addr      
-    };
-    
-    
-    showLoader( true );
-    
-    $.post(site_url + 'home/convertLatLong', data, function(response) {
-            showLoader( false );
-            if (response.status == 'success') {
-                $("#latlang").val(response.latlong);
-                doGuestRegistration();
+     var manual_address  = $('input[name="manual_address"]').val();
+
+     var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode( { 'address': manual_address}, function(results, status) {
+        console.log(results);
+       
+      if (status == 'OK') {
+           if( typeof results[0] == 'undefined' || typeof results[0].geometry == 'undefined' )
+            {
+                alert('Geocode was not successful' );
             }
             else
-            {
-                alert(response.msg);
-                return false;
+            {   
+                //set myCurrentPos values
+                myCurrentPos.lat = '13.040915799999999'//results[0].geometry.location.lat;
+                myCurrentPos.lng = '80.17330849999999'//results[0].geometry.location.lng;
+
+                //
+                $("#latlang").val(myCurrentPos.lat+':::'+myCurrentPos.lng);
+
+                console.log(myCurrentPos);
+                $("#manual_address_popup").hide();
+                //now do registartion
+                doGuestRegistration();
             }
-    }, 'json');    
-}
-
- function codeAddress(address) {
-   var geocoder = new google.maps.Geocoder();
-
-   // var address = document.getElementById('address').value;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-        console.log(results[0].geometry.location);
-        alert(results[0].geometry.location);
-      if (status == 'OK') {
-       
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-  }
+      
+}
+
 
 
 //social share map section
