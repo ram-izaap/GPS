@@ -80,24 +80,24 @@ var geocoder;
                                          google.maps.MapTypeId.SATELLITE,
                                          google.maps.MapTypeId.TERRAIN
                                        ],
-                                       position: google.maps.ControlPosition.RIGHT_BOTTOM
+                                       position: google.maps.ControlPosition.RIGHT_CENTER
                                      },
              streetViewControl: true,
              zoomControl: true,
              zoomControlOptions: {
-                 position: google.maps.ControlPosition.RIGHT_BOTTOM,
+                 position: google.maps.ControlPosition.RIGHT_CENTER,
              },
              streetViewControlOptions: {
-               position: google.maps.ControlPosition.RIGHT_BOTTOM
+               position: google.maps.ControlPosition.RIGHT_CENTER
              },
              rotateControlOptions:{
-                                   position: google.maps.ControlPosition.RIGHT_BOTTOM
+                                   position: google.maps.ControlPosition.RIGHT_CENTER
                                  },
              
              scaleControl:true,
              scrollwheel:false,
              panControl: true,
-             panControlOptions: { position: google.maps.ControlPosition.RIGHT_BOTTOM
+             panControlOptions: { position: google.maps.ControlPosition.RIGHT_CENTER
                                  },
             
              overviewMapControl:true,
@@ -604,6 +604,7 @@ var geocoder;
         firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
         firstChild.style.cursor = 'pointer';
         firstChild.style.marginRight = '10px';
+        firstChild.style.marginTop = '10px';
         firstChild.style.padding = '0';
         firstChild.title = 'Your Location';
         controlDiv.appendChild(firstChild);
@@ -623,13 +624,14 @@ var geocoder;
         });
 
         firstChild.addEventListener('click', function () {
+           
             var imgX = '0',
                 animationInterval = setInterval(function () {
                     imgX = imgX === '-18' ? '0' : '-18';
                     secondChild.style['background-position'] = imgX+'px 0';
                 }, 500);
 
-            if( $.isEmptyObject(myCurrentPos)  )
+            if( !$.isEmptyObject(myCurrentPos)  )
             {
                 var myMarker = new google.maps.Marker({
                   map: map,
@@ -652,7 +654,7 @@ var geocoder;
         });
 
         controlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(controlDiv);
     };
     
 
