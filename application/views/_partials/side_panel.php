@@ -25,7 +25,7 @@
       <div class="col-sm-6">
        
        <!-- <input class="display-name text-field" type="text" name="display_name" id="display_name" value="<?php //echo $display_name;?>" placeholder="Display Name" />-->
-         <span class="form-control"><?php echo $display_name;?></span>
+         <span class=""><?php echo $display_name;?></span>
       
         <button type="button" class="edit tool-tip" data-text="Edit" data-color="green" data-position="left" onclick="openModals('display_name_update')"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit" /> </button>
 
@@ -40,7 +40,7 @@
       <div class="col-sm-6">
        
        <!-- <input type="text"  id="phone" value="<?php //echo $channel_id;?>" name="phone" class="map-id form-control text-field" readonly /> -->
-       <span class="form-control"<?php echo $channel_id;?></span>
+       <span class=""><?php echo $channel_id;?></span>
       
         <button type="button" class="edit tool-tip" data-text="Edit" onclick="openModals('map_id_update');"  data-color="green" data-position="left"> <img src="<?php echo site_url();?>assets/images/edit-icon.png" alt="Edit"> </button>
 
