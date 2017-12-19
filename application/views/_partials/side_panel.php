@@ -90,7 +90,7 @@
   </div>
   <div class="foot-nav">
     <ul>
-      <li><a href="<?php echo site_url();?>home">Home</a></li>
+      <li><a href="<?php echo site_url();?>">Home</a></li>
       <li><a href="<?php echo site_url();?>search/<?php echo $channel_id; ?>">Search</a></li>
       <li><a href="<?php echo site_url();?>">About Us</a></li>
       <li><a href="<?php echo site_url();?>home/Help">Help</a></li>
