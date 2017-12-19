@@ -477,11 +477,11 @@ var geocoder;
         console.log(obj);
         return;
         //infowindow.close();
-//
-//        if(closeid != 1)
-//        {
-//           setTimeout(function(){ map.setZoom(16); },2000);
-//        }
+        //
+        //        if(closeid != 1)
+        //        {
+        //           setTimeout(function(){ map.setZoom(16); },2000);
+        //        }
     }
 
    //update track user
@@ -687,6 +687,16 @@ $(document).ready(function(){
     $('#search_btn').off('click').on('click', doSearch);
 
     //jpTimer();
+
+
+    //search page error hanling
+    if( controller == 'search' 
+        && typeof user_info.error_message != 'undefined' 
+        && user_info.error_message != '' )
+    {
+        alert(user_info.error_message);
+        location.href = site_url;
+    }
 });
 
 
@@ -765,239 +775,6 @@ function formatTime(date)
     
 //FUNCTIONS
 
-function doSearch()
-{
-    
-    var joinKey = $('input[name="join_key"]').val(),
-        pwd     = $('input[name="password"]').val();
-    
-    console.log(joinKey, pwd);
-    
-    var data    = {
-                    join_key: joinKey,
-                    password: pwd   
-    };
-    
-    showLoader();
-
-    $.post(site_url + 'search/validateJoinKey', data, function(response) {
-
-        showLoader(false);
-        
-        if(response.status == 'success'){
-            $('#main_search').submit();
-        }
-        else
-        {
-            alert(response.msg);
-            if(response.type == 'password'){
-              $('input[name="password"]').removeAttr('placeholder');  
-              $('input[name="password"]').focus();
-            }  
-            return false;
-        }
-
-    }, "json"); 
-
-    
-}
-
-
-
-function add_toggle()
-{
-   $("#dropdownMenu2").attr("data-toggle","dropdown");  
-   $(".dropup").removeClass('open');
-}
-
-function showLoader(flag) {
-    if (typeof flag == 'undefined') flag = true;
-
-    if (flag) {
-        $("#wait").css("display", "block");
-    } else {
-        $("#wait").css("display", "none");
-    }
-
-}
-
-function updateVisibleStatus() {
-    if (user_info.group_id == '') {
-        alert("You should join map");
-        return false;
-    }
-
-    var data = {
-        user_id: user_info.user_id,
-        channel_id: user_info.join_key,
-        visible: user_info.visible == '1' ? '0' : '1'
-    };
-
-    showLoader();
-
-    $.post(site_url + 'home/updateVisible', data, function(response) {
-
-        user_info.visible = data.visible;
-
-        showLoader(false);
-
-        $("#visiblestatus, #visiblestatus2").html(response.visible_html);
-
-    }, "json");
-
-
-}
-
-function removeAllMaps() {
-    var data = {
-        user_id: user_info.user_id
-    };
-
-    showLoader();
-
-    $.post(site_url + 'home/removeAllMaps', data, function(response) {
-
-        showLoader(false);
-
-        alert(response.msg);
-
-        //TO do
-        //location.href = site_url+'search/'+map_channel;
-
-    }, "json");
-
-}
-
-function openModals(type) {
-    if (type == undefined) type = 'display_name_update';
-
-    $('#' + type).remove();
-    $.post(site_url + 'home/getModalConent/' + type, {}, function(resp) {
-        //insert into document
-        $('body').append(resp.content);
-
-        if (type == 'display_name_update') {
-
-            //$('input[name="update_type"]').attr("checked", "checked");
-            changeRadioStatus( 'input[name="update_type"][value="system"]' );
-            $('input[name="system_value"]').val( 'Use System Generated('+ user_info.display_name +')' );
-            $('input[name="custom_phonenumber"]').val(  user_info.phonenumber );
-
-        }
-
-
-        if (type == 'map_id_update') {
-            $("#custom_map_id").val(user_info.channel_id);
-        }
-     
-        //now open modal
-        $('#' + type).modal();
-        
-        if(type == 'social_share'){
-            render_social_share(user_info.channel_id);
-            $("#share_mp_join_key").html(user_info.join_key);
-            $("#share_mp_channel").html(user_info.channel_id);
-        }
-        
-    }, 'json');
-}
-
-function updateDisplayName() {
-    
-
-    var update_type = $('input[name="update_type"]:checked').val(),
-        custom_display_name = $('input[name="custom_display_name"]').val(),
-        custom_phonenumber = $('input[name="custom_phonenumber"]').val();
-
-    custom_display_name = custom_display_name.trim();
-    custom_phonenumber = custom_phonenumber.trim();
-
-    if( update_type == 'custom' && custom_display_name == '' )
-    {
-      alert("Please Enter display name.");
-      return false;
-    }
-
-    // if( $('input[name="custom_phone_update"]:checked').length 
-    //     && $('input[name="custom_phone_update"]:checked').val() == 'custom_phone' 
-    //     && custom_phonenumber == '' )
-    // {
-    //   alert("Please Enter phone number.");
-    //   return false;
-    // }
-
-    if( update_type == 'system' ) custom_display_name = user_info.display_name;
-    
-
-    var data = {
-      user_id: user_info.user_id,
-      display_name: custom_display_name,
-      update_type: update_type,
-      phone_number: custom_phonenumber
-    }
-
-    showLoader();
-    $.post(site_url + '/home/updateDisplayNameAndPhone', data, function(response) {
-      showLoader( false );
-      alert(response.msg);
-      if (response.status == 'success') {
-        // if(controller == 'search' && user_info.join_key == user_info.channel_id)
-        //     location.href = site_url+channel_id;
-        //  else
-            location.reload();
-      }
-    }, 'json');
-
-}
-
-
-function updateMapID() {
-
-    var mapID = $("#custom_map_id").val();
-    mapID = mapID.trim();
-
-    var validation_flag = true;
-
-    if (!mapID.length) {
-        alert('Please enter Map ID.');
-        validation_flag = false;
-    }
-
-    if (!validation_flag) return true;
-
-    var data = {
-        user_id: user_info.user_id,
-        channel_id: mapID,
-        updateCookie: (user_info.join_key == user_info.channel_id)
-    };
-
-    //console.log(data);
-
-    $("#wait").css("display", "block");
-
-    $.post(site_url + '/home/updateChannelID', data, function(response) {
-
-        $("#wait").css("display", "none");
-
-        alert(response.msg);
-
-        if (response.status == 'success') {
-            if(controller == 'search' && user_info.join_key == user_info.channel_id)
-                location.href = site_url+mapID;
-            else
-                location.reload();
-        }
-
-
-    }, "json");
-}
-
-
-function changeRadioStatus(id) {
-  $(id).prop("checked", true);
-}
-
-
 function doGuestRegistration()
 {
     var latlon = $("#latlang").val(),
@@ -1038,6 +815,266 @@ function doGuestRegistration()
 
 }
 
+function doSearch()
+{
+    
+    var joinKey = $('input[name="join_key"]').val(),
+        pwd     = $('input[name="password"]').val();
+    
+    console.log(joinKey, pwd);
+    
+    var data    = {
+                    join_key: joinKey,
+                    password: pwd   
+    };
+    
+    showLoader();
+
+    $.post(site_url + 'search/validateJoinKey', data, function(response) {
+
+        showLoader(false);
+        
+        if(response.status == 'success'){
+            $('#main_search').submit();
+        }
+        else
+        {
+            alert(response.msg);
+            if(response.type == 'password'){
+              $('input[name="password"]').removeAttr('placeholder');  
+              $('input[name="password"]').focus();
+            }  
+            return false;
+        }
+
+    }, "json"); 
+
+    
+}
+
+function updateDisplayName() {
+    
+
+    var update_type = $('input[name="update_type"]:checked').val(),
+        custom_display_name = $('input[name="custom_display_name"]').val(),
+        custom_phonenumber = $('input[name="custom_phonenumber"]').val();
+
+    custom_display_name = custom_display_name.trim();
+    custom_phonenumber = custom_phonenumber.trim();
+
+    if( update_type == 'custom' && custom_display_name == '' )
+    {
+      alert("Please Enter display name.");
+      return false;
+    }
+
+    // if( $('input[name="custom_phone_update"]:checked').length 
+    //     && $('input[name="custom_phone_update"]:checked').val() == 'custom_phone' 
+    //     && custom_phonenumber == '' )
+    // {
+    //   alert("Please Enter phone number.");
+    //   return false;
+    // }
+
+    if( update_type == 'system' ) custom_display_name = user_info.display_name;
+    
+
+    var data = {
+      user_id: user_info.user_id,
+      display_name: custom_display_name,
+      update_type: update_type,
+      phone_number: custom_phonenumber
+    }
+
+    showLoader();
+    $.post(site_url + '/home/updateDisplayNameAndPhone', data, function(response) {
+        
+        showLoader( false );
+      
+        if (response.status == 'success') 
+        {
+            closeModals();
+
+            setTimeout(function(){
+                alert(response.msg);
+                location.reload();
+            }, 200);
+            
+        }
+        else
+        {
+            alert(response.msg);
+        }
+
+    }, 'json');
+
+}
+
+
+function updateMapID() {
+
+    var mapID = $("#custom_map_id").val();
+    mapID = mapID.trim();
+
+    var validation_flag = true;
+
+    if (!mapID.length) {
+        alert('Please enter Map ID.');
+        validation_flag = false;
+    }
+
+    if (!validation_flag) return true;
+
+    var data = {
+        user_id: user_info.user_id,
+        channel_id: mapID,
+        updateCookie: (user_info.join_key == user_info.channel_id)
+    };
+
+    //console.log(data);
+
+    $("#wait").css("display", "block");
+
+    $.post(site_url + '/home/updateChannelID', data, function(response) {
+
+        $("#wait").css("display", "none");
+
+        
+
+        if (response.status == 'success') 
+        {
+            closeModals();
+
+            /*  If we update the Map ID which we are on, update the url to reload. Otherwise
+            *   Old MapID will get pagged and make issues
+            */
+            var urlToReload = location.href; 
+            if(controller == 'search' && user_info.join_key == user_info.channel_id)
+            {
+                urlToReload = site_url+mapID;
+            }
+            
+            setTimeout(function(){
+                alert(response.msg);
+                location.href = urlToReload
+            }, 200);
+            
+        }
+        else
+        {
+            alert(response.msg);
+        }
+
+
+
+
+    }, "json");
+}
+
+function updateVisibleStatus() 
+{
+    if (user_info.group_id == '') {
+        alert("You should join map");
+        return false;
+    }
+
+    var data = {
+        user_id: user_info.user_id,
+        channel_id: user_info.join_key,
+        visible: user_info.visible == '1' ? '0' : '1'
+    };
+
+    showLoader();
+
+    $.post(site_url + 'home/updateVisible', data, function(response) {
+
+        user_info.visible = data.visible;
+
+        showLoader(false);
+
+        $("#visiblestatus, #visiblestatus2").html(response.visible_html);
+
+        location.reload();
+
+    }, "json");
+
+
+}
+
+function removeAllMaps() 
+{
+    var data = {
+        user_id: user_info.user_id
+    };
+
+    showLoader();
+
+    $.post(site_url + 'home/removeAllMaps', data, function(response) {
+
+        showLoader(false);
+
+        alert(response.msg);
+
+        //Now redirect user to thier own map
+        location.href = site_url+'search/'+ user_info.channel_id;
+
+    }, "json");
+
+}
+
+//social share map section
+function share_map(type)
+{
+    if(type == 'join_key')
+        share_map_id = user_info.join_key;
+    else
+        share_map_id = user_info.channel_id;
+    
+    render_social_share(share_map_id);     
+}
+
+function render_social_share(share_map_id)
+{
+    var shr_ct = $("#shr_mp_content").html();   
+
+    $("#searchmapshare").html(shr_ct); 
+
+    var sms_href    = 'sms:?body=Hi, View my location on live map and join me at: '+site_url+"/"+share_map_id;
+    var email_href  = "mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: ";
+        email_href += site_url+"/"+share_map_id;
+    var cpy         = "copyToClipboard('#copy_clipboard','#websitesearch_text','"+share_map_id+"')";
+
+
+    //copy clipboard adding onclick event
+    $("#searchmapshare .cpy_clip").attr('onclick', cpy);
+
+    //replace href in sms & email share
+    $("#searchmapshare .sms_share").attr('href', ''+sms_href);
+    $("#searchmapshare .email_share").attr('href', ''+email_href); 
+
+    $("#searchmapshare").socialButtonsShare({
+        socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
+        url: site_url+'/search/'+share_map_id,
+        type: $("#joined_map").val(),
+        text: "\nMy Map ID is "+share_map_id+"\n\n View my location @ "+site_url+"/"+share_map_id+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+        sharelabel: false
+    });
+     
+}
+
+function copyToClipboard(element,altdiv,sharemp) 
+{
+    var $temp = $("<input type='hidden'>");
+    $("body").append($temp);
+    $temp.val(site_url+sharemp).select();
+    document.execCommand("copy");
+    $temp.remove();
+    var url = site_url+sharemp;
+    $(altdiv).css("display","block").html("Copied "+url+" to clipboard");
+    $(altdiv).fadeOut(4000);
+}
+
+
 //get lat long from manual address
 function getLatLong()
 {
@@ -1077,53 +1114,79 @@ function getLatLong()
 
 
 
-//social share map section
-function share_map(type)
+
+
+
+
+//HELPER FUNCTIONS
+function add_toggle()
 {
-    if(type == 'join_key')
-        share_map_id = user_info.join_key;
-    else
-        share_map_id = user_info.channel_id;
-    
-    render_social_share(share_map_id);     
+   $("#dropdownMenu2").attr("data-toggle","dropdown");  
+   $(".dropup").removeClass('open');
 }
 
-function render_social_share(share_map_id)
-{
-      var shr_ct = $("#shr_mp_content").html();   
-      
-      $("#searchmapshare").html(shr_ct); 
-      
-      var sms_href    = 'sms:?body=Hi, View my location on live map and join me at: '+site_url+"/"+share_map_id;
-      var email_href  = "mailto:?subject=Here's MyGPS&body=Hi, View my location on live map and join me at: ";
-          email_href += site_url+"/"+share_map_id;
-      var cpy         = "copyToClipboard('#copy_clipboard','#websitesearch_text','"+share_map_id+"')";
-     
-     
-     //copy clipboard adding onclick event
-     $("#searchmapshare .cpy_clip").attr('onclick', cpy);
-     
-      //replace href in sms & email share
-      $("#searchmapshare .sms_share").attr('href', ''+sms_href);
-      $("#searchmapshare .email_share").attr('href', ''+email_href); 
-      
-      $("#searchmapshare").socialButtonsShare({
-      socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
-      url: site_url+'/search/'+share_map_id,
-      type: $("#joined_map").val(),
-      text: "\nMy Map ID is "+share_map_id+"\n\n View my location @ "+site_url+"/"+share_map_id+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
-      sharelabel: false
-    });
-     
+function showLoader(flag) {
+    if (typeof flag == 'undefined') flag = true;
+
+    if (flag) {
+        $("#wait").css("display", "block");
+    } else {
+        $("#wait").css("display", "none");
+    }
+
 }
 
-function copyToClipboard(element,altdiv,sharemp) {
-  var $temp = $("<input type='hidden'>");
-  $("body").append($temp);
-  $temp.val(site_url+sharemp).select();
-  document.execCommand("copy");
-  $temp.remove();
-  var url = site_url+sharemp;
-  $(altdiv).css("display","block").html("Copied "+url+" to clipboard");
-  $(altdiv).fadeOut(4000);
+
+function openModals(type) 
+{
+    if (type == undefined) type = 'display_name_update';
+
+    $('#' + type).remove();
+    $.post(site_url + 'home/getModalConent/' + type, {}, function(resp) {
+        
+        //insert into document
+        $('body').append(resp.content);
+
+        if (type == 'display_name_update') 
+        {
+
+            //$('input[name="update_type"]').attr("checked", "checked");
+            changeRadioStatus( 'input[name="update_type"][value="system"]' );
+            $('input[name="system_value"]').val( 'Use System Generated('+ user_info.display_name +')' );
+            $('input[name="custom_phonenumber"]').val(  user_info.phonenumber );
+
+        }
+
+        if (type == 'map_id_update') 
+        {
+            $("#custom_map_id").val(user_info.channel_id);
+        }
+
+        if(type == 'social_share')
+        {
+            render_social_share(user_info.channel_id);
+            $("#share_mp_join_key").html(user_info.join_key);
+            $("#share_mp_channel").html(user_info.channel_id);
+        }
+     
+        //now open modal
+        $('#' + type).modal();
+        
+        
+        
+    }, 'json');
+}
+
+function closeModals( type )
+{
+    type = type || '';
+
+    //close all modals or only specific type
+    $(type+' button[data-dismiss="modal"]').trigger('click');
+}
+
+
+function changeRadioStatus(id) 
+{
+  $(id).prop("checked", true);
 }

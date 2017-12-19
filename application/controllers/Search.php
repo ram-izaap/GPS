@@ -12,265 +12,344 @@ class Search extends AppController {
 
 	public function index( $jkey = '' )
 	{
-		//get join_key
-		if( $jkey !== '' )
-		{
-			$this->joinKey = $jkey;
-		}
-		else if( $this->input->post('join_key') !== '' )
-		{
-			$this->joinKey = $this->input->post('join_key');
-		}
-		//save JOIN KEY
-		$this->setJoinKey( $this->joinKey );
-
-		$params = array(
-				'user_id' => $this->userID,
-				'join_key' => $this->joinKey
-			);
-
-		$passwd = $this->input->post('password');
-
-		if( $passwd !== '' )
-		{
-			$params['password'] = $passwd;
-
-			$map_data = $this->rest->get('check_group_password', $params, 'json');
-		}
-		else
-		{
-			$map_data = $this->rest->get('search_map', $params, 'json');
-		}
-		
-		//customPrint( $map_data->static_maps );
-		
-		$my_visible = '';
-		//prepare member-locations
-		$locations = array();
-
-		//public map location
-		if( $map_data->type == 'public' )
-		{
-			$location = array(
-								'display_name' 	=> $map_data->description,
-                                'lat' 			=> $map_data->lat,
-                                'lang' 			=> $map_data->lon,
-                                'user_type' 	=> 'public',
-                                'channel_id'	=> $map_data->join_key,
-                                'visible' 		=> $map_data->is_view,
-                                'location_type' => $map_data->location_type,
-                                'user_id' 		=> $map_data->user_id,
-                                'marker_color'  => base_url()."assets/images/orange-icon.png",
-                                'speed'			=> '',
-                                'accuracy'      => '',
-                                'profile_image' => ''
-							);
-			$locations[] = $location;
-		}
-
-		//Visibles & Invisibles
-		foreach($map_data->members as $member)
+		try
 		{
 
-			if( $member->user->profile->flag == 0 ) continue;
 
-			if( $member->user->profile->id == $this->userID )
+			//get join_key
+			if( $jkey !== '' )
 			{
-				$my_visible = $member->user->group->view;
+				$this->joinKey = $jkey;
+			}
+			else if( $this->input->post('join_key') !== '' )
+			{
+				$this->joinKey = $this->input->post('join_key');
 			}
 
+			$passwd = $this->input->post('password');
 
-			$user_type = $member->user->profile->user_type;
+			$validation = $this->validateJoinKey($this->joinKey, $passwd );
 
-			$last_seen_time = date('d-m-Y H:i', $member->user->group->last_seen_time);
-			$last_seen_time = strtotime($last_seen_time);
+			//customPrint( $validation );
+			if( $validation['status'] != 'success' )
+			{
+				throw new Exception($validation['msg']);				
+			}
 
-			//24 hours last update time check
-			$twenty_four_time = date('d-m-Y H:i',strtotime('-24 hour'));
-			$twenty_four_time = strtotime($twenty_four_time);
+			//save JOIN KEY
+			$this->setJoinKey( $this->joinKey );
 
-			//if( $twenty_four_time > $last_seen_time ) continue;
 			
-			//-1Hr
-			$current_time = date('d-m-Y H:i',strtotime('-1 hour'));
-			$current_time = strtotime($current_time);
 
-			$within_limit	= true;
-			if( $current_time <= $last_seen_time )
+			$params = array(
+					'user_id' => $this->userID,
+					'join_key' => $this->joinKey
+				);
+
+			
+
+			if( $passwd !== '' && $validation['type'] == 'password' )
 			{
-				$within_limit = true;
+				$params['password'] = $passwd;
+
+				$map_data = $this->rest->get('check_group_password', $params, 'json');
+			}
+			else
+			{
+				$map_data = $this->rest->get('search_map', $params, 'json');
+			}
+			
+			//customPrint( $map_data->static_maps );
+			
+			$my_visible = '';
+			//prepare member-locations
+			$locations = array();
+
+			//public map location
+			if( $map_data->type == 'public' )
+			{
+				$location = array(
+									'display_name' 	=> $map_data->description,
+	                                'lat' 			=> $map_data->lat,
+	                                'lang' 			=> $map_data->lon,
+	                                'user_type' 	=> 'public',
+	                                'channel_id'	=> $map_data->join_key,
+	                                'visible' 		=> $map_data->is_view,
+	                                'location_type' => $map_data->location_type,
+	                                'user_id' 		=> $map_data->user_id,
+	                                'marker_color'  => base_url()."assets/images/orange-icon.png",
+	                                'speed'			=> '',
+	                                'accuracy'      => '',
+	                                'profile_image' => ''
+								);
+				$locations[] = $location;
 			}
 
-			if( ($current_time > $last_seen_time) && ($twenty_four_time < $last_seen_time) ) 
-			{  
-			  if($user_type == 'member') {
-			     //continue;
-			  }
-				$within_limit = false;
-			}
-
-
-			 
-			$channel_id  = $member->user->profile->default_id;
-			$phone_num   = $member->user->profile->phonenumber;
-
-			$img = base_url()."assets/images/red-icon.png";
-
-			if( $within_limit ) 
+			//Visibles & Invisibles
+			foreach($map_data->members as $member)
 			{
-				if( $map_data->type != 'public' )
+
+				if( $member->user->profile->flag == 0 ) continue;
+
+				if( $member->user->profile->id == $this->userID )
 				{
-					if( $member->user->profile->user_type == 'admin' )
+					$my_visible = $member->user->group->view;
+				}
+
+
+				$user_type = $member->user->profile->user_type;
+
+				$last_seen_time = date('d-m-Y H:i', $member->user->group->last_seen_time);
+				$last_seen_time = strtotime($last_seen_time);
+
+				//24 hours last update time check
+				$twenty_four_time = date('d-m-Y H:i',strtotime('-24 hour'));
+				$twenty_four_time = strtotime($twenty_four_time);
+
+				//if( $twenty_four_time > $last_seen_time ) continue;
+				
+				//-1Hr
+				$current_time = date('d-m-Y H:i',strtotime('-1 hour'));
+				$current_time = strtotime($current_time);
+
+				$within_limit	= true;
+				if( $current_time <= $last_seen_time )
+				{
+					$within_limit = true;
+				}
+
+				if( ($current_time > $last_seen_time) && ($twenty_four_time < $last_seen_time) ) 
+				{  
+				  if($user_type == 'member') {
+				     //continue;
+				  }
+					$within_limit = false;
+				}
+
+
+				 
+				$channel_id  = $member->user->profile->default_id;
+				$phone_num   = $member->user->profile->phonenumber;
+
+				$img = base_url()."assets/images/red-icon.png";
+
+				if( $within_limit ) 
+				{
+					if( $map_data->type != 'public' )
 					{
-						$img = base_url()."assets/images/violet-icon.png";
+						if( $member->user->profile->user_type == 'admin' )
+						{
+							$img = base_url()."assets/images/violet-icon.png";
+						}
+						else
+						{
+							$img = base_url()."assets/images/green-icon.png";
+						}
+						
 					}
 					else
 					{
-						$img = base_url()."assets/images/green-icon.png";
+						$img = base_url()."assets/images/orange-icon.png";
 					}
-					
 				}
-				else
+
+				$profileImg = $member->user->profile->profile_image;
+
+				if( empty($profileImg) )
 				{
-					$img = base_url()."assets/images/orange-icon.png";
+					//Todo
+					$profileImg = base_url('assets/images/default-user.png');
 				}
+
+				$location = array(
+									'display_name' 	=> $member->user->profile->display_name,
+	                                'lat' 			=> $member->user->position->lat,
+	                                'lang' 			=> $member->user->position->lon,
+	                                'user_type' 	=> $member->user->profile->user_type,
+	                                'channel_id'	=> $member->user->profile->default_id,
+	                                'visible' 		=> $member->user->group->view,
+	                                'location_type' => 'dynamic',
+	                                'user_id' 		=> $member->user->profile->id,
+	                                'marker_color'  => $img,
+	                                'last_seen_time'=> $last_seen_time * 1000,
+	                                'speed'			=> $member->user->position->speed,
+	                                'accuracy'      => $member->user->position->accuracy,
+	                                'profile_image'   => $profileImg
+								);
+
+				$locations[] = $location;
+
 			}
 
-			$profileImg = $member->user->profile->profile_image;
+			
 
-			if( empty($profileImg) )
+			//STATIC MAPS
+			$static_maps = $map_data->static_maps;
+
+			foreach($static_maps as $static_map)
 			{
-				//Todo
-				$profileImg = base_url('assets/images/default-user.png');
+				$location = array(
+									'display_name' 	=> $static_map->map_name,
+	                                'lat' 			=> $static_map->lat,
+	                                'lang' 			=> $static_map->lon,
+	                                'user_type' 	=> '',
+	                                'channel_id'	=> $this->joinKey,
+	                                'visible' 		=> '',
+	                                'location_type' => 'staticmap',
+	                                'user_id' 		=> $static_map->user_id,
+	                                'speed'			=> '',
+	                                'accuracy'      => '',
+	                                'notes' 		=> $static_map->notes,
+	                                'profile_image' => $static_map->clue_image
+								);
+
+				$locations[] = $location;
 			}
 
-			$location = array(
-								'display_name' 	=> $member->user->profile->display_name,
-                                'lat' 			=> $member->user->position->lat,
-                                'lang' 			=> $member->user->position->lon,
-                                'user_type' 	=> $member->user->profile->user_type,
-                                'channel_id'	=> $member->user->profile->default_id,
-                                'visible' 		=> $member->user->group->view,
-                                'location_type' => 'dynamic',
-                                'user_id' 		=> $member->user->profile->id,
-                                'marker_color'  => $img,
-                                'last_seen_time'=> $last_seen_time * 1000,
-                                'speed'			=> $member->user->position->speed,
-                                'accuracy'      => $member->user->position->accuracy,
-                                'profile_image'   => $profileImg
-							);
+			//customPrint( $map_data->static_maps );
+			
+			$output = array(
+					'info' => '',
+					'type' => $map_data->type,
+	                'join_key' => $this->joinKey,
+					'locations' => $locations
+				);
 
-			$locations[] = $location;
+			$this->data['map_data'] = json_encode( $output );
+
+			$this->data['search_key'] = $this->joinKey;
+
+			//$this->data['user_info']['join_key'] 	=  $this->joinKey;
+			//$this->data['user_info']['visible'] 	= $my_visible;
+			//$this->data['visible'] 					= $my_visible;
+
+			//load common data
+			$this->getCommonData();
 
 		}
+		catch(Exception $e){
 
-		
+			$output = array(
+					'info' => '',
+					'type' => '',
+	                'join_key' => $this->joinKey,
+					'locations' => array()
+				);
 
-		//STATIC MAPS
-		$static_maps = $map_data->static_maps;
+			$this->data['map_data'] = json_encode( $output );
 
-		foreach($static_maps as $static_map)
-		{
-			$location = array(
-								'display_name' 	=> $static_map->map_name,
-                                'lat' 			=> $static_map->lat,
-                                'lang' 			=> $static_map->lon,
-                                'user_type' 	=> '',
-                                'channel_id'	=> $this->joinKey,
-                                'visible' 		=> '',
-                                'location_type' => 'staticmap',
-                                'user_id' 		=> $static_map->user_id,
-                                'speed'			=> '',
-                                'accuracy'      => '',
-                                'notes' 		=> $static_map->notes,
-                                'profile_image' => $static_map->clue_image
-							);
+			$this->data['search_key'] = $this->joinKey;
 
-			$locations[] = $location;
+			$this->data['error_message'] = $e->getMessage();
+
+			//load common data
+			$this->getCommonData();
 		}
-
-		//customPrint( $map_data->static_maps );
-		
-		$output = array(
-				'info' => '',
-				'type' => $map_data->type,
-                'join_key' => $this->joinKey,
-				'locations' => $locations
-			);
-
-		$this->data['map_data'] = json_encode( $output );
-
-		$this->data['search_key'] = $this->joinKey;
-
-		//$this->data['user_info']['join_key'] 	=  $this->joinKey;
-		//$this->data['user_info']['visible'] 	= $my_visible;
-		//$this->data['visible'] 					= $my_visible;
-
-		//load common data
-		$this->getCommonData();
 
 		//customPrint( $this->data );
 
 		$this->layout->view($this->viewPath.'/search/index', $this->data);
 	}
     
-   	public function validateJoinKey()
+   	public function validateJoinKey( $jkey = '' , $passwd = '' )
 	{
+
 
         $this->joinKey = '';
         
 		if( $this->input->post('join_key') !== '' )
 		{
-			$this->joinKey = $this->input->post('join_key');
+			$this->joinKey 	= $this->input->post('join_key');
+			$passwd 		= $this->input->post('password');
 		}
+
+		if( !empty($jkey) )
+		{
+			$this->joinKey = $jkey;
+		}
+		
 		//save JOIN KEY
-		$this->setJoinKey( $this->joinKey );
+		//$this->setJoinKey( $this->joinKey );
         
 
 		$params    = array('join_key' => $this->joinKey );
 		$groupData = $this->rest->get('group_dt', $params, 'json');
         
-        $res = array();
+        $resp = array();
         
         //validate group
-        if($groupData->status == 'success'){
+        if($groupData->status == 'success')
+        {
             if($groupData->data->password_protect == 1)
-              $protectionType = 'password';
+            {
+             	$protectionType = 'password';
+            }
             else if($groupData->data->allow_deny == 1)
-              $protectionType = 'allow_deny';
+            {
+             	$protectionType = 'allow_deny';
+            }
             else
-              $protectionType = 'normal';
+            {
+             	$protectionType = 'normal';
+            }
               
               
-            if($protectionType == 'normal'){
-              $res = array("status" => "success", "msg" => "");
+            if($protectionType == 'normal')
+            {
+             	$resp = array(
+             					"status" => "success", 
+             					"msg" => "",
+             					"type" => $protectionType
+
+             				);
             }  
-            else if($protectionType == 'allow_deny'){
-              $res = array( "status" => "error","type" => $protectionType ,"msg" => "This map has been protected. Do you want to send join request?");
+            else if($protectionType == 'allow_deny')
+            {
+             	$resp = array( 	
+             					"status" => "error",
+             					"type" => $protectionType ,
+             					"msg" => "This map has been protected. Do you want to send join request?"
+             				);
             }  
             else
             {
-                $passwd = $this->input->post('password');    
-                if(empty($passwd)){
-                    $res = array( "status" => "error","type" => $protectionType ,"msg" => 'This map has been password protected so please enter password');
+                
+            	if(empty($passwd))
+                {
+                    $resp = array( 
+                    		"status" => "error",
+                    		"type" => $protectionType ,
+                    		"msg" => 'This map has been password protected so please enter password'
+                    	);
                 }
-                else if($passwd == $groupData->data->password){
-                    $res = array( "status" => "success");
+                else if($passwd == $groupData->data->password)
+                {
+                    $resp = array( "status" => "success", "type" => $protectionType);
                 }
                 else
                 {
-                    $res = array( "status" => "error", "type" => $protectionType ,"msg" => "Please Enter Correct Password");
+                    $resp = array( 
+                    	"status" => "error", 
+                    	"type" => $protectionType ,
+                    	"msg" => "Please Enter Correct Password"
+                    );
                 }
             }
                     
         }
         else
         {
-            $res = array( "status" => "error", "msg" => $groupData->msg);
+            $resp = array( "status" => "error", "msg" => $groupData->msg);
         }
         
-        echo json_encode($res);
-        exit;
+        if( $this->input->is_ajax_request() )
+        {
+        	echo json_encode( $resp );
+        	exit;
+        }
+
+        return $resp;
+        
     }
 
 }
