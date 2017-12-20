@@ -291,9 +291,6 @@ body {
 	border-bottom-right-radius: 50px;
 }
 
-.map-action {
-
-}
 
 .map-action .view-map,
 .map-action .exit-map {
@@ -456,12 +453,10 @@ body {
   width:100%;
   text-align:left;
   color:#969696;
-  bottom:-20px;
+  bottom:-15px;
   z-index: 99;
 }
 
-.search-wrap.top-search {
-}
 .search-wrap.top-search:after {
   content:url(../images/lock-orange-black.png);
   position:absolute;
@@ -489,7 +484,7 @@ body {
 }
 
 .top-search-icon {
-  background: transparent url("../images/search-icon-new.png") no-repeat center center;
+  background: transparent url("../images/search-icon-new.gif") no-repeat center center;
   border: 0;
   display: inline-block;
   margin: 0 5px;
@@ -642,7 +637,7 @@ span.tool-tip[data-text="Email"]:before{ left: calc(50% - 53px); }
 .map-layer-top {
 	padding-left: 10px;
 	padding-right: 10px;
-	background: rgba(15,32,56,0.8); 
+	background: #333 !important; 
 }
 
 .map-layer-bottom {
@@ -663,10 +658,6 @@ span.tool-tip[data-text="Email"]:before{ left: calc(50% - 53px); }
 .top-exit {
 	background-color: var(--black-green-color)
 }
-
-.top-visible,
-.top-my-map,
-.top-exit {}
 
 .top-visible,
 .top-my-map,
@@ -695,10 +686,6 @@ span.tool-tip[data-text="Email"]:before{ left: calc(50% - 53px); }
 	max-height: 22px;
 }
 
-
-.top-visible {}
-.top-my-map {}
-.top-exit {}
 
 .logo-small img {
 	max-width:106px;
@@ -1249,7 +1236,7 @@ text-align:center;
     box-shadow: none;
 }
 .search-full { width:100%; display:inline-block;}
-.search-full .search-wrap { /*min-width:204px;*/ width: 30%;}
+.search-full .search-wrap { /*min-width:204px;*/ width: 25%;}
 .pass-deactivate .pass-search {
     display: none;
 }
@@ -1514,4 +1501,17 @@ span.mobile--share {
     font-size: 14px !important;
 }
 
+.m-channel-info span {
+	color: #e9e9e9;
+    font-size: 12px;
+    line-height: 32px;
+    display: inline-block;
+    padding-right: 25px;
+    background: url(../images/pencil-1.png) no-repeat right center;
+    background-size: 18px;
+}
+.m-channel-info span b {
+	font-size: 12px;
+	color: #00ccff; }
 
+.search-full .form-control { height:25px !important;}

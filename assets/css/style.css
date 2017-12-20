@@ -10383,9 +10383,6 @@ body.active .nav-close {
   /*border-bottom: 1px solid #13a1aa;*/
   position: relative;
   top: 10px; }
-  .search-wrap:before, .search-wrap:after {
-    
-  }
   .search-wrap.top-search:after {
     content:"joined Map";
     position:absolute;
@@ -11542,10 +11539,6 @@ footer {
 /**/
 
 /*help page css*/
-.help-page {
-    
-}
-
 .help-page .panel-heading a {
     font-weight: bold;
 }
@@ -11575,9 +11568,6 @@ body.search-page > footer{display: none;}
 
 body.search-page {padding-top: 60px;}
 header{top: 0;}
-.map-locator .btn-group.btn-group-justified button {
-    /*font-size: 12px;*/
-}
 .track-buttons{text-align: center;}
 .track-buttons label {
     padding-bottom: 5px; float: none;
@@ -11913,3 +11903,4 @@ a.close_pop {
   top:-5px;
   left:5px;
 }
+
