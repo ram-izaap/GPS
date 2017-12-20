@@ -10217,7 +10217,7 @@ header {
 .block-left {
   width: 33.33333333%;
   max-width: 533.33px; }
-  @media (max-width: 1400px) {
+  @media (max-width: 1450px) {
     .block-left {
       width: 43.33333333%; } }
 
