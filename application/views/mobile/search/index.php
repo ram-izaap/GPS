@@ -244,5 +244,114 @@
 </div>
 
 
+<div id="map_info_wndow" style="display:none">
+   <div class="map-locator">
+      <div class="map-pic clearfix">
+         <div class="col-xs-4">
+            <img src="" class="profile-img img-responsive img-circle" alt="user-image" onerror="this.src='http://heresmygps.com/assets/images/logo.png';">
+         </div>
+         <div class="col-xs-8">
+            <p> 
+              <i class="fa fa-user pull-left" aria-hidden="true"></i>
+              <small> HMGPS User ID</small> <small class="channel_id"></small> 
+            </p>
+            <p> 
+              <i class="fa fa-user pull-left" aria-hidden="true"></i> 
+              <small>Display Name: </small> <small class="display_name"></small> 
+            </p>
+            <small></small>
+         </div>
+         <small></small>
+      </div>
+      <div class="map-record clearfix">
+         <small>
+            <div class="col-xs-12 clearfix">
+               <p> 
+                  <i class="fa fa-clock-o pull-left" aria-hidden="true"></i> 
+                  <small>Position Time Updated</small>
+                </p>
+                <p class="lastseen"></p>
+            </div>
+            <div class="col-xs-3 clearfix">
+               <p> <small>Speed</small> <small class="speed"></small> </p>
+            </div>
+            <div class="col-xs-6 clearfix">
+               <p> <small>Accuracy</small> <small class="accuray"></small>  </p>
+            </div>
+            <div class="col-xs-12 clearfix">
+              <p> 
+                <i class="fa fa-globe pull-left" aria-hidden="true"></i> 
+                <small>GPS Coordinate</small> 
+                <small class="lat"></small>, &nbsp;&nbsp;&nbsp;  
+                <small class="lng"></small> 
+              </p>
+            </div>
+         </small>
+      </div>
+
+      <small>
+
+        <div class="track-buttons clearfix">
+          <label for="1">
+            Track User
+            <input value="track" class="track_userr" onclick="mapManager.trackUser(this);" type="checkbox">
+          </label>
+          <label for="2">
+            10 mins
+            <input onclick="breadcrumb();"  class="breadcrumb "  type="checkbox">
+          </label>
+          <label for="3">
+            24 Hrs
+            <input onclick="breadcrumb();"  class="breadcrumb"  type="checkbox">
+          </label>
+          <label for="4">
+            24 Hrs in Detail 
+            <input onclick="breadcrumb();"  class="breadcrumb" type="checkbox">
+          </label>
+        </div>
+
+        <div class="map-action">
+            <div class="map-buttons">
+               <span class="tool-tip" data-text="Navigate">
+                <a >
+                  <i class="fa fa-map-pin fa-2x" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span class="tool-tip" data-text="Call">
+                <a >
+                  <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span class="tool-tip" data-text="SMS">
+                <a class="sms">
+                  <i class="fa fa-commenting fa-2x" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span class="tool-tip" data-text="Email">
+                <a>
+                  <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+              </span>
+            </div>
+         </div>
+         
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group text-center" role="group">
+            <button onclick="mapManager.breadcrumb();" type="button" class="btn btn-default btn-success"> OK </button>
+          </div>
+          <div class="btn-group" role="group">
+             <button onclick="mapManager.clearTracking(this)" type="button" class="btn btn-default btn-info">Clear Tracking</button>
+          </div>
+          <div class="btn-group" role="group">
+             <button onclick="mapManager.closeinfowindow()" type="button" class="btn btn-default btn-danger"> Close </button>
+          </div>
+       </div>
+
+      </small>
+
+   </div>   
+</div>
+
+
 
 
