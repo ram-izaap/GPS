@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 
-
+$route['search/breadcrumb']      = 'search/breadcrumb';
 $route['search/validateJoinKey'] = 'search/validateJoinKey';
 
 $route['search'] = 'search/index';

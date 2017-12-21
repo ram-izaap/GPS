@@ -185,15 +185,15 @@
           </label>
           <label for="2">
             10 mins
-            <input onclick="breadcrumb();"  class="breadcrumb "  type="checkbox">
+            <input onclick="mapManager.breadcrumb(this);" name="breadcrumb" value="1"  class="breadcrumb "  type="checkbox">
           </label>
           <label for="3">
             24 Hrs
-            <input onclick="breadcrumb();"  class="breadcrumb"  type="checkbox">
+            <input onclick="mapManager.breadcrumb(this);" name="breadcrumb"  value="2"  class="breadcrumb"  type="checkbox">
           </label>
           <label for="4">
             24 Hrs in Detail 
-            <input onclick="breadcrumb();"  class="breadcrumb" type="checkbox">
+            <input onclick="mapManager.breadcrumb(this);" name="breadcrumb"  value="0"  class="breadcrumb" type="checkbox">
           </label>
         </div>
 

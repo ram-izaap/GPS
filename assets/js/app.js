@@ -46,7 +46,7 @@ var geocoder;
     var myCurrentPos = undefined;
     var adminInfo = undefined;
     var trackingUser ;
-
+    var breadcrumbUser;
     module.init = function ( callback )
     {
 
@@ -59,10 +59,22 @@ var geocoder;
 
         console.log('publicLocations', publicLocations);
         
-        if( !trackingUser ) trackingUser = adminInfo;
-        trackingUser.join_key = map_data.join_key;
-        localStorage.setItem("tracking_user",JSON.stringify(trackingUser));
+        if( !trackingUser ) 
+        {
+            trackingUser = adminInfo;
+            trackingUser.join_key = map_data.join_key;
+            localStorage.setItem("tracking_user",JSON.stringify(trackingUser));
+        }
         
+
+        if( !breadcrumbUser ) 
+        {
+            breadcrumbUser = adminInfo;
+            breadcrumbUser.timelimit = 1;
+            localStorage.setItem("breadcrumb_user",JSON.stringify(breadcrumbUser));
+        }
+        
+
         // console.log(adminInfo);
         // return;
         
@@ -148,7 +160,7 @@ var geocoder;
     {
         var localTrackData = localStorage.getItem("tracking_user"),
             checkTrackUser = true;
-    
+        
         if( localTrackData ) localTrackData = JSON.parse(localTrackData);        
         
         if( !localTrackData || localTrackData.join_key != map_data.join_key )
@@ -156,7 +168,15 @@ var geocoder;
             checkTrackUser = false;
         }
             
+        var localBreadCrumbData = localStorage.getItem("breadcrumb_user");
+
+         if( localBreadCrumbData ) localBreadCrumbData = JSON.parse(localBreadCrumbData);        
         
+        if( !localBreadCrumbData || localBreadCrumbData.user_id != map_data.user_id )
+        {
+            checkBreadCrumbUser = false;
+        }
+
         for (var i = 0; i < locations.length; i++)
         {
             var location = locations[i],
@@ -184,6 +204,13 @@ var geocoder;
                     if( checkTrackUser && localTrackData.channel_id == location.channel_id )
                     {
                         trackingUser = location;
+                        trackingUser.channel_id = localTrackData.channel_id;
+                    }
+
+                    if( checkBreadCrumbUser && localBreadCrumbData.user_id == location.user_id )
+                    {
+                        breadcrumbUser           = location;
+                        breadcrumbUser.timelimit = localBreadCrumbData.timelimit;
                     }
                     
                 }
@@ -237,7 +264,7 @@ var geocoder;
 
                 var $header = $('<li class="map-list-label">' +
                                 '<span class="name">Participant</span>' + 
-                                '<span>Find</span>' + 
+                                '<span>Find</span> ' + 
                                 '<span>Status</span></li>');
 
                 switch( type)
@@ -406,14 +433,24 @@ var geocoder;
         $element.find('.lng').html( location.lang );
         
         var localTrackData = JSON.parse(localStorage.getItem('tracking_user'));
+
         if(localTrackData.channel_id == location.channel_id)
         {
             $element.find('.track_userr').attr( "checked", "checked");
         }
         
+        var localBreadCrumbData = JSON.parse(localStorage.getItem('breadcrumb_user'));
+        if(localBreadCrumbData.user_id == location.user_id)
+        {
+
+            $element.find('.breadcrumb[value="'+localBreadCrumbData.timelimit+'"]').attr( "checked", "checked");
+
+        }
+
          $element.find('.track_userr').attr( 'data-type', type);
          $element.find('.track_userr').attr( 'data-index', index);
-         
+         $element.find('.breadcrumb').attr( 'data-member', location.user_id);
+         $element.find('.breadcrumb').attr( 'data-index', index);
         return $element.html();
     }
 
@@ -472,14 +509,51 @@ var geocoder;
         }
     }
 
-    module.breadcrumb = function ( closeid )
+    module.breadcrumb = function ( obj )
     {
         infowindow.close();
+         
+        var timelimit = $(obj).val();
+        var index     = $(obj).attr("data-index");
 
-        if(closeid != 1)
-        {
-           setTimeout(function(){ map.setZoom(16); },2000);
-        }
+        if(typeof visibles[index] == 'undefined') return false;
+
+        visibles[index].timelimit = timelimit;
+        localStorage.setItem("breadcrumb_user",JSON.stringify(visibles[index]));
+
+        var data = {
+                        user_id: visibles[index].user_id,
+                        timelimit: timelimit
+                   };
+                 
+        $.ajax({
+        type:"POST",
+        url:site_url+'search/breadcrumb/',
+        data:data,
+        success:function(response){
+                response  = JSON.parse(response);
+                console.log(response);
+                for(var i = 0;i<response.length;i++){
+                    var markericon = (response[i].flag==2)?site_url+"assets/images/purple_pos.png":(response[i].flag==0)?site_url+"assets/images/yellow_pos.png":site_url+"assets/images/red_pos.png";
+                    response[i].display_name = '';
+                    response[i].marker_color = markericon;
+
+                   var marker = new google.maps.Marker({
+                                     position: new google.maps.LatLng(parseFloat(response[i].lat), parseFloat(response[i].lon)),
+                                     map: map,
+                                     animation: google.maps.Animation.DROP,
+                                     optimized: false,
+                                     draggable: false,
+                                     icon:markericon,
+                                    // zIndex:9999999+index
+                        });
+                    visibles_markers.push( marker );
+                   
+                }
+               //  map.setCenter( visibles_markers[index] );
+               //  map.setZoom(18); 
+           }  
+      });
     }
 
     module.clearTracking = function ( obj )
@@ -1202,3 +1276,5 @@ function changeRadioStatus(id)
 {
   $(id).prop("checked", true);
 }
+
+

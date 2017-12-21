@@ -106,7 +106,7 @@ class Search extends AppController {
 				$twenty_four_time = date('d-m-Y H:i',strtotime('-24 hour'));
 				$twenty_four_time = strtotime($twenty_four_time);
 
-				//if( $twenty_four_time > $last_seen_time ) continue;
+				if( $twenty_four_time > $last_seen_time ) continue;
 				
 				//-1Hr
 				$current_time = date('d-m-Y H:i',strtotime('-1 hour'));
@@ -351,5 +351,38 @@ class Search extends AppController {
         return $resp;
         
     }
+
+    function breadcrumb()
+   {
+		
+		$user_id = $this->input->post('user_id');
+
+        $params  = array();
+		$params['user_id'] 	     = json_encode(array($user_id));
+		$params['time_limit']    = $this->input->post('timelimit');
+		
+    
+        $map = $this->rest->get('get_trigger_positions', $params, 'json');
+       // print_r($map);exit;
+        $map      = (array)$map;
+        $position = (array)$map['positions']->$user_id;
+        
+        $pos_array= array();
+        if(count($position)){
+	        foreach($position as $pkey=>$pvalue){
+	            $pos_array[$pkey]['lon']        = $pvalue->lon;
+	            $pos_array[$pkey]['lat']        = $pvalue->lat;
+	            $pos_array[$pkey]['flag']       = $pvalue->flag;
+	            $pos_array[$pkey]['speed']      = $pvalue->speed;
+	            $pos_array[$pkey]['altitude']   = $pvalue->altitude;
+	            $pos_array[$pkey]['bearing']    = $pvalue->bearing;
+	            $pos_array[$pkey]['update_time']= $pvalue->update_time;
+	        }
+        }
+		if(count($pos_array)){
+	   		echo json_encode($pos_array);
+	   		exit;
+   		}
+   }
 
 }
