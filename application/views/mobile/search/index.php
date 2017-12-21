@@ -164,6 +164,10 @@
                   <div class="dropdown-menu" id="participants-list">
                      <a class="close_pop" onclick="add_toggle();">CLOSE</a>
                      <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#show-0">
+                           <i class="fa fa-users" aria-hidden="true"></i> All
+                           </a>
+                        </li>
                         <li class="active"><a data-toggle="tab" href="#show-1">
                            <i class="fa fa-users" aria-hidden="true"></i> Visible
                            </a>
@@ -178,6 +182,9 @@
                         </li>
                      </ul>
                      <div class="tab-content">
+                      <div id="show-0" class="tab-pane fade in active ">
+                        <div class="" aria-labelledby="dropdownMenu2" id="tab0"></div>
+                      </div>
                         <div id="show-1" class="tab-pane fade in active ">
                            <div class="" aria-labelledby="dropdownMenu2" id="tab1"></div>
                         </div>
