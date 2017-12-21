@@ -772,7 +772,7 @@ $(document).ready(function(){
 
     $('#search_btn').off('click').on('click', doSearch);
 
-    //jpTimer();
+    jpTimer();
 
 
     //search page error hanling
