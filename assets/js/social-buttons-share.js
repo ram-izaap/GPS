@@ -57,13 +57,13 @@
         height: 600,
         width: 600
       },
-      tumblr:{
+    /*  tumblr:{
         title: "Share on Tumblr",
         cssclass: "social-tumblr",
         shareurl : 'http://www.tumblr.com/share/link?url=' + that.options.url + "&description=" + that.options.text,
         height: 600,
         width: 600
-      }
+      }*/
     };
     $.each(that.socialNetworks, function(index, value) {
       if (socialNetworks.hasOwnProperty(index)) {
