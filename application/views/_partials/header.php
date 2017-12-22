@@ -94,7 +94,7 @@
             <span class="burger-menu"></span>
             </span>
             <span class="pull-left logo">
-            <a href="<?php echo site_url(); ?>">
+            <a href="<?php echo $back_url; ?>">
             <img src="<?php echo site_url();?>assets/images/logo.png" alt="911 GPS" />
             </a>
             </span>

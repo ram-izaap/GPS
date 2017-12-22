@@ -9,6 +9,7 @@ class AppController extends CI_Controller {
 
 	public $isMobile = FALSE;
 	public $viewPath = 'desktop';
+	public $back_url = '';
 
 	public function __construct()
 	{
@@ -31,6 +32,10 @@ class AppController extends CI_Controller {
 		//Set UserID & JOIN_KEy
 		$this->setUserID();
 		$this->setJoinKey();
+
+
+		$this->back_url = (isset($_SERVER['HTTP_REFERER']))?$_SERVER['HTTP_REFERER']:site_url();
+		$this->data['back_url'] = $this->back_url;
 
 	}
 
