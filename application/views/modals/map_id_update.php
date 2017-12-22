@@ -18,7 +18,7 @@
          
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="displayName">              
+            <div role="tabpanel" class="tab-pane fade in active">              
               <div class="panel-gutter">
                 <div class="">
                   <input type="text" class="form-control" name="custom_map_id" aria-describedby="basic-addon1" id="custom_map_id" placeholder="Map ID" value="" />

@@ -200,22 +200,22 @@
         <div class="map-action">
             <div class="map-buttons">
                <span class="tool-tip" data-text="Navigate">
-                <a >
+                <a id="navigate_link">
                   <i class="fa fa-map-pin fa-2x" aria-hidden="true"></i>
                 </a>
               </span>
               <span class="tool-tip" data-text="Call">
-                <a >
+                <a id="call_link">
                   <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
                 </a>
               </span>
               <span class="tool-tip" data-text="SMS">
-                <a class="sms">
+                <a class="sms" id="sms_link">
                   <i class="fa fa-commenting fa-2x" aria-hidden="true"></i>
                 </a>
               </span>
               <span class="tool-tip" data-text="Email">
-                <a>
+                <a id="email_link">
                   <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
                 </a>
               </span>

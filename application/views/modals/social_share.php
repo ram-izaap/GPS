@@ -17,8 +17,10 @@
               <input name="joined_map" id="joined_map" type="hidden" />
                  <label>Current Joined Map ID : </label>
                  <input type="radio" name="share_map_type" class="share_mp_type" id="share_mp_join_key" onclick="share_map('join_key');" value="" />
+                 <span id="share_map_id_display"></span>
                  <label>My Map</label>
                  <input type="radio" name="share_map_type" checked="checked" id="share_mp_channel" class="share_mp_type" onclick="share_map('own_channel');" value="" />
+                 <span id="share_map_own_id_display"></span>
               </div>
             </div>
         </div>

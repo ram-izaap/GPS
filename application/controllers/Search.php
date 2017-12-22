@@ -163,6 +163,7 @@ class Search extends AppController {
 
 				$location = array(
 									'display_name' 	=> $member->user->profile->display_name,
+									 'phonenumber'  => $member->user->profile->phonenumber,
 	                                'lat' 			=> $member->user->position->lat,
 	                                'lang' 			=> $member->user->position->lon,
 	                                'user_type' 	=> $member->user->profile->user_type,
@@ -175,6 +176,7 @@ class Search extends AppController {
 	                                'speed'			=> $member->user->position->speed,
 	                                'accuracy'      => $member->user->position->accuracy,
 	                                'profile_image'   => $profileImg
+
 								);
 
 				$locations[] = $location;

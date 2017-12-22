@@ -46,7 +46,7 @@
 
       <div class="share-location clearfix">
          <div class="col-xs-12">
-            <a data-toggle="modal" data-target="#searchshare_mb">
+            <a data-toggle="modal" data-target="#searchshare_mb" onclick="openModals('social_share');">
                <div class="btn btn-default btn-block">
                   <b>Share Your Location</b>
                </div>

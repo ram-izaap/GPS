@@ -432,6 +432,20 @@ var geocoder;
         $element.find('.lat').html( location.lat );
         $element.find('.lng').html( location.lang );
         
+         //added map links to map buttons
+         var navigator_link = 'http://maps.google.com/maps?z=12&t=m&q=loc:'+location.lat+location.lang;
+         var email_link     = 'mailto:?subject=Here\'s MyGPS&body=Hi,'+site_url+location.channel_id;
+         if(typeof location.phonenumber != 'undefined'){
+            var call_link      = 'tel:'+location.phonenumber;
+            var sms_link       = 'sms:'+location.phonenumber;
+            $element.find("#call_link").attr("href",call_link);
+            $element.find("#sms_link").attr("href",sms_link);
+         }
+         
+         $element.find("#navigate_link").attr("href",navigator_link) ; 
+         $element.find("#email_link").attr("href",email_link);
+
+
         var localTrackData = JSON.parse(localStorage.getItem('tracking_user'));
 
         if(localTrackData.channel_id == location.channel_id)
@@ -558,8 +572,11 @@ var geocoder;
 
     module.clearTracking = function ( obj )
     {
-        console.log(obj);
-        return;
+
+        localStorage.setItem("tracking_user","");
+
+      //  console.log(obj);
+      //  return;
         //infowindow.close();
         //
         //        if(closeid != 1)
@@ -826,7 +843,7 @@ function jpTimer(){
         minTime = 0,
         hourTime = 0;
 
-        window.location.reload();
+       // window.location.reload();
     }
         
   }, 1000);
@@ -1142,7 +1159,7 @@ function render_social_share(share_map_id)
         socialNetworks: ["facebook", "twitter", "googleplus", "pinterest", "tumblr"],
         url: site_url+'/search/'+share_map_id,
         type: $("#joined_map").val(),
-        text: "\nMy Map ID is "+share_map_id+"\n\n View my location @ "+site_url+"/"+share_map_id+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.hmgps.me/apps",
+        text: "\nMy Map ID is "+share_map_id+"\n\n View my location @ "+site_url+"/"+share_map_id+"\n\n"+"Or you can search for my ID on the HeresMyGPS.com website.  You can also join me on my map using the free app.  Get the app @ \nwww.heresmygps.me/apps",
         sharelabel: false
     });
      
@@ -1251,8 +1268,8 @@ function openModals(type)
         if(type == 'social_share')
         {
             render_social_share(user_info.channel_id);
-            $("#share_mp_join_key").html(user_info.join_key);
-            $("#share_mp_channel").html(user_info.channel_id);
+            $("#share_map_id_display").html(user_info.join_key);
+            $("#share_map_own_id_display").html(user_info.channel_id);
         }
      
         //now open modal
