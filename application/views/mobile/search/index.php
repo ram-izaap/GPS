@@ -185,7 +185,7 @@
                       <div id="show-0" class="tab-pane fade in active ">
                         <div class="" aria-labelledby="dropdownMenu2" id="tab0"></div>
                       </div>
-                        <div id="show-1" class="tab-pane fade in active ">
+                        <div id="show-1" class="tab-pane fade in">
                            <div class="" aria-labelledby="dropdownMenu2" id="tab1"></div>
                         </div>
                         <div id="show-2" class="tab-pane fade">
