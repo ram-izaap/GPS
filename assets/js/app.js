@@ -47,6 +47,7 @@ var geocoder;
     var adminInfo = undefined;
     var trackingUser ;
     var breadcrumbUser;
+    var usertag_displayname;
     module.init = function ( callback )
     {
 
@@ -355,7 +356,13 @@ var geocoder;
                  scaledSize: new google.maps.Size(80, 40)
              };
 
-            var usertag_displayname = location.display_name.slice(0,8)+"...";    
+             if(location.display_name.length > 8){
+                usertag_displayname = location.display_name.slice(0,8)+"...";    
+             }
+             else
+             {
+                 usertag_displayname = location.display_name;    
+             }
             var labeltext           = {text:usertag_displayname,color:"white"};     
         }
         else
