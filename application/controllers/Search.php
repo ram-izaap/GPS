@@ -9,7 +9,7 @@ class Search extends AppController {
 	{
 		parent::__construct();
 
-		//$this->data['back_url'] = $this->back_url;
+		$this->data['back_url'] = $this->back_url;
 	}
 
 	public function index( $jkey = '' )

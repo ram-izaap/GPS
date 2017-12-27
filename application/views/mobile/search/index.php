@@ -36,7 +36,7 @@
             </div>
             <div class="col-xs-9">
                <div class="logo-small">
-                  <a href="<?php echo base_url();?>">
+                  <a href="<?php echo $back_url;?>">
                   <img src="<?php echo base_url();?>/assets/images/logo-small.png" class="img-responsive" alt="" />
                   </a>
                </div>

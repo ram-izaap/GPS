@@ -8,6 +8,8 @@ class Home extends AppController {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		$this->data['back_url'] = $this->back_url;
 	}
 	
 	public function index()

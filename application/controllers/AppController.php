@@ -35,7 +35,7 @@ class AppController extends CI_Controller {
 
 
 		$this->back_url = (isset($_SERVER['HTTP_REFERER']))?$_SERVER['HTTP_REFERER']:site_url();
-		$this->data['back_url'] = $this->back_url;
+		
 
 	}
 
