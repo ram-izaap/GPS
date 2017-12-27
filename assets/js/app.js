@@ -355,7 +355,7 @@ var geocoder;
                  scaledSize: new google.maps.Size(80, 40)
              };
 
-            var usertag_displayname = location.display_name.slice(0,5)+"...";    
+            var usertag_displayname = location.display_name.slice(0,8)+"...";    
             var labeltext           = {text:usertag_displayname,color:"white"};     
         }
         else
