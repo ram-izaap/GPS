@@ -363,7 +363,8 @@ var geocoder;
              {
                  usertag_displayname = location.display_name;    
              }
-            var labeltext           = {text:usertag_displayname,color:"white"};     
+            var labeltext           = {text:usertag_displayname+'\n\nTest',color:"white"};     
+
         }
         else
         {
