@@ -397,4 +397,39 @@ class Search extends AppController {
    		}
    }
 
+   function allowDenyRestriction()
+   {
+     try {
+              $join_key = $this->input->post('joinkey');
+              $user_id  = $this->input->post('user_id');
+              
+              $params = array();
+          	  $params['join_key'] 	= $join_key;
+              $params['user_id']    = $user_id;
+              
+          	  $res = $this->rest->get('allowdeny_send_notification', $params, 'json');
+          	  $res = (array)$res;
+              
+              if(empty($res))
+   			       throw new Exception('Service request failed!');
+
+   			  if($res['status']=='error')
+   				  throw new Exception($res['msg']);
+ 
+                $outputs['status']        = 'success';
+                $outputs['msg']           = $res['msg'];
+                $outputs['request_type']  = $res['request_type'];
+    			$outputs['join_key']      = $res['join_key'];    
+    		
+	   	}
+	   	catch (Exception $e)
+        {
+        	$outputs['status']='error';
+			$outputs['msg']   = $e->getMessage(); 
+        } 	
+		
+		echo json_encode($outputs);
+		exit;
+   }
+
 }

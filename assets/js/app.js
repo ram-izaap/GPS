@@ -1002,16 +1002,30 @@ function doSearch()
         else
         {
             alert(response.msg);
+      
             if(response.type == 'password'){
               $('input[name="password"]').removeAttr('placeholder');  
               $('input[name="password"]').focus();
             }  
+
+            if(response.type == 'allow_deny'){
+
+                var data = {joinkey:joinKey,user_id:user_info.user_id};
+                    $.post(site_url+'search/allowDenyRestriction', data, function(response){
+                        console.log(response);
+                      if(response.status=='success'){
+                        alert(response.msg);
+                      }
+                      else                
+                      { 
+                        alert(response.msg);
+                      }
+                    }, "json");
+            }
             return false;
         }
 
     }, "json"); 
-
-    
 }
 
 function updateDisplayName() {
