@@ -11904,3 +11904,9 @@ a.close_pop {
   left:5px;
 }
 
+li.map-list-label.subtitle {
+    background: #333;
+    color: #0cf !important;
+    padding-left: 5px;
+}
+
