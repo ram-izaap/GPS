@@ -1308,7 +1308,11 @@ function user_position_save(){
      
        var latlon = $("#latlang").val();
        var res    = latlon.split(":");
-        
+
+        if(res.length <= 1){
+          res[0] = 'noloc';
+          res[1] = 'noloc';
+        }
         var data  = {
                         user_id: user_info.user_id,
                         lat    : res[0],
