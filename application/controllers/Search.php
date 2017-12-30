@@ -416,7 +416,7 @@ class Search extends AppController {
  
                 $outputs['status']        = 'success';
                 $outputs['msg']           = $res['msg'];
-                $outpusts['request_type'] = $res['request_type'];
+                $outputs['request_type']  = $res['request_type'];
     			$outputs['join_key']      = $res['join_key'];    
     		
 	   	}

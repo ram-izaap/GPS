@@ -53,6 +53,7 @@ $route['default_controller'] = 'home';
 
 $route['search/breadcrumb']      = 'search/breadcrumb';
 $route['search/validateJoinKey'] = 'search/validateJoinKey';
+$route['search/allowDenyRestriction'] = 'search/allowDenyRestriction';
 
 $route['search'] = 'search/index';
 $route['(:any)'] = 'search/index/$1';
