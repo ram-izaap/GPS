@@ -158,7 +158,10 @@ var geocoder;
         if( publicLocations.length )
         {
             module.renderMarkers(publicLocations[0], 0, 'publicLocations');
-        }  
+        }
+
+        //set map protection type
+        $('.search-wrap.top-search').addClass(map_data.protection_type);  
     };
 
 
@@ -287,7 +290,7 @@ var geocoder;
                         {
                             $('#tab0').append( $title );
                         }
-                        
+
                         var $subHeader = $('<li class="map-list-label subtitle">' +
                                 '<span class="name">Invisible Participants</span>' + 
                                 '<span>Find</span> ' + 
@@ -833,6 +836,13 @@ $(document).ready(function(){
          
         //setTimeout(function(){ doGuestRegistration(); },5000);        
     }
+
+    //set map protection type
+    if( typeof user_info.protection_type != 'undefined' )
+    {
+        $('.search-wrap.top-search').addClass(user_info.protection_type); 
+    }
+    
 
     $('#search_btn').off('click').on('click', doSearch);
 

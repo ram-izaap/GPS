@@ -112,10 +112,25 @@ class AppController extends CI_Controller {
        			'channel_id' => $this->joinKey
        		);
 			$resp = $this->rest->get('group_info', $params, 'json');
-			
+			//customPrint( (array)$resp);
+			$userInfo['protection_type'] = 'normal';
 			if( is_object($resp) && $resp->status == 'success' )
 			{
 				$userInfo['visible'] = $resp->data->is_view;
+
+				if( (int)$resp->group_data->password_protect === 1 )
+				{
+					$userInfo['protection_type'] = 'password';
+				}
+				elseif( (int)$resp->group_data->allow_deny === 1 )
+				{
+					$userInfo['protection_type'] = 'password';
+				}
+				else
+	            {
+	             	$userInfo['protection_type'] = 'normal';
+	            }
+
 			}
 			else
 			{

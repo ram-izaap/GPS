@@ -11889,6 +11889,15 @@ a.close_pop {
   top:5px;
   background-color:transparent !important;
 }
+.search-wrap.top-search.normal:before {
+  content:url(../images/lock-green.png);
+}
+.search-wrap.top-search.allow_deny:before {
+  content:url(../images/lock-allow-deny.png);
+}
+.search-wrap.top-search.password:before {
+  content:url(../images/lock-password.png);
+}
 .share-map .share_mp_type { margin:0 8px;}
 
 /* New style */

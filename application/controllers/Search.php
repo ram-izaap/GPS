@@ -215,6 +215,7 @@ class Search extends AppController {
 			$output = array(
 					'info' => '',
 					'type' => $map_data->type,
+					'protection_type' => $validation['type'],
 	                'join_key' => $this->joinKey,
 					'locations' => $locations
 				);
@@ -236,6 +237,7 @@ class Search extends AppController {
 			$output = array(
 					'info' => '',
 					'type' => '',
+					'protection_type' => 'normal',
 	                'join_key' => $this->joinKey,
 					'locations' => array()
 				);
