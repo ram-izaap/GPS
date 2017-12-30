@@ -45,4 +45,10 @@ class User extends CI_Controller {
 		}
 
 	}
+
+	//update user position two minutes once
+	function updateUserPosition()
+	{
+		
+	}
 }

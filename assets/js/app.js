@@ -261,7 +261,7 @@ var geocoder;
             {
                 var $title = '';
                 
-                if( adminInfo !== undefined ) $title = $('<li class="text-center map-admin">Administrator : '+  adminInfo.display_name +'</li>');
+                if( adminInfo !== undefined ) $title = $('<li class="text-left map-admin">Administrator : '+  adminInfo.display_name +'</li>');
 
                 var $header = $('<li class="map-list-label">' +
                                 '<span class="name">Participant</span>' + 
@@ -363,8 +363,7 @@ var geocoder;
              {
                  usertag_displayname = location.display_name;    
              }
-            var labeltext           = {text:usertag_displayname+'\n\nTest',color:"white"};     
-
+            var labeltext           = {text:usertag_displayname,color:"white"};     
         }
         else
         {
@@ -1225,11 +1224,6 @@ function getLatLong()
 }
 
 
-
-
-
-
-
 //HELPER FUNCTIONS
 function add_toggle()
 {
@@ -1303,4 +1297,38 @@ function changeRadioStatus(id)
   $(id).prop("checked", true);
 }
 
+//user position update 
+function user_position_save(user_id){
+     
+      var latlon = $("#latlang").val();
+    
+        var res = latlon.split(":");
 
+        if(res.length <= 1){
+          res[0] = 'noloc';
+          res[1] = 'noloc';
+        }
+        
+        var data = {
+                        user_id: user_info.user_id,
+                        lat    : res[0],
+                        long   : res[1] 
+                   };
+
+        $.post(site_url+'/user/updateUserPosition/', data, function(response){
+             
+            var srchkey = $("#search").val();
+
+            if(srchkey!=''){
+                $.post(site_url+'/search/'+srchkey+'/1', {}, function(response){  
+                    if(response!=''){
+                        response = JSON.parse(response);
+                        map_search(response.locations,response.contents,response.user_id,0);
+                    }
+                });
+            }              
+            
+        });
+        
+      
+    }

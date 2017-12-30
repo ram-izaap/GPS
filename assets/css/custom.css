@@ -1094,7 +1094,8 @@ text-align:center;
   color: #ffffff;
   background-color: #853A5F;
   font-weight: bold;
-  line-height: 32px; }
+  line-height: 32px;
+  text-indent: 5px; }
 
 #participants-list > li,
 #tab3  li {
@@ -1424,9 +1425,9 @@ a.close_pop{cursor: pointer;}
 
 #participants-list .nav > li > a{padding: 10px 10px;}
 a.close_pop {
-    position: absolute;
-    top: 10px;
-    right: 4px;
+        position: absolute;
+    top: 53px;
+    right: 10px;
     color: white;
     background: #ca0000;
     display: inline-block;
@@ -1438,7 +1439,8 @@ a.close_pop {
     font-size: 13px;
     text-decoration: underline;
     font-weight: bold;
-    border-radius: 4px; width:auto;
+    border-radius: 4px;
+    width: auto
 }
 
 
