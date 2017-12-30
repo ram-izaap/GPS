@@ -978,7 +978,7 @@ function doSearch()
 
             if(response.type == 'allow_deny'){
 
-                var data = {joinkey:user_info.joinkey,user_id:user_info.user_id};
+                var data = {joinkey:joinKey,user_id:user_info.user_id};
                     $.post(site_url+'/search/allowDenyRestriction', data, function(response){
                       if(response.status=='success'){
                         alert(response.msg);
