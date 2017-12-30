@@ -282,11 +282,27 @@ var geocoder;
                     case 'invisibles':
                         $header.find('span:nth-child(2)').remove();
                         $('#tab2').append($title, $header);
+
+                        if( !$('#tab0 .map-admin').length )
+                        {
+                            $('#tab0').append( $title );
+                        }
+                        
+                        var $subHeader = $('<li class="map-list-label subtitle">' +
+                                '<span class="name">Invisible Participants</span>' + 
+                                '<span>Find</span> ' + 
+                                '<span>Status</span></li>');
+
+                        $('#tab0').append( $subHeader );
+
                         break;
 
                     case 'clues':
                         $title = '<li class="text-center invisible-head">Static Maps/Clues</li>';
                         $('#tab3').append($title, $header);
+
+                       $('#tab0').append( $title );
+
                         break;
 
                 }
@@ -294,7 +310,12 @@ var geocoder;
                 //Add title for "All" tab
                 if( !$('#tab0 .map-admin').length )
                 {
-                    $('#tab0').append($title, $header);
+                    var $subHeader = $('<li class="map-list-label subtitle">' +
+                                '<span class="name">Visible Participants</span>' + 
+                                '<span>Find</span> ' + 
+                                '<span>Status</span></li>');
+
+                    $('#tab0').append( $title, $subHeader );
                 }
 
 
