@@ -454,15 +454,25 @@ body {
   text-align:left;
   color:#969696;
   bottom:-15px;
-  z-index: 99;
+  /*z-index: 99;*/
 }
 
 .search-wrap.top-search:after {
-  content:url(../images/lock-orange-black.png);
+  content:url(../images/lock-green.png);
   position:absolute;
   right:0;
   top:5px;
   background-color:transparent !important;
+}
+
+.search-wrap.top-search.normal:after {
+  content:url(../images/lock-green.png);
+}
+.search-wrap.top-search.allow_deny:after {
+  content:url(../images/lock-allow-deny.png);
+}
+.search-wrap.top-search.password:after {
+  content:url(../images/lock-password.png);
 }
 
 
