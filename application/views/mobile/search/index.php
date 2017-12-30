@@ -168,7 +168,7 @@
                            <i class="fa fa-users" aria-hidden="true"></i> All
                            </a>
                         </li>
-                        <li class="active"><a data-toggle="tab" href="#show-1">
+                        <li class=""><a data-toggle="tab" href="#show-1">
                            <i class="fa fa-users" aria-hidden="true"></i> Visible
                            </a>
                         </li>

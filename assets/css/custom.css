@@ -1528,3 +1528,9 @@ span.mobile--share {
 	color: #00ccff; }
 
 .search-full .form-control { height:25px !important;}
+
+li.map-list-label.subtitle {
+    background: #333;
+    color: #0cf !important;
+    padding-left: 5px;
+}
