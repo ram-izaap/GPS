@@ -75,6 +75,10 @@ var geocoder;
             localStorage.setItem("breadcrumb_user",JSON.stringify(breadcrumbUser));
         }
         
+        //update user position two minutes once
+        setInterval(function(){
+            user_position_save();
+         },120000);
 
         // console.log(adminInfo);
         // return;
@@ -808,6 +812,8 @@ $(document).ready(function(){
         alert(user_info.error_message);
         location.href = site_url;
     }
+
+    
 });
 
 
@@ -1298,11 +1304,10 @@ function changeRadioStatus(id)
 }
 
 //user position update 
-function user_position_save(user_id){
+function user_position_save(){
      
-      var latlon = $("#latlang").val();
-    
-        var res = latlon.split(":");
+       var latlon = $("#latlang").val();
+        var res   = latlon.split(":");
 
         if(res.length <= 1){
           res[0] = 'noloc';
@@ -1316,19 +1321,15 @@ function user_position_save(user_id){
                    };
 
         $.post(site_url+'/user/updateUserPosition/', data, function(response){
-             
-            var srchkey = $("#search").val();
 
-            if(srchkey!=''){
-                $.post(site_url+'/search/'+srchkey+'/1', {}, function(response){  
+            if(user_info.join_key!=''){
+                $.post(site_url+'/search/'+user_info.join_key, {}, function(response){  
                     if(response!=''){
                         response = JSON.parse(response);
-                        map_search(response.locations,response.contents,response.user_id,0);
+                        console.log(response);
+                        //map_search(response.locations,response.contents,response.user_id,0);
                     }
                 });
-            }              
-            
+            }               
         });
-        
-      
     }

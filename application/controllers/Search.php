@@ -251,8 +251,14 @@ class Search extends AppController {
 		}
 
 		//customPrint( $this->data );
-
-		$this->layout->view($this->viewPath.'/search/index', $this->data);
+		if( $this->input->is_ajax_request() ) {
+        	echo json_encode( $this->data );
+        	exit;
+        }
+        else
+        {
+			$this->layout->view($this->viewPath.'/search/index', $this->data);
+		}
 	}
     
    	public function validateJoinKey( $jkey = '' , $passwd = '' )
