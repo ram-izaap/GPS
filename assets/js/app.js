@@ -76,7 +76,8 @@ var geocoder;
         }
         
         //update user position two minutes once
-        setInterval(function(){
+        window.user_position_save_interval =  setInterval(function(){
+            //clearInterval(window.user_position_save_interval);
             user_position_save();
          },120000);
 
@@ -779,6 +780,8 @@ if( locations.length )  mapManager.init();
 
 //Onload functions
 $(document).ready(function(){
+    
+    set_my_current_pos_by_local_data_pos();
 
     $("input[name='mode_type']").off('click').on('click', function(){
         console.log(this.value);
@@ -796,7 +799,18 @@ $(document).ready(function(){
     //If First time user, do register
     if( user_info.user_id == '' ) 
     {
-        setTimeout(function(){ doGuestRegistration(); },5000);        
+        
+          window.doGuestRegistrationInterval =  setInterval(function(){
+            
+            if( user_info.user_id == '' ) 
+            {
+                clearInterval(window.doGuestRegistrationInterval);
+                doGuestRegistration();
+            }
+            
+         },5000);
+         
+        //setTimeout(function(){ doGuestRegistration(); },5000);        
     }
 
     $('#search_btn').off('click').on('click', doSearch);
@@ -894,18 +908,18 @@ function formatTime(date)
 
 function doGuestRegistration()
 {
-    var latlon = $("#latlang").val(),
+    var latlon = localStorage.getItem('latlang'),//$("#latlang").val(),
         data = {},
         flag = false;
     
-    if(latlon == 'INVALID'){
+    if(!latlon){
      //if(1==1){   
       openModals('manual_address_popup');
     }
     else
     {
         flag = true;
-
+                        
         data = {
             lat: myCurrentPos.lat,
             lng: myCurrentPos.lng,
@@ -1215,7 +1229,8 @@ function getLatLong()
                 myCurrentPos.lng = '80.17330849999999'//results[0].geometry.location.lng;
 
                 //
-                $("#latlang").val(myCurrentPos.lat+':::'+myCurrentPos.lng);
+                localStorage.setItem('latlang',myCurrentPos.lat+':'+myCurrentPos.lng);
+                //$("#latlang").val(myCurrentPos.lat+':::'+myCurrentPos.lng);
 
                 console.log(myCurrentPos);
                 $("#manual_address_popup").hide();
@@ -1305,18 +1320,22 @@ function changeRadioStatus(id)
 
 //user position update 
 function user_position_save(){
-     
-       var latlon = $("#latlang").val();
-       var res    = latlon.split(":");
 
-        if(res.length <= 1){
+       var latlon = myCurrentPos;/*,
+           res    = (latlon)?latlon.split(":"):[];*/
+
+        if( myCurrentPos == undefined || myCurrentPos.lat == undefined || myCurrentPos.lng == undefined ){
+            
+          return;
+          
           res[0] = 'noloc';
           res[1] = 'noloc';
         }
+        
         var data  = {
-                        user_id: user_info.user_id,
-                        lat    : res[0],
-                        long   : res[1] 
+                        'user_id': user_info.user_id,
+                        'lat'    : myCurrentPos.lat,
+                        'long'   : myCurrentPos.lng
                    };
 
         $.post(site_url+'/user/updateUserPosition/', data, function(response){
@@ -1331,4 +1350,18 @@ function user_position_save(){
                 });
             }               
         });
+    }
+    
+    function set_my_current_pos_by_local_data_pos(){
+        
+        var latlon = localStorage.getItem('latlang'),
+            res    = (latlon)?latlon.split(":"):[];
+            
+            if( res.length ){
+                
+               myCurrentPos = {
+                  lat: res[0],
+                  lng: res[1]
+               };
+            }
     }

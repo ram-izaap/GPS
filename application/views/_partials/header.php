@@ -48,19 +48,24 @@
                   lat: position.coords.latitude,
                   lng: position.coords.longitude
                };
-
-               $("#latlang").val(myCurrentPos.lat + ":" + myCurrentPos.lng);
+               
+               if( myCurrentPos && myCurrentPos.lat != undefined && myCurrentPos.lng != undefined ) 
+                    localStorage.setItem('latlang',myCurrentPos.lat + ":" + myCurrentPos.lng);
+               else{
+                
+                    set_my_current_pos_by_local_data_pos();
+               }
 
                 console.log('My Position', myCurrentPos);
             }, 
             function(err) {
                if(err.code == 1) 
                 {
-                   $("#latlang").val('INVALID');
+                  // $("#latlang").val('INVALID');
                 }
                 else if( err.code == 2) 
                 {
-                   $("#latlang").val('INVALID');
+                   //$("#latlang").val('INVALID');
                 }
             }, 
             options);            
