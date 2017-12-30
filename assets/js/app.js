@@ -975,12 +975,24 @@ function doSearch()
               $('input[name="password"]').removeAttr('placeholder');  
               $('input[name="password"]').focus();
             }  
+
+            if(response.type == 'allow_deny'){
+
+                var data = {joinkey:user_info.joinkey,user_id:user_info.user_id};
+                    $.post(site_url+'/search/allowDenyRestriction', data, function(response){
+                      if(response.status=='success'){
+                        alert(response.msg);
+                      }
+                      else                
+                      { 
+                        alert(response.msg);
+                      }
+                    }, "json");
+            }
             return false;
         }
 
     }, "json"); 
-
-    
 }
 
 function updateDisplayName() {
