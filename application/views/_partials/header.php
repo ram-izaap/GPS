@@ -104,7 +104,7 @@
             </a>
             </span>
 
-            <form method='post' id="main_search" action='<?php echo site_url('search');?>'>
+            <form method='post' id="main_search" action="<?php echo site_url('search');?>" >
                <div class="search-full">
                   <span class="dropdown search-filter pull-left">
                      <a href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Search By  <span class="caret"></span>

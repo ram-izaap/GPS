@@ -845,6 +845,13 @@ $(document).ready(function(){
     
 
     $('#search_btn').off('click').on('click', doSearch);
+    $('input[name="join_key"], input[name="password"]').on('keyup', function (e) {
+        if (e.keyCode == 13) {
+           e.preventDefault();
+           doSearch();
+           return false;
+        }
+     });
 
     jpTimer();
 
@@ -1026,6 +1033,12 @@ function doSearch()
         }
 
     }, "json"); 
+}
+
+function submitSearch()
+{
+    doSearch();
+    return false;
 }
 
 function updateDisplayName() {
