@@ -315,10 +315,33 @@ class Search extends AppController {
 
              				);
             }  
+            
             else if($protectionType == 'allow_deny')
             {
+            	$status = "error";
+
+				$params    = array();
+				$params['user_id'] = $this->userID;
+				$joined_groups = $this->rest->get('joined_groups', $params, 'json');
+
+				if( $joined_groups->status == 'success' )
+				{
+					$joined_groups = $joined_groups->list;
+
+					if( is_array($joined_groups) && count($joined_groups) )
+					{
+						foreach ($joined_groups as $jg) {
+							if( $jg->join_key == $this->joinKey )
+							{
+								$status = 'success';
+								break;
+							}
+						}
+					}
+				}
+
              	$resp = array( 	
-             					"status" => "error",
+             					"status" => $status,
              					"type" => $protectionType ,
              					"msg" => "This map has been protected. Do you want to send join request?"
              				);
