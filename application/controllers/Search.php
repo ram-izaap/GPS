@@ -30,7 +30,7 @@ class Search extends AppController {
 
 			$passwd = $this->input->post('password');
 
-			$validation = $this->validateJoinKey($this->joinKey, $passwd );
+			$validation = $this->validateJoinKey($this->joinKey, $passwd, TRUE );
 
 			//customPrint( $validation );
 			if( $validation['status'] != 'success' )
@@ -263,7 +263,7 @@ class Search extends AppController {
 		}
 	}
     
-   	public function validateJoinKey( $jkey = '' , $passwd = '' )
+   	public function validateJoinKey( $jkey = '' , $passwd = '', $flag = FALSE )
 	{
 
 
@@ -354,7 +354,7 @@ class Search extends AppController {
             $resp = array( "status" => "error", "msg" => $groupData->msg);
         }
         
-        if( $this->input->is_ajax_request() )
+        if( $this->input->is_ajax_request() && !$flag )
         {
         	echo json_encode( $resp );
         	exit;

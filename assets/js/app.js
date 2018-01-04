@@ -1399,13 +1399,27 @@ function user_position_save(){
         $.post(site_url+'/user/updateUserPosition/', data, function(response){
 
             if(user_info.join_key!=''){
+
                 $.post(site_url+'/search/'+user_info.join_key, {}, function(response){  
-                    if(response!=''){
-                        response = JSON.parse(response);
+                    
+                    if( !$.isEmptyObject(response) )
+                    {
+                        if( typeof response.map_data !== 'undefined' && !$.isEmptyObject(response.map_data) )
+                        {
+                            map_data = JSON.parse(response.map_data);
+                            locations = map_data.locations;
+                            if( locations.length )
+                            {
+                                console.log('reload map..');
+                                mapManager.init();
+                            }
+                            
+                        }
+                        
                         console.log(response);
                         //map_search(response.locations,response.contents,response.user_id,0);
                     }
-                });
+                }, 'json');
             }               
         });
     }
