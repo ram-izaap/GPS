@@ -878,6 +878,7 @@ $(document).ready(function(){
         renderNotifications();
     }
    
+
     //2minutes once read user notification
     if( controller !== 'search' )
     {
@@ -887,6 +888,7 @@ $(document).ready(function(){
         },1000*30);
     }
     
+
     
 });
 
@@ -932,7 +934,7 @@ function getUserNotification()
                 renderNotifications();
             }
             
-            
+ 
          }
     },'json');
 }
