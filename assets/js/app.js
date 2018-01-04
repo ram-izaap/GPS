@@ -836,7 +836,7 @@ $(document).ready(function(){
          
         //setTimeout(function(){ doGuestRegistration(); },5000);        
     }
-
+    
     //set map protection type
     if( typeof user_info.protection_type != 'undefined' )
     {
@@ -864,9 +864,37 @@ $(document).ready(function(){
         alert(user_info.error_message);
         location.href = site_url;
     }
-
+   
+     //2minutes once read user notification
+    window.userNotification =  setInterval(function(){
+        $(".notification_count").html(user_info.notification_count); 
+        clearInterval(window.userNotification);
+        getUserNotification();
+     },1000);
     
 });
+
+//get user notification
+function getUserNotification()
+{
+    $.post(site_url+'/user/getUserNotifications/', {}, function(response){
+         if(response.status == 'success'){
+            console.log(response);
+    
+           for(var i=0; i<response.message_list.length;i++) {
+            var template = new Element('#notification_lists_section'),
+            $element     = template.element;
+            $element.find(".item-title").html(response.message_list[i].message.msg);
+            $("#notification_window").append($element);
+           } 
+
+           //update notification status to viewed current user
+            $.post(site_url+'/user/updateUserNotificationStatus/', {}, function(response){
+            
+            } ,'json');
+         }
+    },'json');
+}
 
 
 //HELPER FUNCTIONS
@@ -1389,7 +1417,7 @@ function user_position_save(){
           res[0] = 'noloc';
           res[1] = 'noloc';
         }
-        
+        alert(myCurrentPos.lat+myCurrentPos.lng);
         var data  = {
                         'user_id': user_info.user_id,
                         'lat'    : myCurrentPos.lat,
@@ -1421,7 +1449,7 @@ function user_position_save(){
                     }
                 }, 'json');
             }               
-        });
+        }, 'json');
     }
     
     function set_my_current_pos_by_local_data_pos(){
@@ -1437,3 +1465,5 @@ function user_position_save(){
                };
             }
     }
+
+    

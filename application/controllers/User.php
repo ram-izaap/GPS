@@ -38,7 +38,7 @@ class User extends AppController {
 			$param['channel_id']= $channelID;
 			$param['user_id'] 	= $userID;  
 
-			$map_det = $this->rest->get('updateMapID', $this->service_param, 'json');
+			$map_det = $this->rest->get('updateMapID', $param, 'json');
 
 			//$output = array('nn' => $channelID, 'mm' => $userID);
 			echo json_encode($map_det);
@@ -65,6 +65,27 @@ class User extends AppController {
 		
    		$pos = $this->rest->get('user_position_save', $params, 'json');
    		echo json_encode($pos);
+   		exit;
+	}
+
+	//get user notifications
+	function getUserNotifications()
+	{
+		$params = array();
+		$params['user_id'] = $this->userID;//81722; 
+   		$notifications     = $this->rest->get('user_notifications', $params, 'json');
+   		echo json_encode($notifications);
+   		exit;
+	}
+   
+   //update user notification status
+	function updateUserNotificationStatus()
+	{
+		$params = array();
+		$params['msg_id']       =  $this->userID;//81722; 
+		$params['type']         = 'user';
+   		$notification_update    = $this->rest->get('update_notification_view', $params, 'json');
+   		echo json_encode($notification_update);
    		exit;
 	}
 }

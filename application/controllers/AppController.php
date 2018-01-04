@@ -136,6 +136,18 @@ class AppController extends CI_Controller {
 			{
 				$userInfo['visible'] = '1';// default value
 			}
+            
+            //get user notification count
+            $params = array(
+       					'user_id' => $user->user_id
+       		);
+            $response           = $this->rest->get('user_notifications',$params,'json');
+
+            $userInfo['notification_count'] = 0;
+            if($response->status == 'success'){
+            	$notification_count             = count($response->message_list); 
+            	$userInfo['notification_count'] = $notification_count;
+        	}
 
 			return $userInfo;
 		}
