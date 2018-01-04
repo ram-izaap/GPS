@@ -144,9 +144,12 @@ class AppController extends CI_Controller {
             $response           = $this->rest->get('user_notifications',$params,'json');
 
             $userInfo['notification_count'] = 0;
+            $userInfo['notification_list'] = array();
+            
             if($response->status == 'success'){
             	$notification_count             = count($response->message_list); 
             	$userInfo['notification_count'] = $notification_count;
+            	$userInfo['notification_list'] = $response->message_list;
         	}
 
 			return $userInfo;

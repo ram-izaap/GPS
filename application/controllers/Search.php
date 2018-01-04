@@ -45,7 +45,8 @@ class Search extends AppController {
 
 			$params = array(
 					'user_id' => $this->userID,
-					'join_key' => $this->joinKey
+					'join_key' => $this->joinKey,
+					'allowed' => 'no'
 				);
 
 			

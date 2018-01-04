@@ -872,34 +872,67 @@ $(document).ready(function(){
         alert(user_info.error_message);
         location.href = site_url;
     }
+
+    if( user_info && typeof user_info.notification_count !== 'undefined' )
+    {
+        renderNotifications();
+    }
    
-     //2minutes once read user notification
-    window.userNotification =  setInterval(function(){
-        $(".notification_count").html(user_info.notification_count); 
-        clearInterval(window.userNotification);
-        getUserNotification();
-     },1000);
+    //2minutes once read user notification
+    if( controller !== 'search' )
+    {
+        window.userNotification =  setInterval(function(){
+            //clearInterval(window.userNotification);
+            getUserNotification();
+        },1000*30);
+    }
+    
     
 });
+
+
+function renderNotifications( )
+{
+    if( user_info 
+        && typeof user_info.notification_list !== 'undefined' 
+        && Array.isArray(user_info.notification_list) )
+    {
+        for(var i=0; i<user_info.notification_list.length;i++) 
+        {
+            var template = new Element('#notification_lists_section'),
+                $element     = template.element;
+                
+            $element.find(".item-title").html(user_info.notification_list[i].message.msg);
+            
+            $("#notification_window").append($element);
+        }
+
+        $('.notification_count').html(user_info.notification_count);
+    }
+
+    //update notification status to viewed current user
+    setTimeout(function(){
+        $.post(site_url+'/user/updateUserNotificationStatus/', {}, function(response){} ,'json');
+    }, 1000);
+    
+}
 
 //get user notification
 function getUserNotification()
 {
     $.post(site_url+'/user/getUserNotifications/', {}, function(response){
-         if(response.status == 'success'){
+         if(response.status == 'success')
+         {
             console.log(response);
-    
-           for(var i=0; i<response.message_list.length;i++) {
-            var template = new Element('#notification_lists_section'),
-            $element     = template.element;
-            $element.find(".item-title").html(response.message_list[i].message.msg);
-            $("#notification_window").append($element);
-           } 
+            if( typeof response.message_list !== 'undefined' && Array.isArray(response.message_list) ) 
+            {   
+                user_info.notification_list = response.message_list;
+                user_info.notification_count = response.message_list.length;
 
-           //update notification status to viewed current user
-            $.post(site_url+'/user/updateUserNotificationStatus/', {}, function(response){
+                renderNotifications();
+            }
             
-            } ,'json');
+            
          }
     },'json');
 }
@@ -1425,7 +1458,7 @@ function user_position_save(){
           res[0] = 'noloc';
           res[1] = 'noloc';
         }
-        alert(myCurrentPos.lat+myCurrentPos.lng);
+        
         var data  = {
                         'user_id': user_info.user_id,
                         'lat'    : myCurrentPos.lat,
@@ -1444,10 +1477,15 @@ function user_position_save(){
                         {
                             map_data = JSON.parse(response.map_data);
                             locations = map_data.locations;
-                            if( locations.length )
+                            if( locations.length && controller == 'search' )
                             {
                                 console.log('reload map..');
                                 mapManager.init();
+                            }
+
+                            if( typeof response.notification_count !== 'undefined' )
+                            {
+                                $('.notification_count').html(response.notification_count);
                             }
                             
                         }
