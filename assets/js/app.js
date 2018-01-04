@@ -63,16 +63,24 @@ var geocoder;
         if( !trackingUser ) 
         {
             trackingUser = adminInfo;
-            trackingUser.join_key = map_data.join_key;
-            localStorage.setItem("tracking_user",JSON.stringify(trackingUser));
+            if( typeof trackingUser !== 'undefined' )
+            {
+                trackingUser.join_key = map_data.join_key;
+                localStorage.setItem("tracking_user",JSON.stringify(trackingUser));
+            }
+            
         }
         
 
         if( !breadcrumbUser ) 
         {
             breadcrumbUser = adminInfo;
-            breadcrumbUser.timelimit = 1;
-            localStorage.setItem("breadcrumb_user",JSON.stringify(breadcrumbUser));
+            if( typeof breadcrumbUser !== 'undefined' )
+            {
+                breadcrumbUser.timelimit = 1;
+                localStorage.setItem("breadcrumb_user",JSON.stringify(breadcrumbUser));
+            }
+            
         }
         
         //update user position two minutes once
