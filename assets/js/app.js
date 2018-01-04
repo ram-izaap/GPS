@@ -875,7 +875,9 @@ $(document).ready(function(){
    
      //2minutes once read user notification
     window.userNotification =  setInterval(function(){
-        $(".notification_count").html(user_info.notification_count); 
+        if(user_info.notification_count > 0){
+            $(".notification_count").html(user_info.notification_count); 
+        }
         clearInterval(window.userNotification);
         getUserNotification();
      },1000);
@@ -897,9 +899,9 @@ function getUserNotification()
            } 
 
            //update notification status to viewed current user
-            $.post(site_url+'/user/updateUserNotificationStatus/', {}, function(response){
+         //   $.post(site_url+'/user/updateUserNotificationStatus/', {}, function(response){
             
-            } ,'json');
+          //  } ,'json');
          }
     },'json');
 }
