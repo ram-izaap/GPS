@@ -312,11 +312,10 @@ class Search extends AppController {
              	$resp = array(
              					"status" => "success", 
              					"msg" => "",
-             					"type" => $protectionType
-
+             					"type" => $protectionType,
+             					"notify_msg" => 'You have joined map:'.ucfirst($this->joinKey)
              				);
             }  
-            
             else if($protectionType == 'allow_deny')
             {
             	$status = "error";
@@ -352,14 +351,13 @@ class Search extends AppController {
 					$params['user_id']    = $this->userID;
 					$params['join_key']   = $this->joinKey;
 					$notification_status  = $this->rest->get('userJoinRequest',$params,'json');
-	                
-
-				    if($notification_status->status == 'success' && count($notification_status->message_list)){
+	               
+				    if($notification_status->status == 'success' && is_array($notification_status->message_list)){
 				    	$notify_msg  = 'Join request sent. Waiting for approval';
 				    }	
 				    else
 				    {
-				    	$notify_msg  = 'You should';	
+				    	$notify_msg  = 'Search';	
 				    }	
 
 			    }	
@@ -389,9 +387,9 @@ class Search extends AppController {
                 else
                 {
                     $resp = array( 
-                    	"status" => "error", 
-                    	"type" => $protectionType ,
-                    	"msg" => "Please Enter Correct Password"
+			                    	"status" => "error", 
+			                    	"type" => $protectionType ,
+			                    	"msg" => "Please Enter Correct Password"
                     );
                 }
             }

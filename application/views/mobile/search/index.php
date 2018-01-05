@@ -101,7 +101,7 @@
 
          <div class="password-search" style="display:none;">
 
-            <span class="tool-tip pull-left top-search-icon" data-text="Search" data-color="green" data-position="left"  >
+            <span id="searchToolTip" class="tool-tip pull-left top-search-icon" data-text="Search" data-color="green" data-position="left"  >
             <input type="submit" value="" class="go-search subm pass_protect"  /> 
             </span>
 

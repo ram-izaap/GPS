@@ -1110,6 +1110,7 @@ function doSearch()
                         console.log(response);
                       if(response.status=='success'){
                         alert(response.msg);
+                        notificationToolTip();
                       }
                       else                
                       { 
