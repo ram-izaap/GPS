@@ -320,11 +320,14 @@ class Search extends AppController {
             else if($protectionType == 'allow_deny')
             {
             	$status = "error";
+                $msg    = "This map has been protected. Do you want to send join request?";
+                $notify_msg = '';
 
+     			//check if already approved
 				$params    = array();
 				$params['user_id'] = $this->userID;
-				$joined_groups = $this->rest->get('joined_groups', $params, 'json');
-
+				$joined_groups     = $this->rest->get('joined_groups', $params, 'json');
+                $is_joined 		   = FALSE; 	 
 				if( $joined_groups->status == 'success' )
 				{
 					$joined_groups = $joined_groups->list;
@@ -335,16 +338,37 @@ class Search extends AppController {
 							if( $jg->join_key == $this->joinKey )
 							{
 								$status = 'success';
+								$is_joined = TRUE;
+								$notify_msg= 'You have joined map:'.ucfirst($this->joinKey);
 								break;
 							}
 						}
 					}
 				}
 
+				//notification status check
+				if($is_joined == FALSE){
+					$params = array();
+					$params['user_id']    = $this->userID;
+					$params['join_key']   = $this->joinKey;
+					$notification_status  = $this->rest->get('userJoinRequest',$params,'json');
+	                
+
+				    if($notification_status->status == 'success' && count($notification_status->message_list)){
+				    	$notify_msg  = 'Join request sent. Waiting for approval';
+				    }	
+				    else
+				    {
+				    	$notify_msg  = 'You should';	
+				    }	
+
+			    }	
+				
              	$resp = array( 	
              					"status" => $status,
              					"type" => $protectionType ,
-             					"msg" => "This map has been protected. Do you want to send join request?"
+             					"msg" => $msg,
+             					'notify_msg' => $notify_msg
              				);
             }  
             else

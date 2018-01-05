@@ -888,12 +888,29 @@ $(document).ready(function(){
         },1000*30);
     }
     
-
     
+   window.notificationInterval =  setInterval(function(){
+        notificationToolTip();
+    }, 1000*60);
 });
 
+function notificationToolTip()
+{
+    var joinKey = $('input[name="join_key"]').val();
 
-function renderNotifications( )
+    data = {
+                 join_key: joinKey
+        }
+        $.post(site_url + 'search/validateJoinKey', data, function(response) {
+            console.log(response);
+            if(typeof response.notify_msg !== 'undefined'){
+                $("#searchToolTip").attr("data-text",response.notify_msg);
+            }
+        }, "json");
+}
+
+
+function renderNotifications()
 {
     if( user_info 
         && typeof user_info.notification_list !== 'undefined' 

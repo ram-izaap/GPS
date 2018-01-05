@@ -121,10 +121,12 @@
 
    <div class="map-viewer">
       <!-- Map Layer -->
+
       <div class="map-layer-top clearfix"> 
          <div class="m-channel-info">
             <span> Display Name: <b><?php echo $channel_id; ?></b></span>
-
+            <span> Map id: <b><?php echo $display_name; ?></b></span>       
+            
             <!-- Notification Panel integration -->
              <div class="dropdown">
                 <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
@@ -140,7 +142,7 @@
                    <div id="notification_window"></div>
                    
                 </ul>
-               </div>       
+               </div>
               </div>
              <!-- Notification -->
            <div id="notification_lists_section" style="display:none;">
@@ -156,14 +158,15 @@
              <li class="divider"></li> 
              </div>
             </div> 
-            <span> Map id: <b><?php echo $display_name; ?></b></span>
+           
          </div>
-
+         
          <span class="mobile--share">
             <a  data-toggle="modal" data-target="#searchshare_mb" onclick="openModals('social_share');">
             <i class="fa fa-share-alt fa-2x"></i></a>
          </span>      
       </div>
+
 
       <div id="latlang" style=""></div>
 

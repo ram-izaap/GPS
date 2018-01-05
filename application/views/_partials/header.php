@@ -121,7 +121,7 @@
                      <input type="password" name="password" id="password" class="form-control" placeholder="password" />
                      </span>
                   </div>
-                  <span class="tool-tip pull-left top-search-icon" data-text="Search" data-color="green" data-position="left">
+                  <span class="tool-tip pull-left top-search-icon" id="searchToolTip" data-text="Search" data-color="green" data-position="left">
                   <input type="button" value="" class="go-search subm" id="search_btn" />       
                   </span>
                </div>
