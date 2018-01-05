@@ -312,11 +312,10 @@ class Search extends AppController {
              	$resp = array(
              					"status" => "success", 
              					"msg" => "",
-             					"type" => $protectionType
-
+             					"type" => $protectionType,
+             					"notify_msg" => 'You have joined map:'.ucfirst($this->joinKey)
              				);
             }  
-            
             else if($protectionType == 'allow_deny')
             {
             	$status = "error";
@@ -358,7 +357,7 @@ class Search extends AppController {
 				    }	
 				    else
 				    {
-				    	$notify_msg  = '';	
+				    	$notify_msg  = 'Search';	
 				    }	
 
 			    }	
@@ -388,9 +387,9 @@ class Search extends AppController {
                 else
                 {
                     $resp = array( 
-                    	"status" => "error", 
-                    	"type" => $protectionType ,
-                    	"msg" => "Please Enter Correct Password"
+			                    	"status" => "error", 
+			                    	"type" => $protectionType ,
+			                    	"msg" => "Please Enter Correct Password"
                     );
                 }
             }
