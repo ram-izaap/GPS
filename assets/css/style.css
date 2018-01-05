@@ -11922,14 +11922,13 @@ li.map-list-label.subtitle {
 /* Notification Panel */
 
 .dropdown {
-    display:inline-block;
+    /*display:inline-block;
     margin-left:20px;
-    padding:10px;
+    padding:10px;*/
   }
 
 
-.glyphicon-bell {
-   
+.glyphicon-bell { 
     font-size:1.5rem;
   }
 
@@ -11981,5 +11980,19 @@ li.map-list-label.subtitle {
  background:#ccc;
  border-radius:4px;
  }
+
+ .custom-bell 
+  {
+    position: absolute;
+    right: -60px;
+    top: 15px;
+  }
+
+.custom-bell .dropdown-toggle { color:white; }
+.custom-bell .notification_count {
+  background: #C62416;
+  top: -11px;
+  left: -10px;
+}
 
 /* Notification Panel */

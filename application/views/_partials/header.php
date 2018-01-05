@@ -139,14 +139,32 @@
 
          
          <!-- 2nd Block -->
-         <div class="col-s-m-6 block-center">
+         <div class="col-s-m-6 block-center" style="position: relative;">
             <span class="cMapid" onclick="openModals('map_id_update');" style="cursor: pointer;"> Your Map CH. ID.  <b><?php echo $channel_id;?></b> </span>
             <span class="cMapid" onclick="openModals('display_name_update')" style="cursor: pointer;"> Your Display Name: <b><?php echo $display_name;?></b> </span>
+
+<div class="dropdown custom-bell">
+  
+  <div class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <i class="glyphicon glyphicon-bell"></i> 
+    <span class="badge notification_count">5</span>
+  </div>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width: 280px;">
+    <li><a href="#">Notifications</a></li>
+    <!-- <li role="separator" class="divider"></li> -->
+    <div id="notification_window"></div>
+  </ul>
+</div>
          </div>
 
-           <div class="dropdown">
+         
+
+
+           <!-- <div class="dropdown">
               <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-                <i class="glyphicon glyphicon-bell notification_count" ></i>
+                <i class="glyphicon glyphicon-bell" ></i>
+                <span class="notification_count"></span>
               </a>
               
               <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
@@ -159,7 +177,7 @@
                    
               </ul>
               
-            </div>
+            </div> -->
            
            <!-- Notification -->
            <div id="notification_lists_section" style="display:none;">
