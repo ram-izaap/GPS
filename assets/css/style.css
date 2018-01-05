@@ -10734,7 +10734,7 @@ body .text-field {
     z-index: 9999; }
   .tool-tip::before {
     content: attr(data-text);
-    width: 100px;
+    width: 234px;
     height: 40px;
     line-height: 40px;
     font-size: 14px;
