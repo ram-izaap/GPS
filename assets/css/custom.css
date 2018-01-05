@@ -401,7 +401,7 @@ body {
 .map-viewer {
 	background-color:#242f3e;
 	width: 100vw;
-	height:86vh;
+	/*height:86vh;*/
 	position: relative;
 }
 
@@ -1549,7 +1549,7 @@ span.mobile--share {
     position: absolute;
     right: 20px;
     top: 22px;
-    
+
 }
 .m-channel-info .dropdown-menu {
     right: 0;
