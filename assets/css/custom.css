@@ -1638,3 +1638,19 @@ li.map-list-label.subtitle {
 
 /* Notification Panel */
 
+.glyphicon-bell{ color: white;}
+
+span.badge.notification_count {
+    position: absolute;
+    background: red;
+    width: 30px;
+    height: 20px;
+    border-radius: 100%;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    top: -12px;
+    left: 4px;
+    line-height: 22px;
+    font-size: 11px;
+}

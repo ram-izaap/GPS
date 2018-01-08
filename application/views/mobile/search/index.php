@@ -131,6 +131,7 @@
              <div class="dropdown">
                 <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
                   <i class="glyphicon glyphicon-bell"></i>
+                  <span class="badge notification_count">5</span>
                 </a>
           
                  <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel" >

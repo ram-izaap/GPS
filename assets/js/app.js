@@ -158,7 +158,7 @@ var geocoder;
         module.addYourLocationButton(map);
 
         //module.prepareData();
-
+        $('#tab0, #tab1, #tab2, #tab3').html('');
         module.render( visibles, 'visibles');
         module.render( invisibles, 'invisibles');
         module.render( clues, 'clues');
@@ -312,7 +312,7 @@ var geocoder;
                         $title = '<li class="text-center invisible-head">Static Maps/Clues</li>';
                         $('#tab3').append($title, $header);
 
-                       $('#tab0').append( $title );
+                        $('#tab0').append( $title );
 
                         break;
 
@@ -782,7 +782,12 @@ var geocoder;
                 var myMarker = new google.maps.Marker({
                   map: map,
                   position: myCurrentPos,
-                  animation: google.maps.Animation.DROP
+                  animation: google.maps.Animation.DROP,
+                  label:user_info.display_name,
+                  icon: {
+                            url:site_url+"assets/images/violet-icon.png",
+                            scaledSize: new google.maps.Size(80, 40)
+                        }
                 });
 
                 map.setCenter(myCurrentPos);
@@ -1501,6 +1506,7 @@ function user_position_save(){
                             {
                                 console.log('reload map..');
                                 mapManager.init();
+                                notificationToolTip();
                             }
 
                             if( typeof response.notification_count !== 'undefined' )
