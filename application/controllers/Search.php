@@ -69,7 +69,7 @@ class Search extends AppController {
 			$locations = array();
 
 			//public map location
-			if( $map_data->type == 'public' )
+			if((isset($map_data->type)) && $map_data->type == 'public' )
 			{
 				$location = array(
 									'display_name' 	=> $map_data->description,

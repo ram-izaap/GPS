@@ -2,11 +2,11 @@
 
 <style>
    .martop{ margin-top:10px !important;}
-   .gm-style-iw + div {left: 10px;}
+   .gm-style-iw + div {right: 10px;}
    /*.gm-style-iw + div { height:30px !important; width:30px !important; border:1px solid red;}
    .gm-style-iw + div:before { content:"x"; font-weight:bold; font-size:18px; padding:0 10px }*/
-   .gm-style-iw + div, 
-   .gm-style-iw + div img { display: none}
+   /*.gm-style-iw + div, 
+   .gm-style-iw + div img { display: none} */
    [data-role="close"] {
    background: red none repeat scroll 0 0;
    border: 1px solid red;
@@ -105,6 +105,7 @@
           <div class=" pull-right ">
              <span class="btn btn-default">
              <span id="re-load"><time class="timer">00:00</time></span>
+             <i class="fa fa-repeat" onclick="mapManager.refreshMap();" aria-hidden="true"></i>
              </span>
           </div>
 

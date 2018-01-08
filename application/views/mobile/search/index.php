@@ -124,14 +124,14 @@
 
       <div class="map-layer-top clearfix"> 
          <div class="m-channel-info">
-            <span> Display Name: <b><?php echo $channel_id; ?></b></span>
-            <span> Map id: <b><?php echo $display_name; ?></b></span>       
+            <span onclick="openModals('map_id_update');" style="cursor: pointer;"> Display Name: <b><?php echo $channel_id; ?></b></span>
+            <span onclick="openModals('display_name_update')" style="cursor: pointer;"> Map id: <b><?php echo $display_name; ?></b></span>       
             
             <!-- Notification Panel integration -->
              <div class="dropdown">
                 <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
                   <i class="glyphicon glyphicon-bell"></i>
-                  <span class="badge notification_count">5</span>
+                  <span class="badge notification_count">0</span>
                 </a>
           
                  <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel" >
@@ -171,10 +171,11 @@
 
       <div id="latlang" style=""></div>
 
-      <div class="col-xs-4 timer">
+      <div class="col-xs-4 ">
          <div class="pull-right">
-            <span class="btn btn-default timer-btn">
-               <h2 id="re-load"><time class="timer">00:00</time></h2>
+            <span class="btn btn-default timer-btn2">
+               <span id="re-load"><time class="timer">00:00</time></span>
+               <i class="fa fa-repeat" onclick="mapManager.refreshMap();" aria-hidden="true"></i>
             </span>
          </div>
       </div>
@@ -188,7 +189,7 @@
       <div class="conta-iner clearfix">
 
          <div class="col-xs-4">
-            <div class="drop-wrap btn-participant timer-btn">
+            <div class="drop-wrap btn-participant timer-btn1">
                
                <div class="dropup">
                   <button class="btn btn-default dropdown-toggle parti" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

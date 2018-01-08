@@ -65,16 +65,16 @@ class AppController extends CI_Controller {
        	{
        		if( $this->joinKey == $userInfo['channel_id'] )
        		{
-       			$mapDispStr = $this->isMobile ? "<b>My</b>My Map":"My <small>Map</small>";
+       			$mapDispStr = $this->isMobile ? "My <small>Map</small>":"My <small>Map</small>";
        		}
        		else
        		{
-       			$mapDispStr = $this->isMobile ? "<b>Return to</b>My Map":"Return to <small>My Map</small>";
+       			$mapDispStr = $this->isMobile ? "Return to <small>My Map</small>":"Return to <small>My Map</small>";
        		}
        	}
        	else
        	{
-       		$mapDispStr = $this->isMobile ? "<b>View</b>My Map":"View <small>My Map</small>";
+       		$mapDispStr = $this->isMobile ? "View <small>My Map</small>":"View <small>My Map</small>";
        	}
 
        	$this->data['map_disp_str'] = $mapDispStr;
@@ -125,6 +125,7 @@ class AppController extends CI_Controller {
 				elseif( (int)$resp->group_data->allow_deny === 1 )
 				{
 					$userInfo['protection_type'] = 'password';
+					$userInfo['protection_type'] = 'allow_deny';
 				}
 				else
 	            {

@@ -147,7 +147,7 @@
   
   <div class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <i class="glyphicon glyphicon-bell"></i> 
-    <span class="badge notification_count">5</span>
+    <span class="badge notification_count">0</span>
   </div>
 
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width: 280px;">

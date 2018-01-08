@@ -50,7 +50,9 @@ var geocoder;
     var usertag_displayname;
     module.init = function ( callback )
     {
-
+     
+        module.clearLocationArray();
+        
         module.prepareData();
 
         if( map_data.type == 'public' )
@@ -158,7 +160,7 @@ var geocoder;
         module.addYourLocationButton(map);
 
         //module.prepareData();
-        $('#tab0, #tab1, #tab2, #tab3').html('');
+        
         module.render( visibles, 'visibles');
         module.render( invisibles, 'invisibles');
         module.render( clues, 'clues');
@@ -169,9 +171,17 @@ var geocoder;
         }
 
         //set map protection type
+        $('.search-wrap.top-search').removeClass("normal password allow_deny");  
         $('.search-wrap.top-search').addClass(map_data.protection_type);  
     };
-
+    module.clearLocationArray = function(){
+         visibles = [];
+         invisibles = [];
+         clues = [];
+         publicLocations = []; //Only for Public Map
+         participants = [];
+         $('#tab0, #tab1, #tab2, #tab3').html('');
+     };
 
     module.prepareData = function( )
     {
@@ -640,7 +650,12 @@ var geocoder;
         visibles[trackUserIndex].join_key = map_data.join_key;
         localStorage.setItem("tracking_user",JSON.stringify(visibles[trackUserIndex]));
    }
-
+  
+  //refresh map
+  module.refreshMap = function()
+  {
+     user_position_save();
+  }
   
     module.getModeOptions = function( type )
     {
@@ -787,7 +802,8 @@ var geocoder;
                   icon: {
                             url:site_url+"assets/images/violet-icon.png",
                             scaledSize: new google.maps.Size(80, 40)
-                        }
+                        },
+                  zIndex: 99999      
                 });
 
                 map.setCenter(myCurrentPos);
@@ -853,6 +869,7 @@ $(document).ready(function(){
     //set map protection type
     if( typeof user_info.protection_type != 'undefined' )
     {
+        $('.search-wrap.top-search').removeClass("normal password allow_deny"); 
         $('.search-wrap.top-search').addClass(user_info.protection_type); 
     }
     
@@ -924,7 +941,7 @@ function renderNotifications()
         for(var i=0; i<user_info.notification_list.length;i++) 
         {
             var template = new Element('#notification_lists_section'),
-                $element     = template.element;
+                $element = template.element;
                 
             $element.find(".item-title").html(user_info.notification_list[i].message.msg);
             

@@ -1157,7 +1157,7 @@ text-align:center;
 	.timer-btn .btn { font-size:12px; padding:8px 4px;}
 	.top-my-map a {
 	   color:#fff !important;
-	   font-size:8px;
+	   font-size:12px;
 	   width: 100%;
 	    display: inline-block;
 	}
@@ -1171,6 +1171,7 @@ text-align:center;
 	    max-width: 28px;
 	  max-height: 28px;
 	    margin: 0 11px;
+	    font-weight: normal;
 	}
 
 	.map-sel span input[type="radio"] {
@@ -1636,6 +1637,7 @@ li.map-list-label.subtitle {
  border-radius:4px;
  }
 
+
 /* Notification Panel */
 
 .glyphicon-bell{ color: white;}
@@ -1654,3 +1656,52 @@ span.badge.notification_count {
     line-height: 22px;
     font-size: 11px;
 }
+
+.timer1 {
+    text-align: center;
+    position: fixed;
+    bottom: 8px;
+    z-index: 99999;
+    left: 130px;
+    background: white;
+    border-radius: 4px;
+    padding: 2px;
+    max-width: 65px;
+}
+
+.timer-btn1 {
+    width: 106px;
+    position: fixed;
+    bottom: 6px;
+   z-index: 9;
+}
+
+.timer-btn2 {
+    width: 73px;
+    position: fixed;
+    bottom: 5px;
+    z-index: 9;
+    padding: 2px 8px 2px 2px;
+    text-align: right;
+    margin-left: 12px;
+}
+
+.timer-btn1 .btn {
+    font-size: 12px;
+    padding: 3px 4px;
+}
+
+.timer-btn2 .btn {
+    font-size: 12px;
+    padding: 3px 4px;
+}
+
+.map-sel {
+    float: right;
+    width: 165px;
+  } 
+
+.map-sel span:nth-child(2) {
+    margin-left: 7px;
+}
+.map-sel{top:5px;}
