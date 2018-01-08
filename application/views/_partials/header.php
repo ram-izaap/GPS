@@ -193,7 +193,6 @@
              <li class="divider"></li> 
              </div>
             </div>  
-
          <!-- 3nd Block -->
          <div class="col-sm-3 block-3 block-right pull-right">
 

@@ -168,7 +168,6 @@
          </span>      
       </div>
 
-
       <div id="latlang" style=""></div>
 
       <div class="col-xs-4 ">

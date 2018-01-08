@@ -124,7 +124,6 @@ class AppController extends CI_Controller {
 				}
 				elseif( (int)$resp->group_data->allow_deny === 1 )
 				{
-					$userInfo['protection_type'] = 'password';
 					$userInfo['protection_type'] = 'allow_deny';
 				}
 				else
