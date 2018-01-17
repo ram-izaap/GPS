@@ -60,7 +60,7 @@
 
         <h3>Makes creating live maps so easy! <br /> You've already done it...</h3>
 
-        <p> Sharing your location or locating someone else has never been so easy. No download required, no account to set up and best of all. It's Free!  Give <a href="index.html">Here's My GPS</a> a try now! To make your map live, click on <a href="javascript:void(0);">View My Map</a>. Use the website to search for anyone or share your location using the your Guest Map ID. </p>   
+        <p> Sharing your location or locating someone else has never been so easy. No download required, no account to set up and best of all. It's Free!  Give <a href="http://heresmygps.com/">Here's My GPS</a> a try now! To make your map live, click on <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>">View My Map</a>. Use the website to search for anyone or share your location using the your Guest Map ID. </p>   
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-                 <p>Click on any of the social buttons to share a link on your existing networks. You can also write down your Map <a href="javascript:void(0);">Channel ID</a> and give it to someone just like passing along a phone number.</p>
+                 <p>Click on any of the social buttons to share a link on your existing networks. You can also write down your Map <a href="<?php echo base_url();?>search/<?php echo $channel_id; ?>">Channel ID</a> and give it to someone just like passing along a phone number.</p>
 
                 </div>
 
@@ -144,7 +144,7 @@
 
                   
 
-                  <p> When using the website you are automatically assigned a randomly generated guest Map Channel ID which is searchable on the HMGPS Website or App. If you like you can edit your ID to something easier to remember like your last name of phone number. ID's are only good for 24 hours before they are automatically deleted from the system. For Permanent ID's get the  <a href="javascript:void(0);"> HMGPS</a> App. </p>
+                  <p> When using the website you are automatically assigned a randomly generated guest Map Channel ID which is searchable on the HMGPS Website or App. If you like you can edit your ID to something easier to remember like your last name of phone number. ID's are only good for 24 hours before they are automatically deleted from the system. For Permanent ID's get the  <a href="https://play.google.com/store/apps/details?id=com.hmgps"> HMGPS</a> App. </p>
 
                 </div>
 

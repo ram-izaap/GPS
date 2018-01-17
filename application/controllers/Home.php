@@ -131,6 +131,47 @@ class Home extends AppController {
 		$this->layout->view('privacy_policy',$this->data);
 	}
 
+
+	function send_email()
+	{
+
+     	$name 			= $this->input->post('name');
+		$from 			= $this->input->post('email');
+		$message 	    = $this->input->post('message');
+		$to             = "";
+		$subject        = "GPS";
+
+        $this->load->library('email'); 
+
+        $this->email->set_newline("\r\n");
+
+        $this->email->set_header('MIME-Version', '1.0; charset=utf-8'); 
+
+        $this->email->set_header('Content-type', 'text/html');          
+
+        $this->email->from($from, $name); 
+
+        $this->email->to($to);
+
+        $this->email->subject($subject); 
+
+        $this->email->message($message); 
+
+        //$this->email->send();
+         if($this->email->send())
+         {
+            ?>
+            <script type="text/javascript">alert("Email Send Successfully");</script>
+            <?php
+         }
+        else
+        {
+          ?>
+          <script type="text/javascript">alert("Email Not Send");</script>
+          <?php
+        }
+    }
+
 	
 
 
